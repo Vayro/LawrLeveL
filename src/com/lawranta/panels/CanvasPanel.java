@@ -76,6 +76,13 @@ public class CanvasPanel extends JPanel {
 				// TODO Auto-generated method stub
 				mouse = e.getButton();
 				System.out.println("Mouse button: " + mouse);
+				
+			
+				
+				
+				
+				
+				
 			}
 
 			@Override
@@ -114,8 +121,9 @@ public class CanvasPanel extends JPanel {
 					break;
 				}
 				case 2: {
-					break;
-
+					
+					 System.out.println("canvast Container size: " + canvasContainer.size());
+					 break;
 				}
 				case 3: {
 					startDeleting();
@@ -136,16 +144,22 @@ public class CanvasPanel extends JPanel {
 		Point p2 = contentPanel.getLocationOnScreen();
 		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());
 
-		/*
-		 * for(int i=0;i<canvasContainer.size();i++) {
-		 * 
-		 * if(x==canvasContainer.get(i).getX() && y==canvasContainer.get(y).getX()) {
-		 * contentPanel.remove(canvasContainer.get(i)); // canvasContainer.remove(i); //
-		 * i--; contentPanel.repaint(); }
-		 * 
-		 * 
-		 * }
-		 */
+		
+		  for(int i=0;i<canvasContainer.size();i++) {
+			  
+			  System.out.println("Checking: " + i);
+		  if(x==canvasContainer.get(i).getX() && y==canvasContainer.get(i).getY()) {
+			  
+			  
+			  System.out.println("collision detected");
+		  contentPanel.remove(canvasContainer.get(i)); // canvasContainer.remove(i); //
+		  ; contentPanel.repaint()
+		  
+		  ; }
+		 
+		 
+		  }
+		 
 
 		InkDrop kkk = new InkDrop(x, y, brushSize, brushSize);
 
@@ -172,16 +186,17 @@ public class CanvasPanel extends JPanel {
 		 for(int i=0;i<canvasContainer.size();i++) {
 		 
 			 
-			 canvasContainer.get(i).destroy(contentPanel);
+			// canvasContainer.get(i).destroy(contentPanel);
 			 
-			 /*
+			 
 		 if(x==canvasContainer.get(i).getX() && y==canvasContainer.get(i).getY()) {
 			 canvasContainer.get(i).destroy(contentPanel);
 		 System.out.println("removed " + i + " at " + x + "," + y);
-		//  canvasContainer.remove(i); //
+		 System.out.println("canvast Container size: " + canvasContainer.size() );
+		  canvasContainer.remove(i); //
 		 contentPanel.revalidate();
 		 contentPanel.repaint();
-		 }*/
+		 }
 		
 		
 	}

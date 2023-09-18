@@ -73,26 +73,25 @@ public void setySize(int ySize) {
 
 	
 	
-	public InkDrop(int d, int e, int xSize, int ySize) {
+	public InkDrop(int x, int y, int xSize, int ySize) {
 		setRequestFocusEnabled(false);
 		setBackground(new Color(0, 0, 255));
 		// TODO Auto-generated constructor stub
 		
-		this.x=(int) d;
-		this.y=(int) e;
+
 		this.xSize=xSize;
 		this.ySize=ySize;
 		
-	int	gridSnapx=(int) (d%xSize);
-	int gridSnapy=(int) (e%ySize);	
+	int	gridSnapx=(int) (x%xSize);
+	int gridSnapy=(int) (y%ySize);	
 		
-		this.x=d-gridSnapx;
-		this.y=e-gridSnapy;
+		this.x=x-gridSnapx;
+		this.y=y-gridSnapy;
 		
 
-	setBounds(x,y,xSize, ySize);
+	setBounds(this.x,this.y,this.xSize, this.ySize);
 	setLayout(null);
-		System.out.println("inkDrop created at " + x + "," + y + " Size(" + xSize + "," + ySize + ")");
+		System.out.println("inkDrop created at " + this.x + "," + this.y + " Size(" + xSize + "," + ySize + ")");
 		
 		
 		
