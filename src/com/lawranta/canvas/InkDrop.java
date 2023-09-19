@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import com.lawranta.globals.GLOBAL;
@@ -19,7 +20,7 @@ int x, y, xSize, ySize; boolean removed=false;
 protected void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	if(!removed) {
-	g.setColor(Color.BLACK);
+	g.setColor(Color.GRAY);
 	g.fillRect(0,0,xSize, ySize);
 	System.out.println("painted " + this.toString());}
 	else {
@@ -120,7 +121,7 @@ for(int i=0;i<CanvasPanel.canvasContainer.size();i++) {
 	}
 
 
-	public void destroy(JPanel contentPanel) {
+	public void destroy(JLayeredPane contentPanel) {
 		// TODO Auto-generated method stub
 		System.out.println(" deleting mySelf... :( ");
 
