@@ -29,7 +29,10 @@ import javax.swing.Timer;
 
 public class CanvasPanel extends JPanel {
 
-	int canvasWidthDefault = 1024, canvasHeightDefault = 768;
+	static int canvasWidthDefault = 1024;
+	static int canvasHeightDefault = 768;
+	static int canvasWidth = canvasWidthDefault;
+	static int canvasHeight= canvasHeightDefault;
 	static int brushSize = 32;
 	int px;
 	int py;
@@ -76,15 +79,14 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
-				if(e.getButton()==1) {
-					if(Tool.selectedTool==2) {
+
+				if (e.getButton() == 1) {
+					if (Tool.selectedTool == 2) {
 						newTextNode();
-						
+
 					}
 
 				}
-				
 
 			}
 
@@ -144,9 +146,53 @@ public class CanvasPanel extends JPanel {
 
 			}
 		}).start();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 
+	
+	
+	public static void setCanvasSize()
+	{
+		contentPanel.setSize(new Dimension(canvasWidth, canvasHeight));
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	void chooseStartActionByTool() {
 
 		switch (Tool.selectedTool) {
@@ -156,7 +202,6 @@ public class CanvasPanel extends JPanel {
 		}
 		case 2: {
 
-		
 			break;
 		}
 		case 3: {
@@ -176,14 +221,8 @@ public class CanvasPanel extends JPanel {
 		TextNode node = new TextNode(x, y);
 		node.setVisible(true);
 		node.requestFocusInWindow();
-	contentPanel.add(node,2,0);
-		
-		
-		
-		
+		contentPanel.add(node, 2, 0);
 
-		
-		
 		contentPanel.revalidate();
 		contentPanel.repaint();
 
@@ -235,7 +274,7 @@ public class CanvasPanel extends JPanel {
 		canvasContainer.add(kkk);
 		// kkk.paintComponents(kkk.getGraphics());
 		kkk.setVisible(true);
-		contentPanel.add(kkk,1,0);
+		contentPanel.add(kkk, 1, 0);
 		System.out.println("Penis");
 		contentPanel.repaint();
 	}
@@ -265,4 +304,7 @@ public class CanvasPanel extends JPanel {
 		}
 
 	}
+	
+
+	
 }

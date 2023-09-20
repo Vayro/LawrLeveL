@@ -1,8 +1,11 @@
 package com.lawranta.canvas;
 
+import java.awt.Color;
+
 public class Tool {
 	//should be singleton class
-	public static int selectedTool, selectedColor;
+	public static int selectedTool;
+	public static Color selectedColor=new Color(0,0,0);
 	/*
 	 * 0: InkDrop
 	 * 1: Text
@@ -49,8 +52,8 @@ public class Tool {
 
 	public static void setToolDefault() {
 		// TODO Auto-generated method stub
-		//selectedTool=1;
-		
+		selectedTool=1;
+		selectedColor=new Color(0,0,0);
 	}
 
 

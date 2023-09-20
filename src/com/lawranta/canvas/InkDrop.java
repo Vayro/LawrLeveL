@@ -12,127 +12,104 @@ import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class InkDrop extends JPanel {
-int x, y, xSize, ySize; boolean removed=false;
-	
+	int x, y, xSize, ySize;
+	boolean removed = false;
+	Color color = Tool.selectedColor;
 
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		if (!removed) {
+			g.setColor(color);
+			g.fillRect(0, 0, xSize, ySize);
+			System.out.println("painted " + this.toString());
+		} else {
 
-@Override
-protected void paintComponent(Graphics g) {
-	super.paintComponent(g);
-	if(!removed) {
-	g.setColor(Color.GRAY);
-	g.fillRect(0,0,xSize, ySize);
-	System.out.println("painted " + this.toString());}
-	else {
-		
-		
-		g.clearRect(0,0,xSize, ySize);
+			g.clearRect(0, 0, xSize, ySize);
+		}
+
 	}
 
-}
-	
-	
 	public int getX() {
-	return x;
-}
+		return x;
+	}
 
+	public void setX(int x) {
+		this.x = x;
+	}
 
-public void setX(int x) {
-	this.x = x;
-}
+	public int getY() {
+		return y;
+	}
 
+	public void setY(int y) {
+		this.y = y;
+	}
 
-public int getY() {
-	return y;
-}
+	public int getxSize() {
+		return xSize;
+	}
 
+	public void setxSize(int xSize) {
+		this.xSize = xSize;
+	}
 
-public void setY(int y) {
-	this.y = y;
-}
+	public int getySize() {
+		return ySize;
+	}
 
+	public void setySize(int ySize) {
+		this.ySize = ySize;
+	}
 
-public int getxSize() {
-	return xSize;
-}
-
-
-public void setxSize(int xSize) {
-	this.xSize = xSize;
-}
-
-
-public int getySize() {
-	return ySize;
-}
-
-
-public void setySize(int ySize) {
-	this.ySize = ySize;
-}
-
-
-	
-	
 	public InkDrop(int x, int y, int xSize, int ySize) {
 		setRequestFocusEnabled(false);
-		setBackground(new Color(0, 0, 255));
+		setBackground(this.color);
 		// TODO Auto-generated constructor stub
-		
 
-		this.xSize=xSize;
-		this.ySize=ySize;
-		
-	int	gridSnapx=(int) (x%xSize);
-	int gridSnapy=(int) (y%ySize);	
-		
-		this.x=x-gridSnapx;
-		this.y=y-gridSnapy;
-		
+		this.xSize = xSize;
+		this.ySize = ySize;
 
-	setBounds(this.x,this.y,this.xSize, this.ySize);
-	setLayout(null);
+		int gridSnapx = (int) (x % xSize);
+		int gridSnapy = (int) (y % ySize);
+
+		this.x = x - gridSnapx;
+		this.y = y - gridSnapy;
+
+		setBounds(this.x, this.y, this.xSize, this.ySize);
+		setLayout(null);
 		System.out.println("inkDrop created at " + this.x + "," + this.y + " Size(" + xSize + "," + ySize + ")");
+
+	
+
 		
 		
 		
-		
-for(int i=0;i<CanvasPanel.canvasContainer.size();i++) {
-			System.out.println(i+" out of "+CanvasPanel.canvasContainer.size());
-			if(x==CanvasPanel.canvasContainer.get(i).getX() && y==CanvasPanel.canvasContainer.get(i).getY())
-		{
+		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
+			System.out.println(i + " out of " + CanvasPanel.canvasContainer.size());
+			if (x == CanvasPanel.canvasContainer.get(i).getX() && y == CanvasPanel.canvasContainer.get(i).getY()) {
 				GLOBAL.CP.remove(CanvasPanel.canvasContainer.get(i));
 				CanvasPanel.canvasContainer.remove(i);
-			//	i--;
+				// i--;
 				GLOBAL.CP.contentPanel.repaint();
 			}
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-	//	paintComponent(getGraphics());
-	}
 
+		}
+
+		// paintComponent(getGraphics());
+	}
 
 	public void destroy(JLayeredPane contentPanel) {
 		// TODO Auto-generated method stub
 		System.out.println(" deleting mySelf... :( ");
 
-	//	x=0;y=0;xSize=0; ySize=0;
+		// x=0;y=0;xSize=0; ySize=0;
 		setVisible(false);
-		removed=true;
-revalidate();
-repaint();
+		removed = true;
+		revalidate();
+		repaint();
 		contentPanel.remove(this);
 
-		
 	}
 
 }
