@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	Toolbar toolbar;
-	
+	public static JScrollPane scrollPane;
 	/**
 	 * Launch the application.
 	 */
@@ -55,7 +55,6 @@ public class MainFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-	
 		toolbar = new Toolbar();
 		toolbar.setMaximumSize(new Dimension(64, 2147483647));
 		toolbar.setMinimumSize(new Dimension(64, 34));
@@ -65,10 +64,7 @@ public class MainFrame extends JFrame {
 		toolbar.setVisible(true);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		contentPane.add(toolbar);
-		
-		
-		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(648, 480));
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

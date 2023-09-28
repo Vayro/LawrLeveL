@@ -12,7 +12,7 @@ import java.awt.event.KeyListener;
 
 import com.lawranta.panels.*;
 
-public class TextNode extends JTextField {
+public class TextNode extends JTextField implements Paint {
 	/**
 	 * 
 	 */

@@ -17,11 +17,12 @@ import java.awt.BorderLayout;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 
-import com.lawranta.canvas.Tool;
+import com.lawranta.canvas.SelectedTool;
 import com.lawranta.globals.GLOBAL;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JDialog;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -30,7 +31,7 @@ import java.awt.Dimension;
 public class Toolbar extends JInternalFrame {
 
 	public static ActionListener actionListener;
-	public static ColorChooser j;
+	public static JDialog j;
 	static toolButton colorButton;
 	/**
 	 * Launch the application.
@@ -61,7 +62,7 @@ public class Toolbar extends JInternalFrame {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if (e.getButton() == 2)
-					System.out.println("Selected Tool: " + Tool.selectedTool);
+					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 
 			}
 
@@ -107,15 +108,15 @@ public class Toolbar extends JInternalFrame {
 				switch(e.getActionCommand())
 				{
 				case "Brush": 
-					Tool.setInkDropTool();
-					System.out.println("Selected Tool: " + Tool.selectedTool);
+					SelectedTool.setInkDropTool();
+					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					
 					break;
 					
 					
 				case "Aa":
-					Tool.setTextTool();
-					System.out.println("Selected Tool: " + Tool.selectedTool);
+					SelectedTool.setTextTool();
+					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					break;
 					
 				case "Color": 
@@ -129,13 +130,15 @@ public class Toolbar extends JInternalFrame {
 					
 					
 				case "Canvas":
-					
+					j=new CanvasSizer();
 					
 					
 					
 					break;
 				
 				case "Eraser":
+					SelectedTool.setEraserTool();
+					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					break;
 				
 				default:
@@ -153,14 +156,6 @@ public class Toolbar extends JInternalFrame {
 			
 			
 		};
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -209,11 +204,10 @@ public class Toolbar extends JInternalFrame {
 			p.add(this);
 			
 		}
-			
 		public static void colorBorder(toolButton c){ 
 			
 			
-			c.setBorder(BorderFactory.createLineBorder(Tool.selectedColor, 2, true));
+			c.setBorder(BorderFactory.createLineBorder(SelectedTool.selectedColor, 2, true));
 		}
 			
 			
@@ -227,4 +221,3 @@ public class Toolbar extends JInternalFrame {
 		private static final long serialVersionUID = 3704138041001210203L;
 
 	}
-
