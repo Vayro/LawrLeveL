@@ -15,7 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.lawranta.canvas.Tool;
+import com.lawranta.canvas.SelectedTool;
 import com.lawranta.frames.internal.Toolbar.toolButton;
 
 import java.awt.Color;
@@ -23,6 +23,10 @@ import javax.swing.border.TitledBorder;
 
 public class ColorChooser extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	ActionListener actionListener;
 
@@ -75,7 +79,7 @@ getContentPane().add(contentPanel);
 				// TODO Auto-generated method stub
 				switch (e.getActionCommand()){
 				case "OK":
-					Tool.selectedColor=j.getColor();
+					SelectedTool.selectedColor=j.getColor();
 					toolButton.colorBorder(Toolbar.colorButton);
 					dispose();
 	

@@ -11,10 +11,10 @@ import javax.swing.JPanel;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
-public class InkDrop extends JPanel {
+public class InkDrop extends JPanel implements Paint {
 	int x, y, xSize, ySize;
 	boolean removed = false;
-	Color color = Tool.selectedColor;
+	Color color = SelectedTool.selectedColor;
 
 	@Override
 	protected void paintComponent(Graphics g) {

@@ -4,25 +4,31 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.lawranta.canvas.CreateGrid;
 import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.TextNode;
-import com.lawranta.canvas.Tool;
+import com.lawranta.canvas.SelectedTool;
+import com.lawranta.frames.MainFrame;
 import com.lawranta.frames.internal.Toolbar;
 import com.lawranta.globals.GLOBAL;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
@@ -32,7 +38,7 @@ public class CanvasPanel extends JPanel {
 	static int canvasWidthDefault = 1024;
 	static int canvasHeightDefault = 768;
 	static int canvasWidth = canvasWidthDefault;
-	static int canvasHeight= canvasHeightDefault;
+	static int canvasHeight = canvasHeightDefault;
 	static int brushSize = 32;
 	int px;
 	int py;
@@ -41,15 +47,21 @@ public class CanvasPanel extends JPanel {
 	public static ArrayList<InkDrop> canvasContainer = new ArrayList<InkDrop>();
 	private static final long serialVersionUID = 0L;
 	private static final int TIMER_DELAY = 35;
+	static CanvasPanel getCP;
+	private static final double RADIUS    = 15.0;
+	private static final double DIAMETER  = 2.0 * RADIUS;
+	private static final Color  XOR_COLOR = Color.yellow;
+	Graphics2D g2;
+	private static Shape m_circle = null;
 
 	/**
 	 * Create the panel.
 	 */
 
 	public CanvasPanel() {
-		setBackground(new Color(23, 23, 23));
-		Tool.setToolDefault();
-
+		setBackground(new Color(255, 0, 0));
+		SelectedTool.setToolDefault();
+		getCP = this;
 		contentPanel = new JLayeredPane() {
 
 			/**
@@ -81,7 +93,7 @@ public class CanvasPanel extends JPanel {
 				// TODO Auto-generated method stub
 
 				if (e.getButton() == 1) {
-					if (Tool.selectedTool == 2) {
+					if (SelectedTool.selectedTool == 2) {
 						newTextNode();
 
 					}
@@ -102,6 +114,7 @@ public class CanvasPanel extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				mouse = 0;
+					//clearCircle(g2);
 			}
 
 			@Override
@@ -118,6 +131,58 @@ public class CanvasPanel extends JPanel {
 
 		});
 
+		
+		
+		contentPanel.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				   g2     = (Graphics2D) getGraphics();
+				    Point      p      = e.getPoint();
+				    Shape      circle = new Ellipse2D.Double(p.getX() - RADIUS, p.getY() - RADIUS, DIAMETER, DIAMETER);
+
+				    clearCircle(g2);
+
+				    g2.setXORMode(XOR_COLOR);
+				    g2.draw(circle);
+				    g2.setPaintMode();
+
+				    m_circle = circle;
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				   g2     = (Graphics2D) getGraphics();
+				    Point      p      = e.getPoint();
+				    Shape      circle = new Ellipse2D.Double(p.getX() - RADIUS, p.getY() - RADIUS, DIAMETER, DIAMETER);
+
+				    clearCircle(g2);
+
+				    g2.setXORMode(XOR_COLOR);
+				    g2.draw(circle);
+				    g2.setPaintMode();
+
+				    m_circle = circle;
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+		});
+		
+		
+		
+		
+		
+		
 		// the timer variable must be a javax.swing.Timer
 		// TIMER_DELAY is a constant int and = 35;
 		new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
@@ -133,7 +198,7 @@ public class CanvasPanel extends JPanel {
 				}
 				case 2: {
 
-					System.out.println("Selected Tool: " + Tool.selectedTool);
+					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					break;
 				}
 				case 3: {
@@ -143,59 +208,59 @@ public class CanvasPanel extends JPanel {
 				}
 
 				}
+				
+				
+				
+				
+		//	System.out.print("h");	
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 
 			}
 		}).start();
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 	}
 
-	
-	
-	public static void setCanvasSize()
+	private void clearCircle(Graphics2D g2)
 	{
-		contentPanel.setSize(new Dimension(canvasWidth, canvasHeight));
-		
-		
-		
-		
+	    if (m_circle != null)
+	    {
+	        g2.setXORMode(XOR_COLOR);
+	        g2.draw(m_circle);
+	        g2.setPaintMode();
+
+	        m_circle = null;
+	        revalidate();
+	        repaint();
+	    }
+	
+	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public static void setCanvasSize() {
+		contentPanel.setSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
+		contentPanel.setMinimumSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
+		contentPanel.setPreferredSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
+		MainFrame.scrollPane.setViewportView(null);
+		getCP.setSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
+		System.out.println("setting canvas size");
+		MainFrame.scrollPane.setViewportView(getCP);
+		getCP.revalidate();
+		getCP.repaint();
+
+	}
+
 	void chooseStartActionByTool() {
 
-		switch (Tool.selectedTool) {
+		switch (SelectedTool.selectedTool) {
 		case 1: {
 			startPainting();
 			break;
@@ -230,7 +295,7 @@ public class CanvasPanel extends JPanel {
 
 	void chooseStopActionByTool() {
 
-		switch (Tool.selectedTool) {
+		switch (SelectedTool.selectedTool) {
 		case 1: {
 			startDeleting();
 			break;
@@ -304,7 +369,5 @@ public class CanvasPanel extends JPanel {
 		}
 
 	}
-	
 
-	
 }

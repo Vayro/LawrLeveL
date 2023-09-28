@@ -2,14 +2,14 @@ package com.lawranta.canvas;
 
 import java.awt.Color;
 
-public class Tool {
+public class SelectedTool {
 	//should be singleton class
 	public static int selectedTool;
 	public static Color selectedColor=new Color(0,0,0);
 	/*
-	 * 0: InkDrop
-	 * 1: Text
-	 * 
+	 * 1: InkDrop
+	 * 2: Text
+	 * 3: Eraser
 	 * 
 	 * 
 	 * 
@@ -43,7 +43,7 @@ public class Tool {
 
 
 
-	public Tool() {
+	public SelectedTool() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -71,6 +71,15 @@ public class Tool {
 	public static void setInkDropTool() {
 		// TODO Auto-generated method stub
 		selectedTool=1;
+		
+	}
+
+
+
+
+	public static void setEraserTool() {
+		// TODO Auto-generated method st
+		selectedTool=3;
 		
 	}
 
