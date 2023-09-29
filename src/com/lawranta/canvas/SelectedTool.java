@@ -1,6 +1,8 @@
 package com.lawranta.canvas;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SelectedTool {
 	//should be singleton class
@@ -83,5 +85,40 @@ public class SelectedTool {
 		selectedTool=3;
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

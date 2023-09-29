@@ -32,7 +32,8 @@ public class CanvasSizer extends JDialog {
 	private JTextField heightField;
 
 	/**
-	 * Launch the application.
+	 * Launch the application
+	 * .
 	 */
 	public static void main(String[] args) {
 		try {

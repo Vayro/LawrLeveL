@@ -46,8 +46,8 @@ public class Toolbar extends JInternalFrame {
 	public static ActionListener actionListener;
 	public static JDialog j;
 	static toolButton colorButton;
-	Image circle;
-	Cursor eraserCursor;
+	static Image circle;
+	static Cursor eraserCursor;
 	/**
 	 * Launch the application.
 	 */
@@ -159,7 +159,7 @@ public class Toolbar extends JInternalFrame {
 					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					CanvasPanel.contentPanel.setCursor(eraserCursor);
 					
-				j=new BrushSlider();
+			
 	
 					break;
 				
@@ -199,7 +199,50 @@ public class Toolbar extends JInternalFrame {
 		
 
 		toolButton eraserButton = new toolButton("Eraser", panel);
-	
+		eraserButton.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getButton());
+				
+				if(e.getButton()==3) {
+
+					j=new BrushSlider();
+					
+					
+				}
+				
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+			
+		});
 		
 
 		colorButton = new toolButton("Color", panel);
@@ -274,6 +317,8 @@ public class Toolbar extends JInternalFrame {
 			addActionListener(Toolbar.actionListener);
 	
 			p.add(this);
+			
+			
 			
 		}
 		public static void colorBorder(toolButton c){ 

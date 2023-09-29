@@ -54,11 +54,13 @@ public class CanvasPanel extends JPanel {
 	public static ArrayList<Paint> canvasContainer = new ArrayList<Paint>();
 	private static final long serialVersionUID = 0L;
 	private static final int TIMER_DELAY = 35;
+	private static final int MOUSE_TIMER = 120;
 	static CanvasPanel getCP;
 	private static final double RADIUS    = 15.0;
 	private static final double DIAMETER  = 2.0 * RADIUS;
 	private static final Color  XOR_COLOR = Color.yellow;
-	Graphics2D g2;
+	Graphics2D g2= (Graphics2D) getGraphics();
+	Point      p  ;
 	private static Shape m_circle = null;
 
 	/**
@@ -69,6 +71,7 @@ public class CanvasPanel extends JPanel {
 		setBackground(new Color(255, 0, 0));
 		SelectedTool.setToolDefault();
 		getCP = this;
+	
 		contentPanel = new JLayeredPane() {
 
 			/**
@@ -94,6 +97,7 @@ public class CanvasPanel extends JPanel {
 		add(contentPanel);
 		contentPanel.setLayout(null);
 		contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+		 g2= (Graphics2D) contentPanel.getGraphics();
 		contentPanel.addMouseListener(new MouseListener() {
 
 			@Override
@@ -147,15 +151,53 @@ public class CanvasPanel extends JPanel {
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
 			
-	
+				event(e);
 			}
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
-				 clearCircle(g2);
+				
+				event(e);
+			
+					
 
 			}
+			
+			public void event(MouseEvent e) {
+				 g2     = (Graphics2D) contentPanel.getGraphics();
+				 
+					Point p1 = MouseInfo.getPointerInfo().getLocation();
+					Point p2 = contentPanel.getLocationOnScreen();
+				 
+				 
+				 
+				 
+				 
+			     p      = new Point(e.getX(), e.getY());
+			          
+			  //   p      = e.getPoint();
+			          
+			          
+			          
+			          
+			    Shape      circle = new Ellipse2D.Double(p.getX() - RADIUS, p.getY() - RADIUS, DIAMETER, DIAMETER);
+
+			
+
+			    g2.setXORMode(XOR_COLOR);
+			    g2.draw(circle);
+			    g2.setPaintMode();
+
+			    m_circle = circle;
+				
+				
+			}
+			
+			
+
+			
+			
 			
 			
 			
@@ -223,10 +265,47 @@ public class CanvasPanel extends JPanel {
 
 			}
 		}).start();
+		
+		
+		
+		
+		
+		new javax.swing.Timer(MOUSE_TIMER, new ActionListener() {
+			public void actionPerformed(ActionEvent tick) {
+				/*
+				 * contentPanel.revalidate(); contentPanel.repaint();
+				 */
+			if(g2!=null) {
+				
+				System.out.println("penis");
+		    Shape circle = new Ellipse2D.Double(p.getX() - RADIUS, p.getY() - RADIUS, DIAMETER, DIAMETER);
+
+		    clearCircle();
+
+		    g2.setXORMode(XOR_COLOR);
+		    g2.draw(circle);
+		    g2.setPaintMode();
+
+		    m_circle = circle;
+			}
+
+
+
+			}
+		}).start();
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 
-	private void clearCircle(Graphics2D g2)
+	private void clearCircle()
 	{
 	    if (m_circle != null)
 	    {
@@ -235,8 +314,8 @@ public class CanvasPanel extends JPanel {
 	        g2.setPaintMode();
 
 	        m_circle = null;
-	        revalidate();
-	        repaint();
+	       contentPanel. revalidate();
+	       contentPanel.  repaint();
 	    }
 	
 	

@@ -13,6 +13,7 @@ import javax.swing.text.PlainDocument;
 
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.globals.IntegerFilter;
+import com.lawranta.panels.CanvasPanel;
 
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
@@ -20,6 +21,9 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Toolkit;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
@@ -134,6 +138,18 @@ public class BrushSlider extends JDialog {
 					
 					 SelectedTool.brushWidth=Integer.parseInt(textField.getText());
 					 SelectedTool.brushWidth=Integer.parseInt(textField.getText());
+					 
+						Toolbar.circle=Toolbar.makeImage(Integer.parseInt(textField.getText()),Integer.parseInt(textField.getText()));
+						Toolbar.eraserCursor= Toolkit.getDefaultToolkit().createCustomCursor(Toolbar.circle, new Point(0,0), "eraser");
+						SelectedTool.setEraserTool();
+						System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+						CanvasPanel.contentPanel.setCursor(Toolbar.eraserCursor);
+					 
+					 
+					 
+					 
+					 
+					 
 					dispose();
 					
 				}
