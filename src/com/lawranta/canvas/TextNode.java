@@ -128,6 +128,17 @@ addKeyListener(new KeyListener() {
 			CanvasPanel.contentPanel.requestFocus();
 		
 		}
+		
+		if(e.getKeyCode()==127) {
+			CanvasPanel.contentPanel.requestFocus();
+			CanvasPanel.contentPanel.remove(thisNode);
+		
+		}
+		
+		
+		
+		
+		
 	}
 
 	@Override

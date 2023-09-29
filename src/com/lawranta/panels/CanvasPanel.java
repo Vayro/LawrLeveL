@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 
 import com.lawranta.canvas.CreateGrid;
 import com.lawranta.canvas.InkDrop;
+import com.lawranta.canvas.Paint;
 import com.lawranta.canvas.TextNode;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.frames.MainFrame;
@@ -17,18 +18,24 @@ import com.lawranta.frames.internal.Toolbar;
 import com.lawranta.globals.GLOBAL;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
@@ -44,7 +51,7 @@ public class CanvasPanel extends JPanel {
 	int py;
 	public static JLayeredPane contentPanel;
 	int mouse = 0;
-	public static ArrayList<InkDrop> canvasContainer = new ArrayList<InkDrop>();
+	public static ArrayList<Paint> canvasContainer = new ArrayList<Paint>();
 	private static final long serialVersionUID = 0L;
 	private static final int TIMER_DELAY = 35;
 	static CanvasPanel getCP;
@@ -86,6 +93,7 @@ public class CanvasPanel extends JPanel {
 		contentPanel.setPreferredSize(new Dimension(canvasWidthDefault, canvasHeightDefault));
 		add(contentPanel);
 		contentPanel.setLayout(null);
+		contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		contentPanel.addMouseListener(new MouseListener() {
 
 			@Override
@@ -138,35 +146,15 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
-				   g2     = (Graphics2D) getGraphics();
-				    Point      p      = e.getPoint();
-				    Shape      circle = new Ellipse2D.Double(p.getX() - RADIUS, p.getY() - RADIUS, DIAMETER, DIAMETER);
-
-				    clearCircle(g2);
-
-				    g2.setXORMode(XOR_COLOR);
-				    g2.draw(circle);
-				    g2.setPaintMode();
-
-				    m_circle = circle;
-				
+			
+	
 			}
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
-				   g2     = (Graphics2D) getGraphics();
-				    Point      p      = e.getPoint();
-				    Shape      circle = new Ellipse2D.Double(p.getX() - RADIUS, p.getY() - RADIUS, DIAMETER, DIAMETER);
+				 clearCircle(g2);
 
-				    clearCircle(g2);
-
-				    g2.setXORMode(XOR_COLOR);
-				    g2.draw(circle);
-				    g2.setPaintMode();
-
-				    m_circle = circle;
-				
 			}
 			
 			
@@ -206,9 +194,18 @@ public class CanvasPanel extends JPanel {
 					break;
 
 				}
+				
+	
 
 				}
 				
+				
+				
+				
+				
+				
+				
+
 				
 				
 				
@@ -269,13 +266,14 @@ public class CanvasPanel extends JPanel {
 
 			break;
 		}
-		case 3: {
-
+		case 3: { //eraser tool 
+			startErasing();
 			break;
 
 		}
 		}
 	}
+
 
 	private void newTextNode() {
 
@@ -287,7 +285,7 @@ public class CanvasPanel extends JPanel {
 		node.setVisible(true);
 		node.requestFocusInWindow();
 		contentPanel.add(node, 2, 0);
-
+		canvasContainer.add(node);
 		contentPanel.revalidate();
 		contentPanel.repaint();
 
@@ -304,7 +302,7 @@ public class CanvasPanel extends JPanel {
 
 			break;
 		}
-		case 3: {
+		case 3:   { //eraser tool 
 
 			break;
 
@@ -322,10 +320,10 @@ public class CanvasPanel extends JPanel {
 		for (int i = 0; i < canvasContainer.size(); i++) {
 
 			System.out.println("Checking: " + i);
-			if (x == canvasContainer.get(i).getX() && y == canvasContainer.get(i).getY()) {
+			if (x == ((JComponent) canvasContainer.get(i)).getX() && y == ((JComponent) canvasContainer.get(i)).getY()) {
 
 				System.out.println("collision detected");
-				contentPanel.remove(canvasContainer.get(i)); // canvasContainer.remove(i); //
+				contentPanel.remove((Component) canvasContainer.get(i)); // canvasContainer.remove(i); //
 				;
 				contentPanel.repaint()
 
@@ -343,6 +341,141 @@ public class CanvasPanel extends JPanel {
 		System.out.println("Penis");
 		contentPanel.repaint();
 	}
+	
+	
+	
+
+	private void startErasing() {
+		// TODO Auto-generated method stub
+		
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		Point p2 = contentPanel.getLocationOnScreen();
+		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY()); //x and y coordinates of top-left boundary of pointer
+		int x2 = x+SelectedTool.brushWidth, y2=y+SelectedTool.brushHeight;
+		
+		
+
+
+		for (int i = 0; i < canvasContainer.size(); i++) {
+
+			// canvasContainer.get(i).destroy(contentPanel);
+			
+			int ix=((JComponent) canvasContainer.get(i)).getX(); //x coordinate of i
+			int iy=((JComponent) canvasContainer.get(i)).getY(); //y coordinate of i
+			int iWidth = ((JComponent) canvasContainer.get(i)).getWidth(); //width of i
+			int iHeight = ((JComponent) canvasContainer.get(i)).getHeight(); //height of i
+			int ix2 = ix + iWidth; //width of i
+			int iy2 = iy + iHeight; //height of i
+			
+			
+			
+			
+			//need to check if item being erased has a coordinate that falls within the coordinate of the eraser brushSize
+
+			//(iy<y2 || iy2>y) // not overlapping Y
+			//(ix2<x || ix>x2) //
+
+			
+			
+			
+			
+			
+			
+			
+			if (checkOverlap(iy, y2, iy2, y, ix2, x, ix, x2))
+	
+			
+			{
+				((InkDrop) canvasContainer.get(i)).destroy(contentPanel);
+				System.out.println("removed " + i + " at " + x + "," + y);
+				System.out.println("canvast Container size: " + canvasContainer.size());
+				canvasContainer.remove(i); //
+				contentPanel.revalidate();
+				contentPanel.repaint();
+			}
+
+		}
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+		
+		
+		
+		
+		
+		
+	private boolean checkOverlap(int iy, int y2, int iy2, int y, int ix2, int x, int ix, int x2) {
+		// TODO Auto-generated method stub
+		
+		
+
+		if	(ix2<x || ix>x2) {
+			System.out.println("no x overlap");
+			return false;	
+			}
+		
+		
+		if  (iy>y2 || iy2<y)
+		{
+		System.out.println("no y overlap");
+		return false;	
+		}			
+	
+		return true;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 	private static void startDeleting() {
 		Point p = MouseInfo.getPointerInfo().getLocation();
@@ -357,8 +490,8 @@ public class CanvasPanel extends JPanel {
 
 			// canvasContainer.get(i).destroy(contentPanel);
 
-			if (x == canvasContainer.get(i).getX() && y == canvasContainer.get(i).getY()) {
-				canvasContainer.get(i).destroy(contentPanel);
+			if (x == ((JComponent) canvasContainer.get(i)).getX() && y == ((JComponent) canvasContainer.get(i)).getY()) {
+				((InkDrop) canvasContainer.get(i)).destroy(contentPanel);
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
 				canvasContainer.remove(i); //
@@ -369,5 +502,12 @@ public class CanvasPanel extends JPanel {
 		}
 
 	}
+	
+
+	
+	
+	
+	
+	
 
 }

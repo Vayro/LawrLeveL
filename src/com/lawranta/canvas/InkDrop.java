@@ -1,6 +1,7 @@
 package com.lawranta.canvas;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -87,8 +88,8 @@ public class InkDrop extends JPanel implements Paint {
 		
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 			System.out.println(i + " out of " + CanvasPanel.canvasContainer.size());
-			if (x == CanvasPanel.canvasContainer.get(i).getX() && y == CanvasPanel.canvasContainer.get(i).getY()) {
-				GLOBAL.CP.remove(CanvasPanel.canvasContainer.get(i));
+			if (x == ((Component) CanvasPanel.canvasContainer.get(i)).getX() && y == ((Component) CanvasPanel.canvasContainer.get(i)).getY()) {
+				GLOBAL.CP.remove((Component) CanvasPanel.canvasContainer.get(i));
 				CanvasPanel.canvasContainer.remove(i);
 				// i--;
 				GLOBAL.CP.contentPanel.repaint();
