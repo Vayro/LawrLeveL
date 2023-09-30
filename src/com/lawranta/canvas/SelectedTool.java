@@ -8,7 +8,7 @@ public class SelectedTool {
 	//should be singleton class
 	public static int selectedTool;
 	public static Color selectedColor=new Color(0,0,0);
-	public static int brushWidth=32, brushHeight=32;
+	public static int brushSize=32;
 	/*
 	 * 1: InkDrop
 	 * 2: Text

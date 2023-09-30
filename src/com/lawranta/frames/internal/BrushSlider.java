@@ -63,7 +63,7 @@ public class BrushSlider extends JDialog {
 		setType(Type.UTILITY);
 		setVisible(true);
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-	
+		setLocationRelativeTo(null);
 		
 		JPanel sliderPanel = new JPanel();
 		sliderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -136,11 +136,9 @@ public class BrushSlider extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					
-					 SelectedTool.brushWidth=Integer.parseInt(textField.getText());
-					 SelectedTool.brushWidth=Integer.parseInt(textField.getText());
+					 SelectedTool.brushSize=Integer.parseInt(textField.getText());
 					 
-						Toolbar.circle=Toolbar.makeImage(Integer.parseInt(textField.getText()),Integer.parseInt(textField.getText()));
-						Toolbar.eraserCursor= Toolkit.getDefaultToolkit().createCustomCursor(Toolbar.circle, new Point(0,0), "eraser");
+			
 						SelectedTool.setEraserTool();
 						System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 						CanvasPanel.contentPanel.setCursor(Toolbar.eraserCursor);

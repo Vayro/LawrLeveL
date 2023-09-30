@@ -74,7 +74,7 @@ public class InkDrop extends JPanel implements Paint {
 		int gridSnapx = (int) (x % xSize);
 		int gridSnapy = (int) (y % ySize);
 
-		this.x = x - gridSnapx;
+		this.x = x - gridSnapx-(xSize-GLOBAL.OFFSETX);
 		this.y = y - gridSnapy;
 
 		setBounds(this.x, this.y, this.xSize, this.ySize);

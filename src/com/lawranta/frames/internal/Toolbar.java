@@ -153,7 +153,7 @@ public class Toolbar extends JInternalFrame {
 					break;
 				
 				case "Eraser":
-					circle=makeImage(SelectedTool.brushWidth,SelectedTool.brushHeight);
+					circle=makeImage(32,32);
 					eraserCursor= Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0,0), "eraser");
 					SelectedTool.setEraserTool();
 					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
@@ -162,7 +162,12 @@ public class Toolbar extends JInternalFrame {
 			
 	
 					break;
-				
+				case "Grid":
+					j=new GridSlider();
+					
+					
+					
+					break;
 				default:
 				break;
 				
@@ -186,6 +191,51 @@ public class Toolbar extends JInternalFrame {
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		toolButton brushToolButton = new toolButton("Brush", panel);
+		addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getButton());
+				
+				if(e.getButton()==3) {
+
+					j=new BrushSlider();
+					
+					
+				}
+				
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+			
+		});
+		
 	
 	
 
@@ -195,7 +245,7 @@ public class Toolbar extends JInternalFrame {
 
 		toolButton canvasSizeButton = new toolButton("Canvas", panel);
 	
-
+		toolButton gridSizeButton = new toolButton("Grid", panel);
 		
 
 		toolButton eraserButton = new toolButton("Eraser", panel);
@@ -283,9 +333,9 @@ public class Toolbar extends JInternalFrame {
 		     graphics.setBackground(new Color(0, true));
 		     graphics.clearRect(0, 0, width, height);
 		     graphics.setPaint(new Color(255,255,255));
-		     graphics.drawOval(0, 0, width-1, height-1);
+		     graphics.drawOval(1, 1, width-2, height-2);
 		     graphics.setPaint(new Color(0,0,0));
-		     graphics.drawOval(1, 1, width-3, height-3);
+		     graphics.drawOval(2, 2, width-4, height-4);
 		     
 		     
 		     
