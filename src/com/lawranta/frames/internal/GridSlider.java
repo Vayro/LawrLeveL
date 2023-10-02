@@ -34,6 +34,8 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
+import javax.swing.JToggleButton;
+import javax.swing.JCheckBox;
 
 public class GridSlider extends JDialog {
 	private JTextField textField;
@@ -170,6 +172,30 @@ public class GridSlider extends JDialog {
 			}
 
 		});
+		
+		
+		
+		JPanel checkBoxPane = new JPanel();
+		getContentPane().add(checkBoxPane);
+		
+		JCheckBox hideGridCheckBox = new JCheckBox("Hide Grid");
+		checkBoxPane.add(hideGridCheckBox);
+		hideGridCheckBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				CanvasPanel.hideGrid=!CanvasPanel.hideGrid;
+				CanvasPanel.revalidateAndRepaint();
+			}
+
+	
+		}
+		);
+		
+		
+		
+		
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -229,6 +255,8 @@ public class GridSlider extends JDialog {
 			});
 			buttonPanel.add(cancelButton);
 		}
+		
+		
 
 		revalidate();
 		repaint();

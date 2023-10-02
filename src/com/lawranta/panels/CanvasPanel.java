@@ -48,11 +48,12 @@ public class CanvasPanel extends JPanel {
 	static int canvasHeightDefault = 768;
 	static int canvasWidth = canvasWidthDefault;
 	static int canvasHeight = canvasHeightDefault;
-
+	public static boolean hideGrid = false;
 	int px;
 	int py;
-	CreateGrid cg ;
+	static CreateGrid cg;
 	public static JLayeredPane contentPanel;
+	public static JPanel gridPane;
 	int mouse = 0;
 	public static ArrayList<Paint> canvasContainer = new ArrayList<Paint>();
 	private static final long serialVersionUID = 0L;
@@ -71,33 +72,23 @@ public class CanvasPanel extends JPanel {
 	 */
 
 	public CanvasPanel() {
-		setBackground(new Color(255, 0, 0));
+		setBackground(new Color(23, 2, 64));
 		SelectedTool.setToolDefault();
 		getCP = this;
 
-		contentPanel = new JLayeredPane() {
+		contentPanel = new JLayeredPane();
 
-			/**
-						 * 
-						 */
-			private static final long serialVersionUID = -2898210498458640693L;
-
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-
-				 cg = new CreateGrid(g, GLOBAL.GRIDWIDTH, GLOBAL.GRIDHEIGHT, GLOBAL.CANVAS_WIDTH,
-						GLOBAL.CANVAS_HEIGHT);
-
-			}
-
-		};
 		contentPanel.setBackground(new Color(255, 255, 255));
 		contentPanel.setOpaque(true);
 		contentPanel.setSize(new Dimension(canvasWidthDefault, canvasHeightDefault));
 		contentPanel.setMinimumSize(new Dimension(canvasWidthDefault, canvasHeightDefault));
 		contentPanel.setPreferredSize(new Dimension(canvasWidthDefault, canvasHeightDefault));
+		gridPane = new GridPanel();
+
 		add(contentPanel);
+
+		contentPanel.add(gridPane, 3, 0);
+
 		contentPanel.setLayout(null);
 		contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		g2 = (Graphics2D) contentPanel.getGraphics();
@@ -221,8 +212,7 @@ public class CanvasPanel extends JPanel {
 			g2.setPaintMode();
 
 			m_circle = null;
-			contentPanel.revalidate();
-			contentPanel.repaint();
+			revalidateAndRepaint();
 		}
 
 	}
@@ -235,8 +225,15 @@ public class CanvasPanel extends JPanel {
 		getCP.setSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
 		System.out.println("setting canvas size");
 		MainFrame.scrollPane.setViewportView(getCP);
-		getCP.revalidate();
-		getCP.repaint();
+		rebuildGrid();
+
+		revalidateAndRepaint();
+
+	}
+
+	public static void rebuildGrid() {
+		gridPane = new GridPanel();
+		contentPanel.add(gridPane, 3, 0);
 
 	}
 
@@ -270,8 +267,8 @@ public class CanvasPanel extends JPanel {
 		node.requestFocusInWindow();
 		contentPanel.add(node, 2, 0);
 		canvasContainer.add(node);
-		contentPanel.revalidate();
-		contentPanel.repaint();
+		// gridPane=new GridPanel();
+		revalidateAndRepaint();
 
 	}
 
@@ -309,22 +306,81 @@ public class CanvasPanel extends JPanel {
 
 				System.out.println("collision detected");
 				contentPanel.remove((Component) canvasContainer.get(i)); // canvasContainer.remove(i); //
-				;
-				contentPanel.repaint()
+				
+				revalidateAndRepaint();
 
 				;
 			}
 
 		}
 
-		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH);
+		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY);
 
 		canvasContainer.add(kkk);
 		// kkk.paintComponents(kkk.getGraphics());
 		kkk.setVisible(true);
 		contentPanel.add(kkk, 1, 0);
 		System.out.println("Penis");
-		contentPanel.repaint();
+		revalidateAndRepaint();
+	}
+
+	public static void ReloadFromCanvasContainer(ArrayList<Paint> loadedTanFile) {
+
+		if (canvasContainer.size() > 1) {
+			canvasContainer.clear();
+		}
+
+		for (int i = 0; i < loadedTanFile.size(); i++) {
+
+			
+			
+			
+			int x = ((InkDrop) loadedTanFile.get(i)).getX();
+			int y = ((InkDrop) loadedTanFile.get(i)).getY();
+			int ySize = ((InkDrop) loadedTanFile.get(i)).getySize();
+			int xSize = ((InkDrop) loadedTanFile.get(i)).getxSize();
+			int offsetX = ((InkDrop) loadedTanFile.get(i)).getOffsetX();
+			int offsetY = ((InkDrop) loadedTanFile.get(i)).getOffsetY();
+			
+			
+			
+			
+			for (int c = 0; c < canvasContainer.size(); c++) {
+
+				System.out.println("Checking: " + c);
+				if (x == ((JComponent) canvasContainer.get(c)).getX()
+						&& y == ((JComponent) canvasContainer.get(c)).getY()) {
+
+					System.out.println("collision detected");
+					contentPanel.remove((Component) canvasContainer.get(c)); 
+					
+					revalidateAndRepaint();
+
+					;
+				}
+
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+
+			InkDrop kkk =
+
+					new InkDrop(x, y, ySize, xSize, offsetX, offsetY);
+
+			canvasContainer.add(kkk);
+			kkk.setVisible(true);
+			contentPanel.add(kkk, 1, 0);
+
+			revalidateAndRepaint();
+
+		}
+
 	}
 
 	private void startErasing() {
@@ -332,8 +388,9 @@ public class CanvasPanel extends JPanel {
 
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Point p2 = contentPanel.getLocationOnScreen();
-		int x = (int) ( (p.getX() - p2.getX())-((DIAMETER / 2)) + 16), y = (int) ( (p.getY() - p2.getY())-((DIAMETER / 2)) + 16); // x and y coordinates of top-left
-																				// boundary of pointer
+		int x = (int) ((p.getX() - p2.getX()) - ((DIAMETER / 2)) + 16),
+				y = (int) ((p.getY() - p2.getY()) - ((DIAMETER / 2)) + 16); // x and y coordinates of top-left
+		// boundary of pointer
 		int x2 = x + SelectedTool.brushSize, y2 = y + SelectedTool.brushSize;
 
 		for (int i = 0; i < canvasContainer.size(); i++) {
@@ -360,8 +417,7 @@ public class CanvasPanel extends JPanel {
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
 				canvasContainer.remove(i); //
-				contentPanel.revalidate();
-				contentPanel.repaint();
+				revalidateAndRepaint();
 			}
 
 		}
@@ -380,7 +436,6 @@ public class CanvasPanel extends JPanel {
 		// p = e.getPoint();
 
 		Shape circle = new Rectangle2D.Double(p.getX(), p.getY(), DIAMETER, DIAMETER);
-	
 
 		g2.setXORMode(XOR_COLOR);
 		g2.draw(circle);
@@ -425,11 +480,18 @@ public class CanvasPanel extends JPanel {
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
 				canvasContainer.remove(i); //
-				contentPanel.revalidate();
-				contentPanel.repaint();
+				revalidateAndRepaint();
 			}
 
 		}
+
+	}
+
+	public static void revalidateAndRepaint() {
+		gridPane.revalidate();
+		gridPane.repaint();
+		contentPanel.revalidate();
+		contentPanel.repaint();
 
 	}
 
