@@ -81,6 +81,8 @@ public class GridSlider extends JDialog {
 		setLocationRelativeTo(null);
 
 		JPanel sliderPanel = new JPanel();
+		JSlider yOffset = new offsetSlider();
+		JSlider xOffset = new offsetSlider();
 		sliderPanel.setBorder(new TitledBorder(null, "grid size", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		sliderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 		getContentPane().add(sliderPanel);
@@ -114,7 +116,8 @@ public class GridSlider extends JDialog {
 				SelectedTool.brushSize = Integer.parseInt(textField.getText());
 				CanvasPanel.contentPanel.revalidate();
 				CanvasPanel.contentPanel.repaint();
-
+				yOffset.setMaximum(GLOBAL.GRIDHEIGHT);
+				xOffset.setMaximum(GLOBAL.GRIDWIDTH);
 			}
 
 		});
@@ -141,9 +144,9 @@ public class GridSlider extends JDialog {
 		getContentPane().add(offsetSliders);
 		offsetSliders.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JSlider xOffset = new offsetSlider();
 		xOffset.setBorder(new TitledBorder(null, "x-offset", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		xOffset.setValue(GLOBAL.OFFSETX);
+		offsetSliders.add(xOffset);
 		xOffset.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -157,9 +160,9 @@ public class GridSlider extends JDialog {
 
 		});
 
-		JSlider yOffset = new offsetSlider();
 		yOffset.setBorder(new TitledBorder(null, "y-offset", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		yOffset.setValue(GLOBAL.OFFSETY);
+		offsetSliders.add(yOffset);
 		yOffset.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -169,33 +172,30 @@ public class GridSlider extends JDialog {
 				GLOBAL.OFFSETY = yOffset.getValue();
 				CanvasPanel.contentPanel.revalidate();
 				CanvasPanel.contentPanel.repaint();
+
 			}
 
 		});
-		
-		
-		
+
 		JPanel checkBoxPane = new JPanel();
 		getContentPane().add(checkBoxPane);
-		
+
 		JCheckBox hideGridCheckBox = new JCheckBox("Hide Grid");
+
 		checkBoxPane.add(hideGridCheckBox);
+		if (CanvasPanel.hideGrid) {
+			hideGridCheckBox.setSelected(true);
+		}
 		hideGridCheckBox.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				CanvasPanel.hideGrid=!CanvasPanel.hideGrid;
+				CanvasPanel.hideGrid = !CanvasPanel.hideGrid;
 				CanvasPanel.revalidateAndRepaint();
 			}
 
-	
-		}
-		);
-		
-		
-		
-		
+		});
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -247,6 +247,8 @@ public class GridSlider extends JDialog {
 					GLOBAL.OFFSETX = defaultOffsetX;
 					GLOBAL.OFFSETY = defaultOffsetY;
 					GLOBAL.GRIDHEIGHT = defaultGridSize;
+					GLOBAL.GRIDWIDTH = defaultGridSize;
+					GLOBAL.GRIDHEIGHT = defaultGridSize;
 					CanvasPanel.contentPanel.revalidate();
 					CanvasPanel.contentPanel.repaint();
 					dispose();
@@ -255,8 +257,6 @@ public class GridSlider extends JDialog {
 			});
 			buttonPanel.add(cancelButton);
 		}
-		
-		
 
 		revalidate();
 		repaint();
@@ -276,9 +276,8 @@ public class GridSlider extends JDialog {
 			setPaintLabels(true);
 			setMinorTickSpacing(1);
 			setMinimum(0);
-			setMaximum(32);
-			setMajorTickSpacing(4);
-			GridSlider.offsetSliders.add(this);
+			setMaximum(GLOBAL.GRIDHEIGHT);
+			setMajorTickSpacing(16);
 
 		}
 

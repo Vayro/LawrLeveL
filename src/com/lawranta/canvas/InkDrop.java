@@ -3,6 +3,8 @@ package com.lawranta.canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -143,7 +145,26 @@ public class InkDrop extends JPanel implements Paint {
 
 		}
 
-		// paintComponent(getGraphics());
+		MouseMotionListener listener = new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("dragged");
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("moved");
+			}
+			
+			
+			
+			
+		};
+		
+		addMouseMotionListener(listener);
 	}
 
 	public void destroy(JLayeredPane contentPanel) {
