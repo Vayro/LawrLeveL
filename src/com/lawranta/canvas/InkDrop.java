@@ -15,7 +15,21 @@ import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class InkDrop extends JPanel implements Paint {
-	int x, y, xSize, ySize, offsetX, offsetY;
+	int id, x, y, xSize, ySize, offsetX, offsetY;
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getOffsetX() {
 		return offsetX;
 	}

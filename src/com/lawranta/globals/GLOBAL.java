@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 
+import com.lawranta.edit.Debug;
 import com.lawranta.file.ExportPathDialog;
 import com.lawranta.file.FileInfo;
 import com.lawranta.file.FilePathDialog;
@@ -18,6 +19,7 @@ public class GLOBAL {
 	public static final String EXTENSION=".tan";
 	public static FilePathDialog filePathDialog;
 	public static ExportPathDialog exportPathDialog;
+	public static Debug DEBUGFRAME;
 	public static FileInfo fileInfo;
 	public static JFrame MAINFRAME;
 	public static double zoomFactor=01;

@@ -49,6 +49,7 @@ public class CanvasPanel extends JPanel {
 	public static int canvasWidth = canvasWidthDefault;
 	public static int canvasHeight = canvasHeightDefault;
 	public static boolean hideGrid = false;
+	double mouse_x, mouse_y;
 	int px;
 	int py;
 	static CreateGrid cg;
@@ -175,6 +176,13 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
+				
+			mousePosUpdate();
+				
+				
+				
+				
+				
 				if (SelectedTool.selectedTool == 3) {
 					event();
 
@@ -227,6 +235,23 @@ public class CanvasPanel extends JPanel {
 		}).start();
 
 	}
+
+	protected void mousePosUpdate() {
+		// TODO Auto-generated method stub
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		Point p2 = contentPanel.getLocationOnScreen();
+		mouse_x=(p.getX() - p2.getX());
+;
+		mouse_y= (int) (p.getY() - p2.getY());
+		GLOBAL.MAINFRAME.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + "," + mouse_y);
+	}
+
+
+
+
+
+
+
 
 	private void clearCircle() {
 		if (m_circle != null) {
@@ -339,7 +364,9 @@ public class CanvasPanel extends JPanel {
 		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY);
 
 		canvasContainer.add(kkk);
+		kkk.setId(canvasContainer.size()-1);
 		// kkk.paintComponents(kkk.getGraphics());
+
 		kkk.setVisible(true);
 		contentPanel.add(kkk, 1, 0);
 		System.out.println("Penis");
@@ -361,7 +388,7 @@ public class CanvasPanel extends JPanel {
 		GLOBAL.OFFSETX=GLOBAL.fileInfo.getOffsetY();
 		setCanvasSize();
 		rebuildGrid();
-		
+		GLOBAL.DEBUGFRAME.refresh();
 		
 		
 		
@@ -541,7 +568,7 @@ public class CanvasPanel extends JPanel {
 		gridPane.repaint();
 		contentPanel.revalidate();
 		contentPanel.repaint();
-
+		GLOBAL.DEBUGFRAME.refresh();
 	}
 
 }

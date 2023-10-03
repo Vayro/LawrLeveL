@@ -17,7 +17,44 @@ public class TextNode extends JTextField implements Paint {
 	 * 
 	 */
 	private static final long serialVersionUID = -4669795077837742209L;
-	int x, y, xSize, ySize; boolean removed=false;
+	int id, x, y, xSize, ySize; /**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the removed
+	 */
+	public boolean isRemoved() {
+		return removed;
+	}
+
+
+	/**
+	 * @param removed the removed to set
+	 */
+	public void setRemoved(boolean removed) {
+		this.removed = removed;
+	}
+
+
+
+
+
+
+
+	boolean removed=false;
 
 
 	
