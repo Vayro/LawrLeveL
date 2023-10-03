@@ -2,6 +2,8 @@ package com.lawranta.frames;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import com.lawranta.frames.internal.Menu;
 import com.lawranta.frames.internal.Toolbar;
@@ -20,6 +22,7 @@ import java.awt.Insets;
 import javax.swing.BoxLayout;
 import java.awt.Rectangle;
 import java.awt.Component;
+import java.awt.Color;
 
 public class MainFrame extends JFrame {
 
@@ -48,6 +51,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")");
 		
 		GLOBAL.CP = new CanvasPanel();
 		setMinimumSize(new Dimension(320, 240));
@@ -56,6 +60,7 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(null);
 		//setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(69, 69, 69));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
@@ -80,8 +85,8 @@ public class MainFrame extends JFrame {
 		toolbar = new Toolbar();
 		toolbar.setMaximumSize(new Dimension(64, 2147483647));
 		toolbar.setMinimumSize(new Dimension(64, 34));
-		toolbar.setNormalBounds(new Rectangle(100, 100, 64, 300));
-		toolbar.setResizable(true);
+		//toolbar.setNormalBounds(new Rectangle(100, 100, 64, 300));
+		//toolbar.setResizable(true);
 		toolbar.setSize(new Dimension(64, 300));
 		toolbar.setVisible(true);
 		GridBagConstraints gbc_toolbar = new GridBagConstraints();
@@ -91,7 +96,16 @@ public class MainFrame extends JFrame {
 		gbc_toolbar.gridx = 0;
 		gbc_toolbar.gridy = 1;
 		contentPane.add(toolbar, gbc_toolbar);
-		scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane() {
+
+			
+		};
+		
+		
+		
+		
+		
+		
 		scrollPane.setPreferredSize(new Dimension(648, 480));
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

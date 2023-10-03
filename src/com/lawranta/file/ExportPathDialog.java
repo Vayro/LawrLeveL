@@ -7,7 +7,7 @@ import javax.swing.filechooser.FileFilter;
 
 import com.lawranta.globals.GLOBAL;
 
-public class FilePathDialog extends JFileChooser {
+public class ExportPathDialog extends JFileChooser {
 
 	/**
 	 * 
@@ -22,14 +22,14 @@ public class FilePathDialog extends JFileChooser {
 	/**
 	 * Create the dialog.
 	 */
-	public FilePathDialog() {
+	public ExportPathDialog() {
 		setBounds(100, 100, 450, 300);
 		setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		setFileFilter(new FileFilter() {
 
 			public java.lang.String getDescription() {
-				return "Triple Authenticated Numeral File, (*.tan)";
+				return "Portable Network Graphic, (*.png)";
 			}
 
 			@Override
@@ -37,7 +37,7 @@ public class FilePathDialog extends JFileChooser {
 				if (f.isDirectory()) {
 					return true;
 				} else {
-					return f.getName().toLowerCase().endsWith(GLOBAL.EXTENSION);
+					return f.getName().toLowerCase().endsWith(".png");
 				}
 
 			}

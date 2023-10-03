@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JInternalFrame;
 import java.awt.Color;
@@ -40,8 +41,9 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
+import javax.swing.JFrame;
 
-public class Toolbar extends JInternalFrame {
+public class Toolbar extends JPanel {
 
 	public static ActionListener actionListener;
 	public static JDialog j;
@@ -68,9 +70,28 @@ public class Toolbar extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public Toolbar() {
+		
+		/*
+		setFrameIcon(null);
+		setResizable(true);
+		try {
+			setMaximum(true);
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setBorder(null);
+		try {
+			setIcon(true);
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setIconifiable(true);
 		setMaximizable(true);
-		setBackground(new Color(0, 0, 0));
+		*/
+		setBackground(new Color(69, 69, 69));
 		addMouseListener(new MouseListener() {
 
 			@Override
@@ -168,6 +189,22 @@ public class Toolbar extends JInternalFrame {
 					
 					
 					break;
+				case "ZoomIn":
+					GLOBAL.zoomFactor+=1;
+					System.out.println("Zoom: " + GLOBAL.zoomFactor);
+
+					CanvasPanel.revalidateAndRepaint();
+					
+					
+					break;
+				case "ZoomOut":
+					GLOBAL.zoomFactor-=1;
+					System.out.println("Zoom: " + GLOBAL.zoomFactor);
+
+					CanvasPanel.revalidateAndRepaint();
+					
+					
+					break;
 				default:
 				break;
 				
@@ -188,7 +225,7 @@ public class Toolbar extends JInternalFrame {
 		
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.NORTH);
+		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		toolButton brushToolButton = new toolButton("Brush", panel);
 		addMouseListener(new MouseListener() {
@@ -265,6 +302,10 @@ public class Toolbar extends JInternalFrame {
 				
 				
 			}
+			
+			
+			
+	
 
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -292,9 +333,14 @@ public class Toolbar extends JInternalFrame {
 			
 			
 			
+			
+			
+			
+			
 		});
 		
-
+		toolButton zoomInButton = new toolButton("ZoomIn", panel);
+		toolButton zoomOutButton = new toolButton("ZoomOut", panel);
 		colorButton = new toolButton("Color", panel);
 		toolButton.colorBorder(colorButton);
 		

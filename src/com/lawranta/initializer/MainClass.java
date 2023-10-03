@@ -1,28 +1,48 @@
 package com.lawranta.initializer;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.lawranta.file.FilePathDialog;
+import com.lawranta.file.*;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
 
 public class MainClass {
-	public static final JFrame MAINFRAME = new MainFrame();
 
 	public MainClass() {
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub	
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
 		// TODO Auto-generated method stub
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());	
+        UIManager.put("Menu.foreground", GLOBAL.lightColor);
+        UIManager.put("MenuItem.background", GLOBAL.darkColor);
+        UIManager.put("MenuItem.foreground", GLOBAL.lightColor);
+        UIManager.put("MenuItem.opaque", true);
+		
+		
+	
+		
+		
+		
+		
+		
 		System.out.println("initializing..");
-		UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 
-		GLOBAL.path = new FilePathDialog();
-		MAINFRAME.setVisible(true)
+		GLOBAL.fileInfo = new FileInfo();
+
+		GLOBAL.MAINFRAME = new MainFrame();
+
+		
+
+		GLOBAL.filePathDialog = new FilePathDialog();
+		GLOBAL.exportPathDialog = new ExportPathDialog();
+		GLOBAL.MAINFRAME.setVisible(true)
 
 		;
 

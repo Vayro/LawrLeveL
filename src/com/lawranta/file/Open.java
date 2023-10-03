@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
@@ -19,19 +20,20 @@ public class Open {
 
 	public static void open() {
 
-		int option = GLOBAL.path.showOpenDialog(GLOBAL.CP);
+		int option = GLOBAL.filePathDialog.showOpenDialog(GLOBAL.CP);
 		if (option == JFileChooser.APPROVE_OPTION) {
-			File f = GLOBAL.path.getSelectedFile();
+			File f = GLOBAL.filePathDialog.getSelectedFile();
 			System.out.println("File Selected: " + f.getAbsolutePath());
 
-			ArrayList<Paint> loadedTanFile;
+			List<Object> fileContainer;
 			FileInputStream fis;
 			try {
 				fis = new FileInputStream(f);
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				{
-					loadedTanFile = (ArrayList<Paint>) ois.readObject();
-					CanvasPanel.ReloadFromCanvasContainer(loadedTanFile);
+					fileContainer = (ArrayList<Object>) (ois.readObject());
+					GLOBAL.fileInfo=(FileInfo) fileContainer.get(0);
+					CanvasPanel.ReloadFromCanvasContainer((ArrayList<Paint>) fileContainer.get(1));
 				}
 
 			} catch (IOException | ClassNotFoundException e) {
@@ -46,6 +48,7 @@ public class Open {
 		}
 
 //write to CSV
+		GLOBAL.updateTitle() ;
 
 	}
 	

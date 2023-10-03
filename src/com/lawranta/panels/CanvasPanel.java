@@ -44,10 +44,10 @@ import javax.swing.Timer;
 
 public class CanvasPanel extends JPanel {
 
-	static int canvasWidthDefault = 1024;
-	static int canvasHeightDefault = 768;
-	static int canvasWidth = canvasWidthDefault;
-	static int canvasHeight = canvasHeightDefault;
+	public static int canvasWidthDefault = 1024;
+	public static int canvasHeightDefault = 768;
+	public static int canvasWidth = canvasWidthDefault;
+	public static int canvasHeight = canvasHeightDefault;
 	public static boolean hideGrid = false;
 	int px;
 	int py;
@@ -66,10 +66,33 @@ public class CanvasPanel extends JPanel {
 	Point p;
 	MouseEvent e;
 	private static Shape m_circle = null;
+	
+	
+	
+	@Override
+	public void paintComponent(Graphics g)
+	{
+		 Graphics2D g2 = (Graphics2D) g.create(); 
+	    g2.scale(GLOBAL.zoomFactor, GLOBAL.zoomFactor);
+	    // Change the size of the panel
+	    //setSize(GLOBAL.origWidth * GLOBAL.zoomFactor, GLOBAL.origHeight * GLOBAL.zoomFactor);
+	    // Re-Layout the panel
+	    validate();
+	    super.paintComponent(g);
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Create the panel.
 	 */
+	
+	
 
 	public CanvasPanel() {
 		setBackground(new Color(23, 2, 64));
@@ -267,7 +290,6 @@ public class CanvasPanel extends JPanel {
 		node.requestFocusInWindow();
 		contentPanel.add(node, 2, 0);
 		canvasContainer.add(node);
-		// gridPane=new GridPanel();
 		revalidateAndRepaint();
 
 	}
@@ -306,7 +328,7 @@ public class CanvasPanel extends JPanel {
 
 				System.out.println("collision detected");
 				contentPanel.remove((Component) canvasContainer.get(i)); // canvasContainer.remove(i); //
-				
+
 				revalidateAndRepaint();
 
 				;
@@ -330,52 +352,79 @@ public class CanvasPanel extends JPanel {
 			canvasContainer.clear();
 		}
 
+		
+		
+		//set info from loaded FileInfo object
+		GLOBAL.CANVAS_HEIGHT=(int) GLOBAL.fileInfo.getCanvasSize().getHeight();
+		GLOBAL.CANVAS_WIDTH=(int) GLOBAL.fileInfo.getCanvasSize().getWidth();
+		GLOBAL.OFFSETX=GLOBAL.fileInfo.getOffsetX();
+		GLOBAL.OFFSETX=GLOBAL.fileInfo.getOffsetY();
+		setCanvasSize();
+		rebuildGrid();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		for (int i = 0; i < loadedTanFile.size(); i++) {
 
-			
-			
-			
-			int x = ((InkDrop) loadedTanFile.get(i)).getX();
-			int y = ((InkDrop) loadedTanFile.get(i)).getY();
-			int ySize = ((InkDrop) loadedTanFile.get(i)).getySize();
-			int xSize = ((InkDrop) loadedTanFile.get(i)).getxSize();
-			int offsetX = ((InkDrop) loadedTanFile.get(i)).getOffsetX();
-			int offsetY = ((InkDrop) loadedTanFile.get(i)).getOffsetY();
-			
-			
-			
-			
-			for (int c = 0; c < canvasContainer.size(); c++) {
+			if (loadedTanFile.get(i).getClass() == InkDrop.class) {// check if loaded element is an inkdrop
 
-				System.out.println("Checking: " + c);
-				if (x == ((JComponent) canvasContainer.get(c)).getX()
-						&& y == ((JComponent) canvasContainer.get(c)).getY()) {
+				int x = ((InkDrop) loadedTanFile.get(i)).getX();
+				int y = ((InkDrop) loadedTanFile.get(i)).getY();
+				int ySize = ((InkDrop) loadedTanFile.get(i)).getySize();
+				int xSize = ((InkDrop) loadedTanFile.get(i)).getxSize();
+				int offsetX = ((InkDrop) loadedTanFile.get(i)).getOffsetX();
+				int offsetY = ((InkDrop) loadedTanFile.get(i)).getOffsetY();
 
-					System.out.println("collision detected");
-					contentPanel.remove((Component) canvasContainer.get(c)); 
-					
-					revalidateAndRepaint();
+				for (int c = 0; c < canvasContainer.size(); c++) {
 
-					;
+					System.out.println("Checking: " + c);
+					if (x == ((JComponent) canvasContainer.get(c)).getX()
+							&& y == ((JComponent) canvasContainer.get(c)).getY()) {
+
+						System.out.println("collision detected");
+						contentPanel.remove((Component) canvasContainer.get(c));
+
+						revalidateAndRepaint();
+
+						;
+					}
+
 				}
 
+				InkDrop kkk =
+
+						new InkDrop(x, y, ySize, xSize, offsetX, offsetY);
+
+				canvasContainer.add(kkk);
+				kkk.setVisible(true);
+				contentPanel.add(kkk, 1, 0);
+
+			}else if( loadedTanFile.get(i).getClass()==TextNode.class) {
+				//check if it is a TextNode
+				int x = ((TextNode)loadedTanFile.get(i)).getX();
+				int y = ((TextNode)loadedTanFile.get(i)).getY();
+				String text= ((TextNode)loadedTanFile.get(i)).getText();
+				TextNode node = new TextNode(x, y);
+				node.setText(text);
+				node.setVisible(true);
+				node.requestFocusInWindow();
+				contentPanel.add(node, 2, 0);
+				canvasContainer.add(node);
+				
+				
+				
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-
-			InkDrop kkk =
-
-					new InkDrop(x, y, ySize, xSize, offsetX, offsetY);
-
-			canvasContainer.add(kkk);
-			kkk.setVisible(true);
-			contentPanel.add(kkk, 1, 0);
 
 			revalidateAndRepaint();
 
