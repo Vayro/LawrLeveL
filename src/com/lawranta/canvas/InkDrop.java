@@ -173,6 +173,16 @@ public class InkDrop extends JPanel implements Paint {
 				{
 				startDeleting();
 			}
+				
+				if(e.getButton()==1) {  
+					if(SelectedTool.selectedTool==3) {
+						CanvasPanel.startErasing();
+						
+						
+					}
+					
+					
+				}
 
 			}
 
@@ -206,6 +216,20 @@ public class InkDrop extends JPanel implements Paint {
 				startDeleting();
 				
 			}
+				if(e.getButton()==1) {
+					if(SelectedTool.selectedTool==3) {
+						CanvasPanel.mouse=1;
+						CanvasPanel.startErasing();
+						
+						
+					}
+					
+					
+				}
+				
+				
+				
+				
 			}
 
 			@Override
@@ -248,8 +272,23 @@ public class InkDrop extends JPanel implements Paint {
 		
 		if(removeFromContainer) {
 			CanvasPanel.canvasContainer.remove(this.id); 
+			for(int i=0;i< CanvasPanel.canvasContainer.size(); i++) {
+				
+				CanvasPanel.canvasContainer.get(i).setId(i);
+			}
 		}
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	private void startDeleting() {

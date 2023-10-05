@@ -9,6 +9,7 @@ import com.lawranta.edit.Debug;
 import com.lawranta.file.ExportPathDialog;
 import com.lawranta.file.FileInfo;
 import com.lawranta.file.FilePathDialog;
+import com.lawranta.frames.internal.ColorChooser;
 import com.lawranta.panels.CanvasPanel;
 
 public class GLOBAL {
@@ -27,6 +28,7 @@ public class GLOBAL {
 	public static int origHeight=480;
 	public static Color darkColor=new Color(69,69,69);
 	public static Color lightColor=new Color(200,200,200);
+	public static ColorChooser CC = new ColorChooser();
 	
 	public static void setDefault(){
 		GRIDHEIGHT=32;

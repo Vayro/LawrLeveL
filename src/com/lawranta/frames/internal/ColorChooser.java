@@ -38,7 +38,7 @@ public class ColorChooser extends JDialog {
 			ColorChooser dialog = new ColorChooser();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,59 +49,47 @@ public class ColorChooser extends JDialog {
 	 */
 	public ColorChooser() {
 		getContentPane().setBackground(new Color(255, 255, 255));
-		((JComponent) getContentPane()).setBorder(new TitledBorder(null, "Pick Color", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		
+		((JComponent) getContentPane())
+				.setBorder(new TitledBorder(null, "Pick Color", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
 		setUndecorated(true);
 		setAlwaysOnTop(true);
-		setLocation((int) MouseInfo.getPointerInfo().getLocation().getX(),(int) MouseInfo.getPointerInfo().getLocation().getY());
-		setVisible(true);
+
 		setMinimumSize(new Dimension(700, 420));
 		setPreferredSize(new Dimension(700, 420));
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().setMinimumSize(new Dimension(520, 420));
 		contentPanel.setBackground(new Color(42, 42, 42));
 		contentPanel.setLayout(new FlowLayout());
-		
-getContentPane().add(contentPanel);
+
+		getContentPane().add(contentPanel);
 		setModal(true);
 
 		JColorChooser j = new JColorChooser();
 		j.setBackground(new Color(78, 78, 78));
 		contentPanel.add(j);
 
-		
-		
-		
 		actionListener = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				switch (e.getActionCommand()){
+				switch (e.getActionCommand()) {
 				case "OK":
-					SelectedTool.selectedColor=j.getColor();
+					SelectedTool.selectedColor = j.getColor();
 					toolButton.colorBorder(Toolbar.colorButton);
 					dispose();
-	
+
 					break;
-					
+
 				case "Cancel":
 					dispose();
 					break;
 				}
-				
-				
-				
 
 			}
 		};
-		
-		
-		
-		
-		
-		
-		
+
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
@@ -120,8 +108,6 @@ getContentPane().add(contentPanel);
 				cancelButton.addActionListener(actionListener);
 				buttonPane.add(cancelButton);
 			}
-
-
 
 		}
 	}

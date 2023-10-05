@@ -55,7 +55,7 @@ public class CanvasPanel extends JPanel {
 	static CreateGrid cg;
 	public static JLayeredPane contentPanel;
 	public static JPanel gridPane;
-	int mouse = 0;
+	public static int mouse = 0;
 	public static ArrayList<Paint> canvasContainer = new ArrayList<Paint>();
 	private static final long serialVersionUID = 0L;
 	private static final int TIMER_DELAY = 35;
@@ -67,33 +67,22 @@ public class CanvasPanel extends JPanel {
 	Point p;
 	MouseEvent e;
 	private static Shape m_circle = null;
-	
-	
-	
+
 	@Override
-	public void paintComponent(Graphics g)
-	{
-		 Graphics2D g2 = (Graphics2D) g.create(); 
-	    g2.scale(GLOBAL.zoomFactor, GLOBAL.zoomFactor);
-	    // Change the size of the panel
-	    //setSize(GLOBAL.origWidth * GLOBAL.zoomFactor, GLOBAL.origHeight * GLOBAL.zoomFactor);
-	    // Re-Layout the panel
-	    validate();
-	    super.paintComponent(g2);
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g.create();
+		g2.scale(GLOBAL.zoomFactor, GLOBAL.zoomFactor);
+		// Change the size of the panel
+		// setSize(GLOBAL.origWidth * GLOBAL.zoomFactor, GLOBAL.origHeight *
+		// GLOBAL.zoomFactor);
+		// Re-Layout the panel
+		validate();
+		super.paintComponent(g2);
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * Create the panel.
 	 */
-	
-	
 
 	public CanvasPanel() {
 		setBackground(new Color(23, 2, 64));
@@ -157,6 +146,8 @@ public class CanvasPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 
+				clearCircle();
+				revalidateAndRepaint();
 			}
 
 		});
@@ -176,13 +167,9 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
-			mousePosUpdate();
-				
-				
-				
-				
-				
+
+				mousePosUpdate();
+
 				if (SelectedTool.selectedTool == 3) {
 					event();
 
@@ -240,18 +227,12 @@ public class CanvasPanel extends JPanel {
 		// TODO Auto-generated method stub
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Point p2 = contentPanel.getLocationOnScreen();
-		mouse_x=(p.getX() - p2.getX());
-;
-		mouse_y= (int) (p.getY() - p2.getY());
-		GLOBAL.MAINFRAME.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + "," + mouse_y);
+		mouse_x = (p.getX() - p2.getX());
+		;
+		mouse_y = (int) (p.getY() - p2.getY());
+		GLOBAL.MAINFRAME
+				.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + "," + mouse_y);
 	}
-
-
-
-
-
-
-
 
 	private void clearCircle() {
 		if (m_circle != null) {
@@ -323,7 +304,7 @@ public class CanvasPanel extends JPanel {
 
 		switch (SelectedTool.selectedTool) {
 		case 1: {
-			//startDeleting();
+			// startDeleting();
 			break;
 		}
 		case 2: {
@@ -345,26 +326,28 @@ public class CanvasPanel extends JPanel {
 		Point p2 = contentPanel.getLocationOnScreen();
 		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());
 
-		/*for (int i = 0; i < canvasContainer.size(); i++) {
-
-			System.out.println("Checking: " + i);
-			
-			if (x ==  canvasContainer.get(i).getX() && y == canvasContainer.get(i).getY()) {
-
-				System.out.println("collision detected");
-				contentPanel.remove((Component) canvasContainer.get(i)); // canvasContainer.remove(i); //
-
-				revalidateAndRepaint();
-
-				;
-			}
-
-		}*/
+		/*
+		 * for (int i = 0; i < canvasContainer.size(); i++) {
+		 * 
+		 * System.out.println("Checking: " + i);
+		 * 
+		 * if (x == canvasContainer.get(i).getX() && y == canvasContainer.get(i).getY())
+		 * {
+		 * 
+		 * System.out.println("collision detected"); contentPanel.remove((Component)
+		 * canvasContainer.get(i)); // canvasContainer.remove(i); //
+		 * 
+		 * revalidateAndRepaint();
+		 * 
+		 * ; }
+		 * 
+		 * }
+		 */
 
 		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY);
 
 		canvasContainer.add(kkk);
-		kkk.setId(canvasContainer.size()-1);
+		kkk.setId(canvasContainer.size() - 1);
 		// kkk.paintComponents(kkk.getGraphics());
 
 		kkk.setVisible(true);
@@ -379,29 +362,15 @@ public class CanvasPanel extends JPanel {
 			canvasContainer.clear();
 		}
 
-		
-		
-		//set info from loaded FileInfo object
-		GLOBAL.CANVAS_HEIGHT=(int) GLOBAL.fileInfo.getCanvasSize().getHeight();
-		GLOBAL.CANVAS_WIDTH=(int) GLOBAL.fileInfo.getCanvasSize().getWidth();
-		GLOBAL.OFFSETX=GLOBAL.fileInfo.getOffsetX();
-		GLOBAL.OFFSETX=GLOBAL.fileInfo.getOffsetY();
+		// set info from loaded FileInfo object
+		GLOBAL.CANVAS_HEIGHT = (int) GLOBAL.fileInfo.getCanvasSize().getHeight();
+		GLOBAL.CANVAS_WIDTH = (int) GLOBAL.fileInfo.getCanvasSize().getWidth();
+		GLOBAL.OFFSETX = GLOBAL.fileInfo.getOffsetX();
+		GLOBAL.OFFSETX = GLOBAL.fileInfo.getOffsetY();
 		setCanvasSize();
 		rebuildGrid();
 		GLOBAL.DEBUGFRAME.refresh();
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		for (int i = 0; i < loadedTanFile.size(); i++) {
 
 			if (loadedTanFile.get(i).getClass() == InkDrop.class) {// check if loaded element is an inkdrop
@@ -437,20 +406,18 @@ public class CanvasPanel extends JPanel {
 				kkk.setVisible(true);
 				contentPanel.add(kkk, 1, 0);
 
-			}else if( loadedTanFile.get(i).getClass()==TextNode.class) {
-				//check if it is a TextNode
-				int x = ((TextNode)loadedTanFile.get(i)).getX();
-				int y = ((TextNode)loadedTanFile.get(i)).getY();
-				String text= ((TextNode)loadedTanFile.get(i)).getText();
+			} else if (loadedTanFile.get(i).getClass() == TextNode.class) {
+				// check if it is a TextNode
+				int x = ((TextNode) loadedTanFile.get(i)).getX();
+				int y = ((TextNode) loadedTanFile.get(i)).getY();
+				String text = ((TextNode) loadedTanFile.get(i)).getText();
 				TextNode node = new TextNode(x, y);
 				node.setText(text);
 				node.setVisible(true);
 				node.requestFocusInWindow();
 				contentPanel.add(node, 2, 0);
 				canvasContainer.add(node);
-				
-				
-				
+
 			}
 
 			revalidateAndRepaint();
@@ -459,7 +426,7 @@ public class CanvasPanel extends JPanel {
 
 	}
 
-	private void startErasing() {
+	public static void startErasing() {
 		// TODO Auto-generated method stub
 
 		Point p = MouseInfo.getPointerInfo().getLocation();
@@ -490,15 +457,11 @@ public class CanvasPanel extends JPanel {
 
 			{
 				((InkDrop) canvasContainer.get(i)).destroy(false);
-				CanvasPanel.canvasContainer.remove(i); 
+				CanvasPanel.canvasContainer.remove(i);
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
 				revalidateAndRepaint();
-				
-				
-				
-				
-				
+
 			}
 
 		}
@@ -526,7 +489,7 @@ public class CanvasPanel extends JPanel {
 
 	}
 
-	private boolean checkOverlap(int iy, int y2, int iy2, int y, int ix2, int x, int ix, int x2) {
+	private static boolean checkOverlap(int iy, int y2, int iy2, int y, int ix2, int x, int ix, int x2) {
 		// TODO Auto-generated method stub
 
 		if (ix2 < x || ix > x2) {
@@ -542,7 +505,7 @@ public class CanvasPanel extends JPanel {
 		return true;
 	}
 
-	private static void startDeleting() { //legacy
+	private static void startDeleting() { // legacy
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Point p2 = contentPanel.getLocationOnScreen();
 		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());

@@ -21,6 +21,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.BoxLayout;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.Component;
 import java.awt.Color;
 
@@ -97,15 +99,50 @@ public class MainFrame extends JFrame {
 		gbc_toolbar.gridy = 1;
 		contentPane.add(toolbar, gbc_toolbar);
 		scrollPane = new JScrollPane() {
-
+		
 			
 		};
 		
 		
+		MouseListener mListener = new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Well here we are");
+				System.out.println("mouse left");
+				CanvasPanel.mouse = 0;
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+		};
 		
 		
-		
-		
+		scrollPane.addMouseListener(mListener);
 		scrollPane.setPreferredSize(new Dimension(648, 480));
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

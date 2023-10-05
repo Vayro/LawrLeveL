@@ -158,7 +158,10 @@ public class Toolbar extends JPanel {
 					
 				case "Color": 
 					
-					j = new ColorChooser();
+					j = GLOBAL.CC;
+	
+					j.setLocation(colorButton.getLocationOnScreen());
+					j.setVisible(true);
 					
 					
 					
