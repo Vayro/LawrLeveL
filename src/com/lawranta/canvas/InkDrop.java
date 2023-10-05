@@ -3,19 +3,23 @@ package com.lawranta.canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class InkDrop extends JPanel implements Paint {
-	int id, x, y, xSize, ySize, offsetX, offsetY;
+	int id, x, y, xSize, ySize, offsetX, offsetY, mouseButton=0;
 	/**
 	 * @return the id
 	 */
@@ -165,12 +169,17 @@ public class InkDrop extends JPanel implements Paint {
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("dragged");
+				if(mouseButton==3)
+				{
+				startDeleting();
+			}
+
 			}
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("moved");
+			
 			}
 			
 			
@@ -178,10 +187,55 @@ public class InkDrop extends JPanel implements Paint {
 			
 		};
 		
+		
+		
+		
+		MouseListener clickListener = new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub	
+				mouseButton=e.getButton();
+				if(e.getButton()==3)
+				{
+				startDeleting();
+				
+			}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mouseButton=0;
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}};
+		
+		
+		addMouseListener(clickListener);
 		addMouseMotionListener(listener);
+		
+		
+		
+		 checkCollision() ;
 	}
 
-	public void destroy(JLayeredPane contentPanel) {
+	public void destroy(boolean removeFromContainer) {
 		// TODO Auto-generated method stub
 		System.out.println(" deleting mySelf... :( ");
 
@@ -190,8 +244,73 @@ public class InkDrop extends JPanel implements Paint {
 		removed = true;
 		revalidate();
 		repaint();
-		contentPanel.remove(this);
+		CanvasPanel.contentPanel.remove(this);
+		
+		if(removeFromContainer) {
+			CanvasPanel.canvasContainer.remove(this.id); 
+		}
 
+	}
+	
+	private void startDeleting() {
+		
+		
+//
+		destroy(true);
+		
+		
+		
+		for(int i =0; i< CanvasPanel.canvasContainer.size(); i++) {
+			
+			
+			
+			
+			CanvasPanel.canvasContainer.get(i).setId(i); 
+			
+			
+			
+			
+			
+		}
+			
+				CanvasPanel.revalidateAndRepaint();
+			
+		
+
+	}
+	
+	private void checkCollision() {
+		
+		
+
+		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
+
+			System.out.println("Checking: " + i);
+			
+			if(CanvasPanel.canvasContainer.get(i).getClass()==InkDrop.class){
+				//first check if inkdrop
+			
+			
+			if (this.x ==  CanvasPanel.canvasContainer.get(i).getX() && this.y == CanvasPanel.canvasContainer.get(i).getY()
+					&& this.xSize == CanvasPanel.canvasContainer.get(i).getxSize() && this.ySize == CanvasPanel.canvasContainer.get(i).getySize()) 
+					
+					 {
+
+				System.out.println("collision detected");
+			(	(InkDrop) CanvasPanel.canvasContainer.get(i)).destroy(true);
+
+				CanvasPanel.revalidateAndRepaint();
+
+				;
+			}
+			}
+		}
+		
+		
+		
+		
+		
+		
 	}
 
 }

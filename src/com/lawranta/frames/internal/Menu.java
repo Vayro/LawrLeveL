@@ -121,7 +121,7 @@ public class Menu extends JMenuBar {
 
 				switch (e.getActionCommand()) {
 				case "debug":
-					GLOBAL.DEBUGFRAME=new Debug();
+			
 					GLOBAL.DEBUGFRAME.setVisible(true);
 					break;
 

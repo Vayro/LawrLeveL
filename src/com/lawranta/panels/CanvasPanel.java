@@ -79,7 +79,7 @@ public class CanvasPanel extends JPanel {
 	    //setSize(GLOBAL.origWidth * GLOBAL.zoomFactor, GLOBAL.origHeight * GLOBAL.zoomFactor);
 	    // Re-Layout the panel
 	    validate();
-	    super.paintComponent(g);
+	    super.paintComponent(g2);
 	}
 	
 	
@@ -323,7 +323,7 @@ public class CanvasPanel extends JPanel {
 
 		switch (SelectedTool.selectedTool) {
 		case 1: {
-			startDeleting();
+			//startDeleting();
 			break;
 		}
 		case 2: {
@@ -345,11 +345,11 @@ public class CanvasPanel extends JPanel {
 		Point p2 = contentPanel.getLocationOnScreen();
 		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());
 
-		for (int i = 0; i < canvasContainer.size(); i++) {
+		/*for (int i = 0; i < canvasContainer.size(); i++) {
 
 			System.out.println("Checking: " + i);
-			if (x == ((JComponent) canvasContainer.get(i)).getX()
-					&& y == ((JComponent) canvasContainer.get(i)).getY()) {
+			
+			if (x ==  canvasContainer.get(i).getX() && y == canvasContainer.get(i).getY()) {
 
 				System.out.println("collision detected");
 				contentPanel.remove((Component) canvasContainer.get(i)); // canvasContainer.remove(i); //
@@ -359,7 +359,7 @@ public class CanvasPanel extends JPanel {
 				;
 			}
 
-		}
+		}*/
 
 		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY);
 
@@ -489,11 +489,16 @@ public class CanvasPanel extends JPanel {
 			if (checkOverlap(iy, y2, iy2, y, ix2, x, ix, x2))
 
 			{
-				((InkDrop) canvasContainer.get(i)).destroy(contentPanel);
+				((InkDrop) canvasContainer.get(i)).destroy(false);
+				CanvasPanel.canvasContainer.remove(i); 
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
-				canvasContainer.remove(i); //
 				revalidateAndRepaint();
+				
+				
+				
+				
+				
 			}
 
 		}
@@ -537,7 +542,7 @@ public class CanvasPanel extends JPanel {
 		return true;
 	}
 
-	private static void startDeleting() {
+	private static void startDeleting() { //legacy
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Point p2 = contentPanel.getLocationOnScreen();
 		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());
@@ -552,7 +557,7 @@ public class CanvasPanel extends JPanel {
 
 			if (x == ((JComponent) canvasContainer.get(i)).getX()
 					&& y == ((JComponent) canvasContainer.get(i)).getY()) {
-				((InkDrop) canvasContainer.get(i)).destroy(contentPanel);
+				((InkDrop) canvasContainer.get(i)).destroy(true);
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
 				canvasContainer.remove(i); //

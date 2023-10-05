@@ -8,8 +8,18 @@ public interface Paint {
 	boolean removed = false;
 	
 	
-	
-	
+	int getId();
+	void setId(int id);
+	public int getX();
+	public void setX(int x) ;
+	public int getY();
+	public void setY(int y) ;
+	public int getxSize() ;
+	public void setxSize(int xSize) ;
+
+	public int getySize() ;
+
+	public void setySize(int ySize) ;
 	
 	
 	

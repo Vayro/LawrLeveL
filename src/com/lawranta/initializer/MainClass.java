@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.lawranta.edit.Debug;
 import com.lawranta.file.*;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
@@ -37,7 +38,7 @@ public class MainClass {
 		GLOBAL.fileInfo = new FileInfo();
 
 		GLOBAL.MAINFRAME = new MainFrame();
-
+		GLOBAL.DEBUGFRAME=new Debug();
 		
 
 		GLOBAL.filePathDialog = new FilePathDialog();

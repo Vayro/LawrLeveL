@@ -119,7 +119,7 @@ public class Debug extends JFrame {
 				data[i][3] = ((InkDrop) CanvasPanel.canvasContainer.get(i)).getY();
 				data[i][4] = "InkDrop";
 
-				System.out.println("loaded " + i + 1 + " lines");
+				
 			}
 
 			else if (CanvasPanel.canvasContainer.get(i).getClass() == TextNode.class) {
@@ -147,7 +147,7 @@ public class Debug extends JFrame {
 
 		};
 		scroll.setViewportView(table);
-		System.out.println("refreshed deubugger");
+	//	System.out.println("refreshed deubugger");
 
 	}
 
