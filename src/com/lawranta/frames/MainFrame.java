@@ -148,6 +148,7 @@ public class MainFrame extends JFrame {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.anchor = GridBagConstraints.NORTHWEST;
 		gbc_scrollPane.gridwidth = 9;
 		gbc_scrollPane.gridheight = 9;
 		gbc_scrollPane.gridx = 1;

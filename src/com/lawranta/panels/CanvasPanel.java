@@ -20,6 +20,7 @@ import com.lawranta.globals.GLOBAL;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -43,11 +44,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
+import java.awt.FlowLayout;
 
 public class CanvasPanel extends JPanel {
 
 	public static int canvasWidthDefault = 1024;
-	public static int canvasHeightDefault = 768;
+	public static int canvasHeightDefault = 1024;
 	public static int canvasWidth = canvasWidthDefault;
 	public static int canvasHeight = canvasHeightDefault;
 	public static boolean hideGrid = false;
@@ -83,11 +85,17 @@ public class CanvasPanel extends JPanel {
 	
 	
 	public CanvasPanel() {
+		FlowLayout flowLayout = (FlowLayout) getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBackground(new Color(23, 2, 64));
 		SelectedTool.setToolDefault();
 		getCP = this;
 
 		contentPanel = new JLayeredPane();
+		contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		contentPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
 		contentPanel.setBackground(new Color(255, 255, 255));
 		contentPanel.setOpaque(true);
@@ -245,17 +253,18 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void setCanvasSize() {
-		int sizeX=(int) (GLOBAL.CANVAS_HEIGHT*Zoom.factor);
+		int sizeX=(int) (GLOBAL.CANVAS_WIDTH*Zoom.factor);
 		int sizeY=(int) (GLOBAL.CANVAS_HEIGHT*Zoom.factor);
+		
 		contentPanel.setSize(new Dimension(sizeX, sizeY));
 		contentPanel.setMinimumSize(new Dimension(sizeX, sizeY));
 		contentPanel.setPreferredSize(new Dimension(sizeX, sizeY));
-		MainFrame.scrollPane.setViewportView(null);
+		//MainFrame.scrollPane.setViewportView(null);
 		getCP.setSize(new Dimension(sizeX, sizeY));
 		System.out.println("setting canvas size");
 		MainFrame.scrollPane.setViewportView(getCP);
 		rebuildGrid();
-
+		
 		revalidateAndRepaint();
 
 	}
@@ -532,6 +541,9 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void revalidateAndRepaint() {
+		System.out.println(gridPane.getParent().getParent());
+		gridPane.getParent().getParent().revalidate();
+		gridPane.getParent().getParent().getParent();
 		gridPane.revalidate();
 		gridPane.repaint();
 		contentPanel.revalidate();

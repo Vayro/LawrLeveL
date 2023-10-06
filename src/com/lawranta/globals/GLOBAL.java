@@ -15,7 +15,7 @@ import com.lawranta.panels.CanvasPanel;
 
 public class GLOBAL {
 	public static final double VERSION=0.01;
-	public static int GRIDWIDTH=(int) (32*Zoom.factor), GRIDHEIGHT=(int) (32*Zoom.factor), CANVAS_HEIGHT=768, CANVAS_WIDTH=1024, OFFSETX=0, OFFSETY=0, DEFAULTGRIDSIZE;
+	public static int GRIDWIDTH=(int) (32*Zoom.factor), GRIDHEIGHT=(int) (32*Zoom.factor),CANVAS_WIDTH=1024, CANVAS_HEIGHT=1024,  OFFSETX=0, OFFSETY=0, DEFAULTGRIDSIZE;
 	public static CanvasPanel CP;
 	public static Font toolFont=new Font("Monospaced", Font.PLAIN, 12);
 	public static final String EXTENSION=".tan";
@@ -24,8 +24,8 @@ public class GLOBAL {
 	public static Debug DEBUGFRAME;
 	public static FileInfo fileInfo;
 	public static JFrame MAINFRAME;
-	public static int origWidth=648;
-	public static int origHeight=480;
+	public static int origWidth=1024;
+	public static int origHeight=768;
 	public static Color darkColor=new Color(69,69,69);
 	public static Color lightColor=new Color(200,200,200);
 	public static ColorChooser CC = new ColorChooser();
