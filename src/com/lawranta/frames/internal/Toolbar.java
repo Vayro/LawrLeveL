@@ -31,6 +31,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 
 import com.lawranta.canvas.SelectedTool;
+import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
@@ -193,16 +194,16 @@ public class Toolbar extends JPanel {
 					
 					break;
 				case "ZoomIn":
-					GLOBAL.zoomFactor+=1;
-					System.out.println("Zoom: " + GLOBAL.zoomFactor);
+					Zoom.zoomIn();
+					System.out.println("Zoom: " + Zoom.factor);
 
 					CanvasPanel.revalidateAndRepaint();
 					
 					
 					break;
 				case "ZoomOut":
-					GLOBAL.zoomFactor-=1;
-					System.out.println("Zoom: " + GLOBAL.zoomFactor);
+					Zoom.zoomOut();
+					System.out.println("Zoom: " + Zoom.factor);
 
 					CanvasPanel.revalidateAndRepaint();
 					

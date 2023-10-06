@@ -20,12 +20,12 @@ public interface Paint {
 	public int getySize() ;
 
 	public void setySize(int ySize) ;
-	
+
 	
 	
 	
 	default void remove(){}
-
+	default void 	draw() {}
 
 
 

@@ -73,7 +73,7 @@ public class InkDrop extends JPanel implements Paint {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (!removed) {
-			g.setColor(color);
+			g.setColor(this.color);
 			g.fillRect(0, 0, xSize, ySize);
 			
 		} else {
@@ -118,10 +118,11 @@ public class InkDrop extends JPanel implements Paint {
 	public InkDrop(int x, int y, int xSize, int ySize,int offsetX,int offsetY) {
 		setRequestFocusEnabled(false);
 		setBackground(this.color);
+		setBackground(new Color(255,0,0)); //debug color
 		// TODO Auto-generated constructor stub
 
-		this.xSize = xSize;
-		this.ySize = ySize;
+		this.xSize = (int) (xSize*Zoom.factor);
+		this.ySize = (int) (ySize*Zoom.factor);
 		this.offsetX=offsetX;
 		this.offsetY=offsetY;
 		int origX = x;
@@ -130,8 +131,8 @@ public class InkDrop extends JPanel implements Paint {
 		int gridSnapx = (int) (x % xSize);
 		int gridSnapy = (int) (y % ySize);
 
-		this.x = x - gridSnapx-this.offsetX;
-		this.y = y - gridSnapy-this.offsetY;
+		this.x = (int) ((x - gridSnapx-this.offsetX));
+		this.y = (int) ((y - gridSnapy-this.offsetY));
 
 		if(this.x+xSize<origX) {
 			
@@ -142,8 +143,7 @@ public class InkDrop extends JPanel implements Paint {
 			
 			this.y+=ySize;
 		}
-		
-		setBounds(this.x, this.y, this.xSize, this.ySize);
+		draw();
 		setLayout(null);
 		System.out.println("inkDrop created at " + this.x + "," + this.y + " Size(" + xSize + "," + ySize + ")");
 
@@ -350,6 +350,17 @@ public class InkDrop extends JPanel implements Paint {
 		
 		
 		
+	}
+	
+public void	draw(){
+
+	setBounds(this.x,this.y,this.xSize*2, this.ySize);
+	revalidate();
+	repaint();
+		
+		
+		
+	
 	}
 
 }

@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 
 import com.lawranta.canvas.CreateGrid;
+import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
 
 public class GridPanel extends JPanel {
@@ -21,8 +22,8 @@ public class GridPanel extends JPanel {
 		super.paintComponent(g);
 
 		if (!CanvasPanel.hideGrid)
-			CanvasPanel.cg = new CreateGrid(g, GLOBAL.GRIDWIDTH, GLOBAL.GRIDHEIGHT, GLOBAL.CANVAS_WIDTH,
-					GLOBAL.CANVAS_HEIGHT, Color.RED);
+			CanvasPanel.cg = new CreateGrid(g, (int)(GLOBAL.GRIDWIDTH*Zoom.factor), (int)(GLOBAL.GRIDHEIGHT*Zoom.factor), (int)(GLOBAL.CANVAS_WIDTH*Zoom.factor),
+					(int)(GLOBAL.CANVAS_HEIGHT*Zoom.factor), Color.RED);
 
 	}
 

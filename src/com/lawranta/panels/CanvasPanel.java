@@ -12,6 +12,7 @@ import com.lawranta.canvas.CreateGrid;
 import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.Paint;
 import com.lawranta.canvas.TextNode;
+import com.lawranta.canvas.Zoom;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.frames.internal.Toolbar;
@@ -35,6 +36,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -68,22 +70,18 @@ public class CanvasPanel extends JPanel {
 	MouseEvent e;
 	private static Shape m_circle = null;
 
-	@Override
+
 	public void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g.create();
-		g2.scale(GLOBAL.zoomFactor, GLOBAL.zoomFactor);
-		// Change the size of the panel
-		// setSize(GLOBAL.origWidth * GLOBAL.zoomFactor, GLOBAL.origHeight *
-		// GLOBAL.zoomFactor);
-		// Re-Layout the panel
-		validate();
-		super.paintComponent(g2);
-	}
-
-	/**
-	 * Create the panel.
-	 */
-
+	    super.paintComponent(g);
+	    Graphics2D g2 = (Graphics2D) g;
+	    if(Zoom.zooming==true){    
+	    	AffineTransform at = new AffineTransform();
+	        at.scale(Zoom.factor,Zoom.factor);
+	        Zoom.zooming=false;
+	        g2.transform(at);
+	    }}
+	
+	
 	public CanvasPanel() {
 		setBackground(new Color(23, 2, 64));
 		SelectedTool.setToolDefault();
@@ -247,11 +245,13 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void setCanvasSize() {
-		contentPanel.setSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
-		contentPanel.setMinimumSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
-		contentPanel.setPreferredSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
+		int sizeX=(int) (GLOBAL.CANVAS_HEIGHT*Zoom.factor);
+		int sizeY=(int) (GLOBAL.CANVAS_HEIGHT*Zoom.factor);
+		contentPanel.setSize(new Dimension(sizeX, sizeY));
+		contentPanel.setMinimumSize(new Dimension(sizeX, sizeY));
+		contentPanel.setPreferredSize(new Dimension(sizeX, sizeY));
 		MainFrame.scrollPane.setViewportView(null);
-		getCP.setSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
+		getCP.setSize(new Dimension(sizeX, sizeY));
 		System.out.println("setting canvas size");
 		MainFrame.scrollPane.setViewportView(getCP);
 		rebuildGrid();

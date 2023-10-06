@@ -26,7 +26,7 @@ public class CreateGrid {
 		for (int i = 0+offsetx; i < roomWidth-offsetx; i += xSize) {
 
 			for (int y = 0+offsety; y < roomHeight-offsety; y += ySize) {
-				g.drawRect(i+offsetx-1, y+offsety-1, xSize, ySize);
+				g.drawRect((int) ((i+offsetx-1)*1), (int) ((y+offsety-1)*1), (int) ((xSize)*1), (int)((ySize)*1));
 			}
 		}
 
