@@ -25,7 +25,6 @@ public class FilePathDialog extends JFileChooser {
 	public FilePathDialog() {
 		setBounds(100, 100, 450, 300);
 		setFileSelectionMode(JFileChooser.FILES_ONLY);
-
 		setFileFilter(new FileFilter() {
 
 			public java.lang.String getDescription() {

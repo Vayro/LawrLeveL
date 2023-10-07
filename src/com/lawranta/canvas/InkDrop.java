@@ -120,6 +120,7 @@ public class InkDrop extends JPanel implements Paint {
 	public int getX() {
 		return x;
 	}
+	
 
 	public void setX(int x) {
 		this.x = x;
@@ -149,10 +150,12 @@ public class InkDrop extends JPanel implements Paint {
 		this.ySize = ySize;
 	}
 
-	public InkDrop(int x, int y, int xSize, int ySize, int offsetX, int offsetY) {
+	public InkDrop(int x, int y, int xSize, int ySize, int offsetX, int offsetY, Color color) {
+		this.color=color;
+		
 		setRequestFocusEnabled(false);
 		setBackground(this.color);
-		setBackground(new Color(255, 0, 0)); // debug color
+		//setBackground(new Color(255, 0, 0)); // debug color
 		// TODO Auto-generated constructor stub
 
 		this.unscaledXSize = xSize;
@@ -174,14 +177,14 @@ public class InkDrop extends JPanel implements Paint {
 		this.x -= this.offsetX;
 		this.y -= this.offsetY;
 
-		if (this.x + xSize < origX) {
+		if (this.x + xSize < origX/Zoom.factor) {
 
-			this.x += xSize;
+			this.x += xSize*Zoom.factor;
 		}
 
-		if (this.y + xSize < origY) {
+		if (this.y + xSize < origY/Zoom.factor) {
 
-			this.y += ySize;
+			this.y += ySize*Zoom.factor;
 		}
 
 		this.unscaledX = this.x;

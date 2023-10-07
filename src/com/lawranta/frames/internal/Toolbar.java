@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
@@ -38,7 +40,7 @@ import com.lawranta.panels.CanvasPanel;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import javax.swing.Action; 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
@@ -51,6 +53,7 @@ public class Toolbar extends JPanel {
 	static toolButton colorButton;
 	static Image circle;
 	static Cursor eraserCursor;
+
 	/**
 	 * Launch the application.
 	 */
@@ -71,27 +74,15 @@ public class Toolbar extends JPanel {
 	 * Create the frame.
 	 */
 	public Toolbar() {
-		
+
 		/*
-		setFrameIcon(null);
-		setResizable(true);
-		try {
-			setMaximum(true);
-		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setBorder(null);
-		try {
-			setIcon(true);
-		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setIconifiable(true);
-		setMaximizable(true);
-		*/
+		 * setFrameIcon(null); setResizable(true); try { setMaximum(true); } catch
+		 * (PropertyVetoException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } setBorder(null); try { setIcon(true); } catch
+		 * (PropertyVetoException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		 * setIconifiable(true); setMaximizable(true);
+		 */
 		setBackground(new Color(69, 69, 69));
 		addMouseListener(new MouseListener() {
 
@@ -129,105 +120,105 @@ public class Toolbar extends JPanel {
 
 		});
 
-		
-		
-		
-		
-		
-		
-		
-		 actionListener = new ActionListener() {
+		actionListener = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-				switch(e.getActionCommand())
-				{
-				case "Brush": 
+
+				switch (e.getActionCommand()) {
+				case "Brush":
 					SelectedTool.setInkDropTool();
 					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 					break;
-					
-					
+
 				case "Aa":
 					SelectedTool.setTextTool();
 					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
 					break;
-					
-				case "Color": 
-					
+
+				case "Color":
+
 					j = GLOBAL.CC;
-	
+
 					j.setLocation(colorButton.getLocationOnScreen());
 					j.setVisible(true);
-					
-					
-					
+
 					break;
-					
-					
-					
+
 				case "Canvas":
-					j=new CanvasSizer();
-					
-					
-					
+					j = new CanvasSizer();
+
 					break;
-				
+
 				case "Eraser":
-					circle=makeImage(32,32);
-					eraserCursor= Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0,0), "eraser");
+					circle = makeImage(32, 32);
+					eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0, 0), "eraser");
 					SelectedTool.setEraserTool();
 					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					CanvasPanel.contentPanel.setCursor(eraserCursor);
-					
-			
-	
+
 					break;
 				case "Grid":
-					j=new GridSlider();
-					
-					
-					
+					j = new GridSlider();
+
 					break;
 				case "ZoomIn":
 					Zoom.zoomIn();
 					System.out.println("Zoom: " + Zoom.factor);
 
 					CanvasPanel.revalidateAndRepaint();
-					
-					
+
 					break;
 				case "ZoomOut":
 					Zoom.zoomOut();
 					System.out.println("Zoom: " + Zoom.factor);
 
 					CanvasPanel.revalidateAndRepaint();
-					
-					
+
 					break;
 				default:
-				break;
-				
+					break;
+
 				}
-				
-				
-				
-	
-				
-				
+
 			}
-			
-			
-			
+
 		};
-		
-		
-		
-		
+
+		KeyListener keyListener = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				switch (e.getKeyCode()) {
+				case 69:
+					System.out.println("e pressed");
+					break;
+				case 0:
+					break;
+
+				}
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("released");
+			}
+
+		};
+		addKeyListener(keyListener);
+
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -238,56 +229,45 @@ public class Toolbar extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println(e.getButton());
-				
-				if(e.getButton()==3) {
 
-					j=new BrushSlider();
-					
-					
+				if (e.getButton() == 3) {
+
+					j = new BrushSlider();
+
 				}
-				
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
-			
-			
+
 		});
-		
-	
-	
 
 		toolButton textToolButton = new toolButton("Aa", panel);
 
-	
-
 		toolButton canvasSizeButton = new toolButton("Canvas", panel);
-	
+
 		toolButton gridSizeButton = new toolButton("Grid", panel);
-		
 
 		toolButton eraserButton = new toolButton("Eraser", panel);
 		eraserButton.addMouseListener(new MouseListener() {
@@ -296,115 +276,78 @@ public class Toolbar extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println(e.getButton());
-				
-				if(e.getButton()==3) {
 
-					j=new BrushSlider();
-					
-					
+				if (e.getButton() == 3) {
+
+					j = new BrushSlider();
+
 				}
-				
-				
+
 			}
-			
-			
-			
-	
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
-			
-			
-			
-			
-			
-			
+
 		});
-		
+
 		toolButton zoomInButton = new toolButton("ZoomIn", panel);
 		toolButton zoomOutButton = new toolButton("ZoomOut", panel);
 		colorButton = new toolButton("Color", panel);
 		toolButton.colorBorder(colorButton);
-		
-		
+
 		setBounds(100, 100, 450, 300);
 
 	}
 
-	
-	
-	
+	static public BufferedImage makeImage(int width, int height) {
+		// BufferedImage is actually already transparent on my system, but that isn't
+		// guaranteed across platforms.
 
-	
-	
-	
-	
-	
-	
-	
+		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = bufferedImage.createGraphics();
 
-	
-	
-	
-	
-	  static public BufferedImage makeImage(int width, int height) {
-		     // BufferedImage is actually already transparent on my system, but that isn't
-		     // guaranteed across platforms.
-		  
-		  
-		     BufferedImage bufferedImage = new BufferedImage(width, height, 
-		                        BufferedImage.TYPE_INT_ARGB);
-		     Graphics2D graphics = bufferedImage.createGraphics();
+		// To be sure, we use clearRect, which will (unlike fillRect) totally replace
+		// the current pixels with the desired color, even if it's fully transparent.
+		graphics.setBackground(new Color(0, true));
+		graphics.clearRect(0, 0, width, height);
+		graphics.setPaint(new Color(255, 255, 255));
+		graphics.drawOval(1, 1, width - 2, height - 2);
+		graphics.setPaint(new Color(0, 0, 0));
+		graphics.drawOval(2, 2, width - 4, height - 4);
 
-		     // To be sure, we use clearRect, which will (unlike fillRect) totally replace
-		     // the current pixels with the desired color, even if it's fully transparent.
-		     graphics.setBackground(new Color(0, true));
-		     graphics.clearRect(0, 0, width, height);
-		     graphics.setPaint(new Color(255,255,255));
-		     graphics.drawOval(1, 1, width-2, height-2);
-		     graphics.setPaint(new Color(0,0,0));
-		     graphics.drawOval(2, 2, width-4, height-4);
-		     
-		     
-		     
-		     graphics.dispose();
+		graphics.dispose();
 
-		     return bufferedImage;
-		  }
-	
-	
-	
-	
-	
-	
+		return bufferedImage;
+	}
+
 	class toolButton extends JButton {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -2900847629316298000L;
+
 		public toolButton(String s, JPanel p) {
 			// TODO Auto-generated constructor stub
 			setFont(GLOBAL.toolFont);
@@ -415,26 +358,21 @@ public class Toolbar extends JPanel {
 			setMargin(new Insets(0, 0, 0, 0));
 			setActionCommand(s);
 			addActionListener(Toolbar.actionListener);
-	
+
 			p.add(this);
-			
-			
-			
+
 		}
-		public static void colorBorder(toolButton c){ 
-			
-			
+
+		public static void colorBorder(toolButton c) {
+
 			c.setBorder(BorderFactory.createLineBorder(SelectedTool.selectedColor, 2, true));
 		}
-			
-			
-			
-			
-		}
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 3704138041001210203L;
 
 	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3704138041001210203L;
+
+}

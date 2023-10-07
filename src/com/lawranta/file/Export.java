@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
+import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class Export {
 
 	public static boolean export() {
-		
+		Zoom.zoomDefault();
 		String defaultFileName = ".png";
 
 

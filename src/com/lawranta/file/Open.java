@@ -13,13 +13,14 @@ import java.util.List;
 import javax.swing.JFileChooser;
 
 import com.lawranta.canvas.Paint;
+import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class Open {
 
 	public static void open() {
-
+		Zoom.zoomDefault();
 		int option = GLOBAL.filePathDialog.showOpenDialog(GLOBAL.CP);
 		if (option == JFileChooser.APPROVE_OPTION) {
 			File f = GLOBAL.filePathDialog.getSelectedFile();

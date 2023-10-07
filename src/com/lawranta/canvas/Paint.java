@@ -1,11 +1,14 @@
 package com.lawranta.canvas;
 
+import java.awt.Color;
+
 import javax.swing.JLayeredPane;
 
 public interface Paint {
 
 	static int x=0, y=0, xSize=0, ySize=0;
 	boolean removed = false;
+	public static Color color = SelectedTool.selectedColor;
 	
 	
 	int getId();
@@ -16,12 +19,13 @@ public interface Paint {
 	public void setY(int y) ;
 	public int getxSize() ;
 	public void setxSize(int xSize) ;
-
+	
 	public int getySize() ;
 
 	public void setySize(int ySize) ;
 
-	
+	public void setColor(Color color);
+	public Color getColor();
 	
 	
 	default void remove(){}

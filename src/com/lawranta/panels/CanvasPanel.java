@@ -70,20 +70,21 @@ public class CanvasPanel extends JPanel {
 	Graphics2D g2 = (Graphics2D) getGraphics();
 	Point p;
 	MouseEvent e;
+	Point point;
+	Boolean draggingGrid = false;
 	private static Shape m_circle = null;
 
-
 	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	    Graphics2D g2 = (Graphics2D) g;
-	    if(Zoom.zooming==true){    
-	    	AffineTransform at = new AffineTransform();
-	        at.scale(Zoom.factor,Zoom.factor);
-	        Zoom.zooming=false;
-	        g2.transform(at);
-	    }}
-	
-	
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		if (Zoom.zooming == true) {
+			AffineTransform at = new AffineTransform();
+			at.scale(Zoom.factor, Zoom.factor);
+			Zoom.zooming = false;
+			g2.transform(at);
+		}
+	}
+
 	public CanvasPanel() {
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
@@ -133,13 +134,27 @@ public class CanvasPanel extends JPanel {
 				mouse = e.getButton();
 				System.out.println("Mouse button: " + mouse);
 
+				if (e.getButton() == 2) {
+
+					System.out.println("Started Dragging");
+					draggingGrid = true;
+					point = MouseInfo.getPointerInfo().getLocation();
+
+				}
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				mouse = 0;
-				// clearCircle(g2);
+				if (e.getButton() == 2) {
+
+					System.out.println("Stopped Dragging");
+					draggingGrid = false;
+					point = null;
+
+				}
 			}
 
 			@Override
@@ -168,6 +183,52 @@ public class CanvasPanel extends JPanel {
 					clearCircle();
 				}
 				;
+
+				if (mouse == 2) {
+
+					{// change offset of grid
+						int max = GLOBAL.GRIDHEIGHT;
+
+						double dragX = MouseInfo.getPointerInfo().getLocation().getX() - point.getX();
+						double dragY = MouseInfo.getPointerInfo().getLocation().getY() - point.getY();
+						;
+						System.out.println(MouseInfo.getPointerInfo().getLocation() + "-" + point);
+						System.out.println(dragX + " , " + dragY);
+
+						if (dragX > max) {
+							dragX = max;
+
+						}
+
+						GLOBAL.OFFSETX = (int) dragX;
+
+						if (GLOBAL.OFFSETX <0) {
+							GLOBAL.OFFSETX  = 0;
+						}
+
+						
+						if (dragY > max) {
+							dragY = max;
+
+						}
+
+						GLOBAL.OFFSETY = (int) dragY;
+
+						if (GLOBAL.OFFSETY<0) {
+							GLOBAL.OFFSETY  = 0;
+						}
+
+						System.out.println("GLOBAL.OFFSETX=" + GLOBAL.OFFSETX);
+						/*
+						 * if (Math.abs(dragX) < max) { GLOBAL.OFFSETY += (int) dragY; }
+						 */
+						revalidateAndRepaint();
+
+					}
+
+				}
+				;
+
 			}
 
 			@Override
@@ -201,7 +262,7 @@ public class CanvasPanel extends JPanel {
 				}
 				case 2: {
 
-					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+					// System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 					break;
 				}
 				case 3: {
@@ -253,18 +314,18 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void setCanvasSize() {
-		int sizeX=(int) (GLOBAL.CANVAS_WIDTH*Zoom.factor);
-		int sizeY=(int) (GLOBAL.CANVAS_HEIGHT*Zoom.factor);
-		
+		int sizeX = (int) (GLOBAL.CANVAS_WIDTH * Zoom.factor);
+		int sizeY = (int) (GLOBAL.CANVAS_HEIGHT * Zoom.factor);
+
 		contentPanel.setSize(new Dimension(sizeX, sizeY));
 		contentPanel.setMinimumSize(new Dimension(sizeX, sizeY));
 		contentPanel.setPreferredSize(new Dimension(sizeX, sizeY));
-		//MainFrame.scrollPane.setViewportView(null);
+		// MainFrame.scrollPane.setViewportView(null);
 		getCP.setSize(new Dimension(sizeX, sizeY));
 		System.out.println("setting canvas size");
 		MainFrame.scrollPane.setViewportView(getCP);
 		rebuildGrid();
-		
+
 		revalidateAndRepaint();
 
 	}
@@ -353,7 +414,8 @@ public class CanvasPanel extends JPanel {
 		 * }
 		 */
 
-		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY);
+		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY,
+				SelectedTool.selectedColor);
 
 		canvasContainer.add(kkk);
 		kkk.setId(canvasContainer.size() - 1);
@@ -390,6 +452,7 @@ public class CanvasPanel extends JPanel {
 				int xSize = ((InkDrop) loadedTanFile.get(i)).getxSize();
 				int offsetX = ((InkDrop) loadedTanFile.get(i)).getOffsetX();
 				int offsetY = ((InkDrop) loadedTanFile.get(i)).getOffsetY();
+				Color color = loadedTanFile.get(i).getColor();
 
 				for (int c = 0; c < canvasContainer.size(); c++) {
 
@@ -409,7 +472,7 @@ public class CanvasPanel extends JPanel {
 
 				InkDrop kkk =
 
-						new InkDrop(x, y, ySize, xSize, offsetX, offsetY);
+						new InkDrop(x, y, ySize, xSize, offsetX, offsetY, color);
 
 				canvasContainer.add(kkk);
 				kkk.setVisible(true);

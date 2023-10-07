@@ -211,4 +211,18 @@ addKeyListener(new KeyListener() {
 	
 }
 
+
+@Override
+public void setColor(Color color) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public Color getColor() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }
