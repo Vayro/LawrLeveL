@@ -257,7 +257,7 @@ public class CanvasPanel extends JPanel {
 
 				switch (mouse) {
 				case 1: {
-					chooseStartActionByTool();
+					//chooseStartActionByTool();
 					break;
 				}
 				case 2: {
@@ -266,7 +266,7 @@ public class CanvasPanel extends JPanel {
 					break;
 				}
 				case 3: {
-					chooseStopActionByTool();
+					//chooseStopActionByTool();
 					break;
 
 				}
@@ -339,6 +339,7 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void rebuildGrid() {
+		contentPanel.remove(gridPane);
 		gridPane = new GridPanel();
 		contentPanel.add(gridPane, 3, 0);
 
