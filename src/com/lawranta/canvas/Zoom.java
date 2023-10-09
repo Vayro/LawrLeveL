@@ -37,9 +37,9 @@ public class Zoom {
 			}
 		}
 
-		CanvasPanel.setCanvasSize();
-		GLOBAL.MAINFRAME.revalidate();
-		GLOBAL.MAINFRAME.repaint();
+	//	CanvasPanel.setCanvasSize();
+		CanvasPanel.contentPanel.requestFocus();
+		
 	}
 
 	public static void zoomOut() {
@@ -62,8 +62,8 @@ public class Zoom {
 					int xSize = ((InkDrop) CanvasPanel.canvasContainer.get(i)).getUnscaledXSize();
 					int ySize = ((InkDrop) CanvasPanel.canvasContainer.get(i)).getUnscaledYSize();
 
-					((InkDrop) CanvasPanel.canvasContainer.get(i)).setX((int) (x * factor));
-					((InkDrop) CanvasPanel.canvasContainer.get(i)).setY((int) (y * factor));
+					((InkDrop) CanvasPanel.canvasContainer.get(i)).setX((int) (x* factor));
+					((InkDrop) CanvasPanel.canvasContainer.get(i)).setY((int) (y* factor));
 					((InkDrop) CanvasPanel.canvasContainer.get(i)).setxSize((int) (xSize * factor));
 					((InkDrop) CanvasPanel.canvasContainer.get(i)).setySize((int) (ySize * factor));
 					((InkDrop) CanvasPanel.canvasContainer.get(i)).draw();
@@ -71,9 +71,8 @@ public class Zoom {
 
 			}
 
-			CanvasPanel.setCanvasSize();
-			GLOBAL.MAINFRAME.revalidate();
-			GLOBAL.MAINFRAME.repaint();
+		//	CanvasPanel.setCanvasSize();
+			CanvasPanel.contentPanel.requestFocus();
 		}
 	}
 
@@ -101,8 +100,7 @@ public class Zoom {
 		}
 
 		CanvasPanel.setCanvasSize();
-		GLOBAL.MAINFRAME.revalidate();
-		GLOBAL.MAINFRAME.repaint();
+		CanvasPanel.contentPanel.requestFocus();
 
 	}
 

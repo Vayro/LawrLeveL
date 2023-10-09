@@ -314,20 +314,28 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void setCanvasSize() {
+		
 		int sizeX = (int) (GLOBAL.CANVAS_WIDTH * Zoom.factor);
 		int sizeY = (int) (GLOBAL.CANVAS_HEIGHT * Zoom.factor);
-
+		contentPanel.setVisible(false);
 		contentPanel.setSize(new Dimension(sizeX, sizeY));
 		contentPanel.setMinimumSize(new Dimension(sizeX, sizeY));
 		contentPanel.setPreferredSize(new Dimension(sizeX, sizeY));
 		// MainFrame.scrollPane.setViewportView(null);
-		getCP.setSize(new Dimension(sizeX, sizeY));
-		System.out.println("setting canvas size");
-		MainFrame.scrollPane.setViewportView(getCP);
+	//	getCP.setSize(new Dimension(sizeX, sizeY));
+		System.out.println("Testing zoom");
+	//	MainFrame.scrollPane.setViewportView(getCP);
+
+		contentPanel.getParent().revalidate();
+		contentPanel.getParent().repaint();
+		contentPanel.getParent().getParent().revalidate();
+		contentPanel.getParent().getParent().repaint();
+		contentPanel.getParent().getParent().getParent().revalidate();
+		contentPanel.getParent().getParent().getParent().repaint();
 		rebuildGrid();
 
 		revalidateAndRepaint();
-
+		contentPanel.setVisible(true);
 	}
 
 	public static void rebuildGrid() {

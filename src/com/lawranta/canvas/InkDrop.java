@@ -19,7 +19,7 @@ import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class InkDrop extends JPanel implements Paint {
-	int id, x, y, xSize, ySize, offsetX, offsetY, mouseButton = 0;
+	int id, x, y, xSize, ySize, offsetX, offsetY, mouseButton = 0, origX, origY;
 	int unscaledXSize, unscaledYSize, unscaledX, unscaledY;
 
 	/**
@@ -164,8 +164,8 @@ public class InkDrop extends JPanel implements Paint {
 		this.ySize = (int) (ySize * Zoom.factor);
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
-		int origX = x;
-		int origY = y;
+		this.origX = x;
+		this.origY = y;
 
 		int gridSnapx = (int) (x % this.xSize);
 		int gridSnapy = (int) (y % this.ySize);
@@ -283,7 +283,29 @@ public class InkDrop extends JPanel implements Paint {
 		addMouseListener(clickListener);
 		addMouseMotionListener(listener);
 
+		
+		
+		
+		
+		this.origX = (int) (origX/Zoom.factor) ;
+		this.origY = (int) (origY/Zoom.factor);
+		
+		
+		
+		
+		
+		
+		
+		
 		checkCollision();
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	public void destroy(boolean removeFromContainer) {
