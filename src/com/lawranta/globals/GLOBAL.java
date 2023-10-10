@@ -2,6 +2,8 @@ package com.lawranta.globals;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
@@ -10,6 +12,7 @@ import com.lawranta.edit.Debug;
 import com.lawranta.file.ExportPathDialog;
 import com.lawranta.file.FileInfo;
 import com.lawranta.file.FilePathDialog;
+import com.lawranta.frames.MainFrame;
 import com.lawranta.frames.internal.ColorChooser;
 import com.lawranta.panels.CanvasPanel;
 
@@ -19,6 +22,7 @@ public class GLOBAL {
 	public static CanvasPanel CP;
 	public static Font toolFont=new Font("Monospaced", Font.PLAIN, 12);
 	public static final String EXTENSION=".tan";
+	public static final Image FAVICO = Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/images/favicon.png"));
 	public static FilePathDialog filePathDialog;
 	public static ExportPathDialog exportPathDialog;
 	public static Debug DEBUGFRAME;

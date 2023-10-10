@@ -10,14 +10,17 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.*;
 
 public class TextNode extends JTextField implements Paint {
 	/**
 	 * 
 	 */
+	TextNode thisNode;
 	private static final long serialVersionUID = -4669795077837742209L;
-	int id, x, y, xSize, ySize; /**
+	int id, x, y, xSize, ySize, unscaledX, unscaledY;; /**
+	
 	 * @return the id
 	 */
 	public int getId() {
@@ -108,8 +111,9 @@ public void setySize(int ySize) {
  * Create the panel.
  */
 public TextNode(int x, int y) {
-	
-	TextNode thisNode=this;
+	setLayout(null);
+	this.x=x; this.y=y;
+	 thisNode=this;
 	addFocusListener(new FocusListener() {
 
 		@Override
@@ -223,6 +227,16 @@ public void setColor(Color color) {
 public Color getColor() {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+
+public void setLocation() {
+	// TODO Auto-generated method stub
+	String placeholder = thisNode.getText();
+	CanvasPanel.contentPanel.remove(thisNode);
+	thisNode=new TextNode((int) (x*Zoom.factor),(int) (y*Zoom.factor));
+	thisNode.setText(placeholder);
+	CanvasPanel.contentPanel.add(thisNode, 2, 0);
 }
 
 }

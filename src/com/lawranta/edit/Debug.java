@@ -12,6 +12,7 @@ import javax.swing.table.JTableHeader;
 
 import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.TextNode;
+import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class Debug extends JFrame {
@@ -46,7 +47,7 @@ public class Debug extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setIconImage(GLOBAL.FAVICO);
 		setContentPane(contentPane);
 
 		data = new Object[CanvasPanel.canvasContainer.size()][5];

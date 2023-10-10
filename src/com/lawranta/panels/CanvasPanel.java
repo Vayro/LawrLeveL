@@ -90,7 +90,7 @@ public class CanvasPanel extends JPanel {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setBackground(new Color(23, 2, 64));
+		setBackground(new Color(0, 0, 0));
 		SelectedTool.setToolDefault();
 		getCP = this;
 
@@ -166,7 +166,7 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+System.out.println("clearing circle as mouse exits");
 				clearCircle();
 				revalidateAndRepaint();
 			}
@@ -257,7 +257,7 @@ public class CanvasPanel extends JPanel {
 
 				switch (mouse) {
 				case 1: {
-					//chooseStartActionByTool();
+					chooseStartActionByTool();
 					break;
 				}
 				case 2: {
@@ -266,7 +266,7 @@ public class CanvasPanel extends JPanel {
 					break;
 				}
 				case 3: {
-					//chooseStopActionByTool();
+					chooseStopActionByTool();
 					break;
 
 				}
@@ -301,7 +301,7 @@ public class CanvasPanel extends JPanel {
 				.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + "," + mouse_y);
 	}
 
-	private void clearCircle() {
+	public void clearCircle() {
 		if (m_circle != null) {
 			g2.setXORMode(XOR_COLOR);
 			g2.draw(m_circle);
@@ -399,7 +399,7 @@ public class CanvasPanel extends JPanel {
 
 	}
 
-	private static void startPainting() {
+	public static void startPainting() {
 		// TODO Auto-generated method stub
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Point p2 = contentPanel.getLocationOnScreen();
@@ -613,9 +613,9 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void revalidateAndRepaint() {
-		System.out.println(gridPane.getParent().getParent());
+		System.out.println("Revalidating and Repainting");
 		gridPane.getParent().getParent().revalidate();
-		gridPane.getParent().getParent().getParent();
+		gridPane.getParent().getParent().repaint();
 		gridPane.revalidate();
 		gridPane.repaint();
 		contentPanel.revalidate();

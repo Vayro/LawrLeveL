@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Component;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame {
 
@@ -53,6 +54,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setIconImage(GLOBAL.FAVICO);
 		setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")");
 		
 		GLOBAL.CP = new CanvasPanel();

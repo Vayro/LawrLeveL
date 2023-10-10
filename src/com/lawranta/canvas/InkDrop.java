@@ -21,6 +21,7 @@ import com.lawranta.panels.CanvasPanel;
 public class InkDrop extends JPanel implements Paint {
 	int id, x, y, xSize, ySize, offsetX, offsetY, mouseButton = 0, origX, origY;
 	int unscaledXSize, unscaledYSize, unscaledX, unscaledY;
+	boolean createdWhileZoomed;
 
 	/**
 	 * @return the id
@@ -166,6 +167,11 @@ public class InkDrop extends JPanel implements Paint {
 		this.offsetY = offsetY;
 		this.origX = x;
 		this.origY = y;
+		
+		if(Zoom.factor>1) {
+			
+			this.createdWhileZoomed=true;
+		}
 
 		int gridSnapx = (int) (x % this.xSize);
 		int gridSnapy = (int) (y % this.ySize);
@@ -187,8 +193,8 @@ public class InkDrop extends JPanel implements Paint {
 			this.y += ySize*Zoom.factor;
 		}
 
-		this.unscaledX = this.x;
-		this.unscaledY = this.y;
+		this.unscaledX = (int) (this.x/Zoom.factor);
+		this.unscaledY = (int) (this.y/Zoom.factor);
 
 		draw();
 		setLayout(null);
@@ -202,7 +208,7 @@ public class InkDrop extends JPanel implements Paint {
 				GLOBAL.CP.remove((Component) CanvasPanel.canvasContainer.get(i));
 				CanvasPanel.canvasContainer.remove(i);
 				// i--;
-				GLOBAL.CP.contentPanel.repaint();
+				GLOBAL.CP.repaint();
 			}
 
 		}
@@ -221,6 +227,10 @@ public class InkDrop extends JPanel implements Paint {
 					if (SelectedTool.selectedTool == 3) {
 						CanvasPanel.startErasing();
 
+					}else if(SelectedTool.selectedTool == 1) {
+						
+						CanvasPanel.startPainting();
+						
 					}
 
 				}
@@ -255,9 +265,13 @@ public class InkDrop extends JPanel implements Paint {
 						CanvasPanel.mouse = 1;
 						CanvasPanel.startErasing();
 
+					}else if(SelectedTool.selectedTool == 1) {
+						
+						CanvasPanel.startPainting();
+						
 					}
 
-				}
+				} 
 
 			}
 

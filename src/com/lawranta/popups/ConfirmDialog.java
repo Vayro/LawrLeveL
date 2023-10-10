@@ -12,6 +12,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
+import com.lawranta.globals.GLOBAL;
+
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 
@@ -39,6 +42,7 @@ ActionEvent a;
 	 * @param string 
 	 */
 	public  ConfirmDialog(String string) {
+		setIconImage(GLOBAL.FAVICO);
 		setUndecorated(true);
 		setSize(new Dimension(300,100));
 		setPreferredSize(new Dimension(300,100));

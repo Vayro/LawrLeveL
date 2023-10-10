@@ -1,8 +1,10 @@
 package com.lawranta.canvas;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.Iterator;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
@@ -34,11 +36,18 @@ public class Zoom {
 				((InkDrop) CanvasPanel.canvasContainer.get(i)).setxSize((int) (xSize * factor));
 				((InkDrop) CanvasPanel.canvasContainer.get(i)).setySize((int) (ySize * factor));
 				((InkDrop) CanvasPanel.canvasContainer.get(i)).draw();
+			} else if(CanvasPanel.canvasContainer.get(i).getClass() == TextNode.class) {
+				((TextNode) CanvasPanel.canvasContainer.get(i)).setLocation();
+
+			//	((TextNode) CanvasPanel.canvasContainer.get(i)).setLocation((int)( CanvasPanel.canvasContainer.get(i).getX()*factor*factor),(int)( CanvasPanel.canvasContainer.get(i).getY()*factor*factor));
+				
 			}
 		}
 
 	//	CanvasPanel.setCanvasSize();
-		CanvasPanel.contentPanel.requestFocus();
+		
+
+	resize();
 		
 	}
 
@@ -67,12 +76,18 @@ public class Zoom {
 					((InkDrop) CanvasPanel.canvasContainer.get(i)).setxSize((int) (xSize * factor));
 					((InkDrop) CanvasPanel.canvasContainer.get(i)).setySize((int) (ySize * factor));
 					((InkDrop) CanvasPanel.canvasContainer.get(i)).draw();
+				} else if(CanvasPanel.canvasContainer.get(i).getClass() == TextNode.class) {
+					((TextNode) CanvasPanel.canvasContainer.get(i)).setLocation();
+				//	((TextNode) CanvasPanel.canvasContainer.get(i)).setLocation((int)( CanvasPanel.canvasContainer.get(i).getX()*factor*factor),(int)( CanvasPanel.canvasContainer.get(i).getY()*factor*factor));
+					
 				}
 
 			}
 
-		//	CanvasPanel.setCanvasSize();
-			CanvasPanel.contentPanel.requestFocus();
+		resize();
+			
+
+
 		}
 	}
 
@@ -95,6 +110,11 @@ public class Zoom {
 				((InkDrop) CanvasPanel.canvasContainer.get(i)).setxSize((int) (xSize));
 				((InkDrop) CanvasPanel.canvasContainer.get(i)).setySize((int) (ySize));
 				((InkDrop) CanvasPanel.canvasContainer.get(i)).draw();
+			} else if(CanvasPanel.canvasContainer.get(i).getClass() == TextNode.class) {
+				((TextNode) CanvasPanel.canvasContainer.get(i)).setLocation();
+
+			//	((TextNode) CanvasPanel.canvasContainer.get(i)).setLocation((int)( CanvasPanel.canvasContainer.get(i).getX()*factor*factor),(int)( CanvasPanel.canvasContainer.get(i).getY()*factor*factor));
+				
 			}
 
 		}
@@ -102,6 +122,34 @@ public class Zoom {
 		CanvasPanel.setCanvasSize();
 		CanvasPanel.contentPanel.requestFocus();
 
+	}
+	
+	private static void resize() {
+		CanvasPanel.contentPanel.setSize((int) (GLOBAL.CANVAS_WIDTH*factor),(int) (GLOBAL.CANVAS_HEIGHT*factor));
+		CanvasPanel.contentPanel.setPreferredSize(new Dimension((int) (GLOBAL.CANVAS_WIDTH*factor),(int) (GLOBAL.CANVAS_HEIGHT*factor)));
+		CanvasPanel.rebuildGrid();
+		SwingUtilities.updateComponentTreeUI(GLOBAL.MAINFRAME);
+		CanvasPanel.contentPanel.setVisible(true);
+		CanvasPanel.contentPanel.requestFocus();
+		GLOBAL.CP.clearCircle();
+		CanvasPanel.revalidateAndRepaint() ;
+		SwingUtilities.invokeLater(refresh());
+	}
+	
+	private static Runnable refresh() {
+		return new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				CanvasPanel.revalidateAndRepaint() ;
+			}
+			
+			
+			
+		};
+		
+		
 	}
 
 }

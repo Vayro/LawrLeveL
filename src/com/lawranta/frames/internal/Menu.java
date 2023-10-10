@@ -10,11 +10,13 @@ import javax.swing.JPanel;
 
 import com.lawranta.edit.Debug;
 import com.lawranta.file.Export;
+import com.lawranta.file.ExportPreDialog;
 import com.lawranta.file.Open;
 import com.lawranta.file.Save;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.help.About;
 import com.lawranta.panels.CanvasPanel;
-
+import javax.swing.JDialog;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -31,8 +33,9 @@ import java.awt.Component;
 
 public class Menu extends JMenuBar {
 
-	JMenu fileMenu, editMenu;
-	ActionListener fileAction, editAction;
+	JMenu fileMenu, editMenu, helpMenu;
+	ActionListener fileAction, editAction, helpAction;
+	private JMenuItem AboutMenuItem;
 
 	/**
 	 * Launch the application.
@@ -100,7 +103,8 @@ public class Menu extends JMenuBar {
 
 					break;
 				case "export":
-					Export.export();
+					JDialog j = new ExportPreDialog();
+					j.setVisible(true);
 					break;
 				case "exit":
 					System.exit(0);
@@ -123,6 +127,27 @@ public class Menu extends JMenuBar {
 				case "debug":
 			
 					GLOBAL.DEBUGFRAME.setVisible(true);
+					break;
+
+				default:
+
+					break;
+
+				}
+			}
+		};
+		
+		helpAction = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				switch (e.getActionCommand()) {
+				case "about":
+			
+					About about = new About();
+					about.setVisible(true);
 					break;
 
 				default:
@@ -155,8 +180,11 @@ public class Menu extends JMenuBar {
 		EditMenuItem debugMenuItem = new EditMenuItem("Debug", "debug");
 		editMenu.add(debugMenuItem);
 
-		JMenu helpMenu = new JMenu("Help");
+		helpMenu = new JMenu("Help");
 		add(helpMenu);
+		
+		HelpMenuItem AboutMenuItem = new HelpMenuItem("About", "about");
+		helpMenu.add(AboutMenuItem);
 
 	}
 
@@ -178,6 +206,17 @@ public class Menu extends JMenuBar {
 			setActionCommand(command);
 			addActionListener(editAction);
 			editMenu.add(this);
+
+		}
+	}
+	
+	public class HelpMenuItem extends JMenuItem {
+
+		public HelpMenuItem(String text, String command) {
+			setText(text);
+			setActionCommand(command);
+			addActionListener(helpAction);
+			helpMenu.add(this);
 
 		}
 	}
