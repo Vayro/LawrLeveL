@@ -3,22 +3,21 @@ package com.lawranta.canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class InkDrop extends JPanel implements Paint {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7177229581515071838L;
 	int id, x, y, xSize, ySize, offsetX, offsetY, origX, origY;
 	int unscaledXSize, unscaledYSize, unscaledX, unscaledY;
 	boolean createdWhileZoomed;
@@ -218,12 +217,12 @@ public class InkDrop extends JPanel implements Paint {
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("dragged");
-				if (CanvasPanel.mouse == 3 || e.getButton()==3) {
+				if (CanvasPanel.mouse == 3 || e.getButton() == 3) {
 					startDeleting();
 				}
 
 				if (e.getButton() == 1) {
-					//CanvasPanel.mouse =1;
+					// CanvasPanel.mouse =1;
 					if (SelectedTool.selectedTool == 3) {
 						CanvasPanel.startErasing();
 
@@ -240,7 +239,7 @@ public class InkDrop extends JPanel implements Paint {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
-				CanvasPanel.mouse  = 0;
+				CanvasPanel.mouse = 0;
 			}
 
 		};
@@ -278,8 +277,8 @@ public class InkDrop extends JPanel implements Paint {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				CanvasPanel.mouse  = 0;
-	
+				CanvasPanel.mouse = 0;
+
 			}
 
 			@Override
@@ -292,7 +291,6 @@ public class InkDrop extends JPanel implements Paint {
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Stop painting here?j");
-				
 
 			}
 		};

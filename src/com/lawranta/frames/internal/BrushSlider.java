@@ -1,11 +1,10 @@
 package com.lawranta.frames.internal;
+
 import java.awt.EventQueue;
-import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
-import javax.swing.JInternalFrame;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -15,15 +14,8 @@ import com.lawranta.canvas.SelectedTool;
 import com.lawranta.globals.IntegerFilter;
 import com.lawranta.panels.CanvasPanel;
 
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Toolkit;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
@@ -32,7 +24,13 @@ import java.awt.Dimension;
 import java.awt.Color;
 
 public class BrushSlider extends JDialog {
-	private JTextField textField; private JPanel contentPane=new JPanel();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5757691635233262953L;
+	private JTextField textField;
+	@SuppressWarnings("unused")
+	private JPanel contentPane = new JPanel();
 
 	/**
 	 * Launch the application.
@@ -64,7 +62,7 @@ public class BrushSlider extends JDialog {
 		setVisible(true);
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setLocationRelativeTo(null);
-		
+
 		JPanel sliderPanel = new JPanel();
 		sliderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 		getContentPane().add(sliderPanel);
@@ -83,43 +81,29 @@ public class BrushSlider extends JDialog {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
-				
+
 				textField.setText(Integer.toString(slider.getValue()));
-				
-				
+
 			}
-			
-			
-			
+
 		});
-		
+
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 200));
 		sliderPanel.add(panel);
-		
+
 		textField = new JTextField();
 		textField.setSize(new Dimension(64, 20));
 		textField.setPreferredSize(new Dimension(64, 20));
 		textField.setMinimumSize(new Dimension(64, 20));
 		textField.setText(Integer.toString(slider.getValue()));
 		textField.setHorizontalAlignment(JTextField.CENTER);
-		
-		
-		 PlainDocument doc = (PlainDocument) textField.getDocument();
-	      doc.setDocumentFilter(new IntegerFilter());
-		
-		
-		
-		
 
-		
-		
-		
-		
+		PlainDocument doc = (PlainDocument) textField.getDocument();
+		doc.setDocumentFilter(new IntegerFilter());
+
 		panel.add(textField);
-		
-		
-		
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		getContentPane().add(buttonPanel);
@@ -135,30 +119,17 @@ public class BrushSlider extends JDialog {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					
-					 SelectedTool.brushSize=Integer.parseInt(textField.getText());
-					 
-			
-						SelectedTool.setEraserTool();
-						System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-						CanvasPanel.contentPanel.setCursor(Toolbar.eraserCursor);
-					 
-					 
-					 
-					 
-					 
-					 
+
+					SelectedTool.brushSize = Integer.parseInt(textField.getText());
+
+					SelectedTool.setEraserTool();
+					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+					CanvasPanel.contentPanel.setCursor(Toolbar.eraserCursor);
+
 					dispose();
-					
+
 				}
-				
-				
-				
-				
-				
-				
-				
-				
+
 			});
 			getRootPane().setDefaultButton(okButton);
 		}
@@ -172,30 +143,13 @@ public class BrushSlider extends JDialog {
 					// TODO Auto-generated method stub
 					dispose();
 				}
-				
-				
-				
-				
-				
-				
-				
-				
+
 			});
 			buttonPanel.add(cancelButton);
 		}
-		
-		
-		
+
 		revalidate();
 		repaint();
-		
-		
-		
-		
-		
-		
-		
-		
 
 	}
 

@@ -2,11 +2,8 @@ package com.lawranta.file;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +16,7 @@ import com.lawranta.panels.CanvasPanel;
 
 public class Open {
 
+	@SuppressWarnings("unchecked")
 	public static void open() {
 		Zoom.zoomDefault();
 		int option = GLOBAL.filePathDialog.showOpenDialog(GLOBAL.CP);
@@ -35,6 +33,7 @@ public class Open {
 					fileContainer = (ArrayList<Object>) (ois.readObject());
 					GLOBAL.fileInfo=(FileInfo) fileContainer.get(0);
 					CanvasPanel.ReloadFromCanvasContainer((ArrayList<Paint>) fileContainer.get(1));
+					ois.close();
 				}
 
 			} catch (IOException | ClassNotFoundException e) {

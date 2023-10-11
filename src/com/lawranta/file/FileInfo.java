@@ -7,6 +7,10 @@ import com.lawranta.globals.GLOBAL;
 
 public class FileInfo implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5937948156098489479L;
 	protected String fileName, absPath;
 	Dimension canvasSize;
 	boolean newFile, saved;

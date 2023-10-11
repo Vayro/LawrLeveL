@@ -3,19 +3,11 @@ package com.lawranta.file;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JFileChooser;
-import javax.swing.table.TableModel;
-
 import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
@@ -59,60 +51,55 @@ public class Save {
 
 		String absPath = GLOBAL.fileInfo.getAbsPath();
 		File f = null;
-		boolean fileOverwrite=true;
-		
+		boolean fileOverwrite = true;
+
 		do {
-			
-		
-		GLOBAL.filePathDialog.setSelectedFile(new File(defaultFileName));
-		Integer opt = GLOBAL.filePathDialog.showSaveDialog(GLOBAL.CP);
 
+			GLOBAL.filePathDialog.setSelectedFile(new File(defaultFileName));
+			Integer opt = GLOBAL.filePathDialog.showSaveDialog(GLOBAL.CP);
 
-		if (opt == JFileChooser.APPROVE_OPTION) {
+			if (opt == JFileChooser.APPROVE_OPTION) {
 
-			// get selected pathfile
-			f = GLOBAL.filePathDialog.getSelectedFile();
-			absPath = f.getAbsolutePath();
+				// get selected pathfile
+				f = GLOBAL.filePathDialog.getSelectedFile();
+				absPath = f.getAbsolutePath();
 
-			if (!f.getAbsolutePath().endsWith(GLOBAL.EXTENSION)) {
+				if (!f.getAbsolutePath().endsWith(GLOBAL.EXTENSION)) {
 
-				absPath = f.getAbsolutePath() + GLOBAL.EXTENSION;
-			}
-			if(new File(absPath).exists() && !new File(absPath).isDirectory()) {
-				
-				
-				ConfirmDialog overwrite = new ConfirmDialog("Overwrite file: \n[" +  absPath + "]?");
-				overwrite.setVisible(true);
-				ActionEvent e= overwrite.getA();
-				
-				
-				switch (e.getActionCommand()) {
-
-				case "OK":
-					System.out.println("Overwriting");
-					fileOverwrite=true;
-					break;
-				case "Cancel":
-					System.out.println("not Overwriting");
-					fileOverwrite=false;
-					break;
-
+					absPath = f.getAbsolutePath() + GLOBAL.EXTENSION;
 				}
-			}}}
-			
-		while(fileOverwrite==false);
-				
-		
-			// update file info
-			System.out.println(absPath);
-			GLOBAL.fileInfo.setVersion(GLOBAL.VERSION);
-			GLOBAL.fileInfo.setFileName(f.getName());
-			GLOBAL.fileInfo.setAbsPath(absPath);
-			GLOBAL.fileInfo.setCanvasSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
-			GLOBAL.fileInfo.setOffsetX(GLOBAL.OFFSETX);
-			GLOBAL.fileInfo.setOffsetY(GLOBAL.OFFSETY);
+				if (new File(absPath).exists() && !new File(absPath).isDirectory()) {
 
-		
+					ConfirmDialog overwrite = new ConfirmDialog("Overwrite file: \n[" + absPath + "]?");
+					overwrite.setVisible(true);
+					ActionEvent e = overwrite.getA();
+
+					switch (e.getActionCommand()) {
+
+					case "OK":
+						System.out.println("Overwriting");
+						fileOverwrite = true;
+						break;
+					case "Cancel":
+						System.out.println("not Overwriting");
+						fileOverwrite = false;
+						break;
+
+					}
+				}
+			}
+		}
+
+		while (fileOverwrite == false);
+
+		// update file info
+		System.out.println(absPath);
+		GLOBAL.fileInfo.setVersion(GLOBAL.VERSION);
+		GLOBAL.fileInfo.setFileName(f.getName());
+		GLOBAL.fileInfo.setAbsPath(absPath);
+		GLOBAL.fileInfo.setCanvasSize(new Dimension(GLOBAL.CANVAS_WIDTH, GLOBAL.CANVAS_HEIGHT));
+		GLOBAL.fileInfo.setOffsetX(GLOBAL.OFFSETX);
+		GLOBAL.fileInfo.setOffsetY(GLOBAL.OFFSETY);
 
 //stuff canvasContainer and FileInfo into a new object array
 		ArrayList<Object> fileContainer = new ArrayList<Object>();

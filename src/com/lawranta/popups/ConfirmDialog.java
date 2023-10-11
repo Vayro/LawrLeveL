@@ -15,12 +15,16 @@ import javax.swing.border.EmptyBorder;
 
 import com.lawranta.globals.GLOBAL;
 
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
 
 public class ConfirmDialog extends JDialog {
-ActionEvent a;
-	
+	/**
+		 * 
+		 */
+	private static final long serialVersionUID = 1802378469305034627L;
+
+	ActionEvent a;
+
 	private final JPanel contentPanel = new JPanel();
 	private JTextArea textField;
 
@@ -39,14 +43,15 @@ ActionEvent a;
 
 	/**
 	 * Create the dialog.
-	 * @param string 
+	 * 
+	 * @param string
 	 */
-	public  ConfirmDialog(String string) {
+	public ConfirmDialog(String string) {
 		setIconImage(GLOBAL.FAVICO);
 		setUndecorated(true);
-		setSize(new Dimension(300,100));
-		setPreferredSize(new Dimension(300,100));
-		setMinimumSize(new Dimension(300,100));
+		setSize(new Dimension(300, 100));
+		setPreferredSize(new Dimension(300, 100));
+		setMinimumSize(new Dimension(300, 100));
 
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		getContentPane().setLayout(new BorderLayout());
@@ -58,10 +63,8 @@ ActionEvent a;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				a = e ;
+				a = e;
 				dispose();
-		
-				
 
 			}
 		};
@@ -72,19 +75,15 @@ ActionEvent a;
 			textField = new JTextArea();
 			textField.setPreferredSize(new Dimension(400, 36));
 			textField.setEditable(false);
-			
+
 			textField.setColumns(10);
 			textField.setText(string);
-			
-			
-			
-			JScrollPane scroll= new JScrollPane();
+
+			JScrollPane scroll = new JScrollPane();
 			scroll.setViewportView(textField);
-			textField.setCaretPosition(0) ;
+			textField.setCaretPosition(0);
 			contentPanel.add(scroll);
-			
-			
-			
+
 		}
 		{
 			JPanel buttonPane = new JPanel();

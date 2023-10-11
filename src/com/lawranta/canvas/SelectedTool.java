@@ -1,18 +1,14 @@
 package com.lawranta.canvas;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SelectedTool {
-	//should be singleton class
+	// should be singleton class
 	public static int selectedTool;
-	public static Color selectedColor=new Color(0,0,0);
-	public static int brushSize=32;
+	public static Color selectedColor = new Color(0, 0, 0);
+	public static int brushSize = 32;
 	/*
-	 * 1: InkDrop
-	 * 2: Text
-	 * 3: Eraser
+	 * 1: InkDrop 2: Text 3: Eraser
 	 * 
 	 * 
 	 * 
@@ -23,8 +19,6 @@ public class SelectedTool {
 	 * 
 	 * 
 	 */
-	
-	
 
 	/**
 	 * @return the selectedTool
@@ -33,92 +27,39 @@ public class SelectedTool {
 		return selectedTool;
 	}
 
-
-
-
 	/**
 	 * @param selectedTool the selectedTool to set
 	 */
 	public void setSelectedTool(int selectedTool) {
-		this.selectedTool = selectedTool;
+		SelectedTool.selectedTool = selectedTool;
 	}
-
-
-
 
 	public SelectedTool() {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-
 	public static void setToolDefault() {
 		// TODO Auto-generated method stub
-		selectedTool=1;
-		selectedColor=new Color(0,0,0);
+		selectedTool = 1;
+		selectedColor = new Color(0, 0, 0);
 	}
-
-
-
 
 	public static void setTextTool() {
 		// TODO Auto-generated method stub
-		selectedTool=2;
-		
+		selectedTool = 2;
+
 	}
-
-
-
 
 	public static void setInkDropTool() {
 		// TODO Auto-generated method stub
-		selectedTool=1;
-		
+		selectedTool = 1;
+
 	}
-
-
-
 
 	public static void setEraserTool() {
 		// TODO Auto-generated method st
-		selectedTool=3;
-		
+		selectedTool = 3;
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

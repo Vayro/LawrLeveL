@@ -1,15 +1,8 @@
 package com.lawranta.frames.internal;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
-import javax.swing.BoxLayout;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-
-import com.lawranta.edit.Debug;
-import com.lawranta.file.Export;
 import com.lawranta.file.ExportPreDialog;
 import com.lawranta.file.Open;
 import com.lawranta.file.Save;
@@ -21,22 +14,22 @@ import javax.swing.JDialog;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Dimension;
-import javax.swing.JFrame;
 import javax.swing.border.BevelBorder;
-import java.awt.Component;
 
 public class Menu extends JMenuBar {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JMenu fileMenu, editMenu, helpMenu;
 	ActionListener fileAction, editAction, helpAction;
+	@SuppressWarnings("unused")
 	private JMenuItem AboutMenuItem;
 
 	/**
@@ -71,6 +64,7 @@ public class Menu extends JMenuBar {
 	 * @return
 	 */
 
+	@SuppressWarnings("unused")
 	public Menu() {
 		setForeground(new Color(255, 255, 204));
 		// setForeground(new Color(255, 255, 255));
@@ -102,14 +96,14 @@ public class Menu extends JMenuBar {
 					CanvasPanel.contentPanel.removeAll();
 					GLOBAL.setDefault();
 					CanvasPanel.setCanvasSize();
-					//actually let's just re-create the mainframe instead of just the panel...
-					
-					Point locationholder=GLOBAL.MAINFRAME.getLocation();
+					// actually let's just re-create the mainframe instead of just the panel...
+
+					Point locationholder = GLOBAL.MAINFRAME.getLocation();
 					GLOBAL.MAINFRAME.dispose();
-					GLOBAL.MAINFRAME=new MainFrame();
+					GLOBAL.MAINFRAME = new MainFrame();
 					GLOBAL.MAINFRAME.setLocation(locationholder);
 					GLOBAL.MAINFRAME.setVisible(true);
-					
+
 					break;
 				case "export":
 					JDialog j = new ExportPreDialog();
@@ -134,7 +128,7 @@ public class Menu extends JMenuBar {
 
 				switch (e.getActionCommand()) {
 				case "debug":
-			
+
 					GLOBAL.DEBUGFRAME.setVisible(true);
 					break;
 
@@ -145,7 +139,7 @@ public class Menu extends JMenuBar {
 				}
 			}
 		};
-		
+
 		helpAction = new ActionListener() {
 
 			@Override
@@ -154,7 +148,7 @@ public class Menu extends JMenuBar {
 
 				switch (e.getActionCommand()) {
 				case "about":
-			
+
 					About about = new About();
 					about.setVisible(true);
 					break;
@@ -191,13 +185,18 @@ public class Menu extends JMenuBar {
 
 		helpMenu = new JMenu("Help");
 		add(helpMenu);
-		
+
 		HelpMenuItem AboutMenuItem = new HelpMenuItem("About", "about");
 		helpMenu.add(AboutMenuItem);
 
 	}
 
 	public class FileMenuItem extends JMenuItem {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		public FileMenuItem(String text, String command) {
 			setText(text);
@@ -210,6 +209,11 @@ public class Menu extends JMenuBar {
 
 	public class EditMenuItem extends JMenuItem {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public EditMenuItem(String text, String command) {
 			setText(text);
 			setActionCommand(command);
@@ -218,8 +222,13 @@ public class Menu extends JMenuBar {
 
 		}
 	}
-	
+
 	public class HelpMenuItem extends JMenuItem {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		public HelpMenuItem(String text, String command) {
 			setText(text);

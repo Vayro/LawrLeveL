@@ -4,47 +4,31 @@ import java.awt.EventQueue;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyVetoException;
-
-import javax.swing.JInternalFrame;
 import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.swing.JPanel;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
-import javax.swing.JTextPane;
-import javax.swing.border.LineBorder;
-
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
-import javax.swing.JFrame;
 
 public class Toolbar extends JPanel {
 
@@ -73,6 +57,7 @@ public class Toolbar extends JPanel {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("unused")
 	public Toolbar() {
 
 		/*

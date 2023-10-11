@@ -1,49 +1,34 @@
 package com.lawranta.panels;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
 import com.lawranta.canvas.CreateGrid;
 import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.Paint;
 import com.lawranta.canvas.TextNode;
 import com.lawranta.canvas.Zoom;
 import com.lawranta.canvas.SelectedTool;
-import com.lawranta.frames.MainFrame;
-import com.lawranta.frames.internal.Toolbar;
 import com.lawranta.globals.GLOBAL;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
 import java.awt.FlowLayout;
 
 public class CanvasPanel extends JPanel {
@@ -166,7 +151,7 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-System.out.println("clearing circle as mouse exits");
+				System.out.println("clearing circle as mouse exits");
 				clearCircle();
 				revalidateAndRepaint();
 			}
@@ -202,11 +187,10 @@ System.out.println("clearing circle as mouse exits");
 
 						GLOBAL.OFFSETX = (int) dragX;
 
-						if (GLOBAL.OFFSETX <0) {
-							GLOBAL.OFFSETX  = 0;
+						if (GLOBAL.OFFSETX < 0) {
+							GLOBAL.OFFSETX = 0;
 						}
 
-						
 						if (dragY > max) {
 							dragY = max;
 
@@ -214,8 +198,8 @@ System.out.println("clearing circle as mouse exits");
 
 						GLOBAL.OFFSETY = (int) dragY;
 
-						if (GLOBAL.OFFSETY<0) {
-							GLOBAL.OFFSETY  = 0;
+						if (GLOBAL.OFFSETY < 0) {
+							GLOBAL.OFFSETY = 0;
 						}
 
 						System.out.println("GLOBAL.OFFSETX=" + GLOBAL.OFFSETX);
@@ -314,7 +298,7 @@ System.out.println("clearing circle as mouse exits");
 	}
 
 	public static void setCanvasSize() {
-		
+
 		int sizeX = (int) (GLOBAL.CANVAS_WIDTH * Zoom.factor);
 		int sizeY = (int) (GLOBAL.CANVAS_HEIGHT * Zoom.factor);
 		contentPanel.setVisible(false);
@@ -322,9 +306,9 @@ System.out.println("clearing circle as mouse exits");
 		contentPanel.setMinimumSize(new Dimension(sizeX, sizeY));
 		contentPanel.setPreferredSize(new Dimension(sizeX, sizeY));
 		// MainFrame.scrollPane.setViewportView(null);
-	//	getCP.setSize(new Dimension(sizeX, sizeY));
+		// getCP.setSize(new Dimension(sizeX, sizeY));
 		System.out.println("Testing zoom");
-	//	MainFrame.scrollPane.setViewportView(getCP);
+		// MainFrame.scrollPane.setViewportView(getCP);
 
 		contentPanel.getParent().revalidate();
 		contentPanel.getParent().repaint();
@@ -432,7 +416,7 @@ System.out.println("clearing circle as mouse exits");
 
 		kkk.setVisible(true);
 		contentPanel.add(kkk, 1, 0);
-	
+
 		revalidateAndRepaint();
 	}
 
@@ -519,7 +503,6 @@ System.out.println("clearing circle as mouse exits");
 
 		for (int i = 0; i < canvasContainer.size(); i++) {
 
-
 			int ix = (int) (((JComponent) canvasContainer.get(i)).getX()); // x coordinate of i
 			int iy = (int) (((JComponent) canvasContainer.get(i)).getY()); // y coordinate of i
 			int iWidth = ((JComponent) canvasContainer.get(i)).getWidth(); // width of i
@@ -581,7 +564,6 @@ System.out.println("clearing circle as mouse exits");
 
 		return true;
 	}
-
 
 	public static void revalidateAndRepaint() {
 		System.out.println("Revalidating and Repainting");

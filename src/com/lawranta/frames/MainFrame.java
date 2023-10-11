@@ -1,10 +1,6 @@
 package com.lawranta.frames;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
 import com.lawranta.frames.internal.Menu;
 import com.lawranta.frames.internal.Toolbar;
 import com.lawranta.globals.GLOBAL;
@@ -17,22 +13,22 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import javax.swing.BoxLayout;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.Component;
 import java.awt.Color;
-import java.awt.Toolkit;
 
 public class MainFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	Toolbar toolbar;
 	Menu menu;
 	public static JScrollPane scrollPane;
+
 	/**
 	 * Launch the application.
 	 */
@@ -56,25 +52,24 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		setIconImage(GLOBAL.FAVICO);
 		setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")");
-		
+
 		GLOBAL.CP = new CanvasPanel();
 		setMinimumSize(new Dimension(320, 240));
 		setSize(new Dimension(1024, 768));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		//setBounds(100, 100, 450, 300);
+		// setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(69, 69, 69));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] {32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
-		gbl_contentPane.rowHeights = new int[] {32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 };
+		gbl_contentPane.rowHeights = new int[] { 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
-		
-		
+
 		menu = new Menu();
 		menu.setVisible(true);
 		GridBagConstraints gbc_menu = new GridBagConstraints();
@@ -84,13 +79,12 @@ public class MainFrame extends JFrame {
 		gbc_menu.gridx = 0;
 		gbc_menu.gridy = 0;
 		contentPane.add(menu, gbc_menu);
-		
-		
+
 		toolbar = new Toolbar();
 		toolbar.setMaximumSize(new Dimension(64, 2147483647));
 		toolbar.setMinimumSize(new Dimension(64, 34));
-		//toolbar.setNormalBounds(new Rectangle(100, 100, 64, 300));
-		//toolbar.setResizable(true);
+		// toolbar.setNormalBounds(new Rectangle(100, 100, 64, 300));
+		// toolbar.setResizable(true);
 		toolbar.setSize(new Dimension(64, 300));
 		toolbar.setVisible(true);
 		GridBagConstraints gbc_toolbar = new GridBagConstraints();
@@ -101,29 +95,32 @@ public class MainFrame extends JFrame {
 		gbc_toolbar.gridy = 1;
 		contentPane.add(toolbar, gbc_toolbar);
 		scrollPane = new JScrollPane() {
-		
-			
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 		};
-		
-		
+
 		MouseListener mListener = new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
@@ -137,13 +134,11 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
-			
+
 		};
-		
-		
+
 		scrollPane.addMouseListener(mListener);
 		scrollPane.setPreferredSize(new Dimension(648, 480));
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -158,9 +153,6 @@ public class MainFrame extends JFrame {
 		contentPane.add(scrollPane, gbc_scrollPane);
 		scrollPane.setViewportView(GLOBAL.CP);
 
-		
-
-		
 	}
 
 }

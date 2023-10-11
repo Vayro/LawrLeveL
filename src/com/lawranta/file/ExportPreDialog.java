@@ -15,7 +15,6 @@ import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
-import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
@@ -23,6 +22,10 @@ import javax.swing.SwingConstants;
 
 public class ExportPreDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6237059586053172097L;
 	private final JPanel contentPanel = new JPanel();
 
 	/**
@@ -59,13 +62,9 @@ public class ExportPreDialog extends JDialog {
 			txtrExportingAsPng.setBackground(new Color(240, 240, 240));
 			txtrExportingAsPng.setText("Exporting as PNG");
 			contentPanel.add(txtrExportingAsPng);
-			
-			
-			
+
 		}
-		
-		
-		
+
 		JPanel checkBoxPane = new JPanel();
 		contentPanel.add(checkBoxPane);
 
@@ -86,15 +85,6 @@ public class ExportPreDialog extends JDialog {
 
 		});
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -110,8 +100,9 @@ public class ExportPreDialog extends JDialog {
 						// TODO Auto-generated method stub
 						Export.export();
 						dispose();
-					}});
-					
+					}
+				});
+
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
@@ -124,9 +115,7 @@ public class ExportPreDialog extends JDialog {
 						// TODO Auto-generated method stub
 						dispose();
 					}
-					
-					
-					
+
 				});
 				buttonPane.add(cancelButton);
 			}

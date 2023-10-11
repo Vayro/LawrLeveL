@@ -17,6 +17,10 @@ import javax.swing.JTextArea;
 
 public class About extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3855001895443711422L;
 	private final JPanel contentPanel = new JPanel();
 
 	/**

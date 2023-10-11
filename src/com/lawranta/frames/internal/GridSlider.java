@@ -1,12 +1,10 @@
 package com.lawranta.frames.internal;
 
 import java.awt.EventQueue;
-import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
-import javax.swing.JInternalFrame;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -17,15 +15,8 @@ import com.lawranta.globals.GLOBAL;
 import com.lawranta.globals.IntegerFilter;
 import com.lawranta.panels.CanvasPanel;
 
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Toolkit;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
@@ -34,11 +25,15 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
-import javax.swing.JToggleButton;
 import javax.swing.JCheckBox;
 
 public class GridSlider extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5889446827180023147L;
 	private JTextField textField;
+	@SuppressWarnings("unused")
 	private JPanel contentPane = new JPanel();
 	static JPanel offsetSliders;
 	ChangeListener offsetChange;

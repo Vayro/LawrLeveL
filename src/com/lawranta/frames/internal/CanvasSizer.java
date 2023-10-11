@@ -2,8 +2,6 @@ package com.lawranta.frames.internal;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,19 +14,20 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import com.lawranta.canvas.SelectedTool;
-import com.lawranta.frames.internal.Toolbar.toolButton;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.Window.Type;
+
 
 public class CanvasSizer extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6227487048679852962L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField widthField;
 	private JTextField heightField;

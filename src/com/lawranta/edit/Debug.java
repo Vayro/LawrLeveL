@@ -17,6 +17,10 @@ import com.lawranta.panels.CanvasPanel;
 
 public class Debug extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7009336912835329101L;
 	private JPanel contentPane;
 	JTableHeader header;
 	JTable table;

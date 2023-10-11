@@ -5,8 +5,6 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import com.lawranta.globals.GLOBAL;
-
 public class ExportPathDialog extends JFileChooser {
 
 	/**

@@ -2,7 +2,7 @@ package com.lawranta.canvas;
 
 import java.awt.Color;
 
-import javax.swing.JPanel;
+
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import java.awt.event.FocusEvent;
@@ -10,7 +10,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import com.lawranta.globals.GLOBAL;
+
 import com.lawranta.panels.*;
 
 public class TextNode extends JTextField implements Paint {
