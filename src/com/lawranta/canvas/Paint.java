@@ -32,6 +32,7 @@ public interface Paint {
 	default void 	draw() {}
 
 
+	 void destroy(boolean removeFromContainer) ;
 
 
 

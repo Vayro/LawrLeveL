@@ -239,4 +239,28 @@ public void setLocation() {
 	CanvasPanel.contentPanel.add(thisNode, 2, 0);
 }
 
+
+@Override
+public void destroy(boolean removeFromContainer) {
+	// TODO Auto-generated method stub
+	System.out.println(" deleting mySelf... :( ");
+
+	// x=0;y=0;xSize=0; ySize=0;
+	setVisible(false);
+	removed = true;
+	revalidate();
+	repaint();
+	CanvasPanel.contentPanel.remove(this);
+
+	if (removeFromContainer) {
+		CanvasPanel.canvasContainer.remove(this.id);
+		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
+
+			CanvasPanel.canvasContainer.get(i).setId(i);
+		}
+	}
+
+	
+}
+
 }

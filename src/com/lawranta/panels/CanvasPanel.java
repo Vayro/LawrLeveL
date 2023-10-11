@@ -519,7 +519,6 @@ System.out.println("clearing circle as mouse exits");
 
 		for (int i = 0; i < canvasContainer.size(); i++) {
 
-			// canvasContainer.get(i).destroy(contentPanel);
 
 			int ix = (int) (((JComponent) canvasContainer.get(i)).getX()); // x coordinate of i
 			int iy = (int) (((JComponent) canvasContainer.get(i)).getY()); // y coordinate of i
@@ -531,13 +530,10 @@ System.out.println("clearing circle as mouse exits");
 			// need to check if item being erased has a coordinate that falls within the
 			// coordinate of the eraser brushSize
 
-			// (iy<y2 || iy2>y) // not overlapping Y
-			// (ix2<x || ix>x2) //
-
 			if (checkOverlap(iy, y2, iy2, y, ix2, x, ix, x2))
 
 			{
-				((InkDrop) canvasContainer.get(i)).destroy(false);
+				((Paint) canvasContainer.get(i)).destroy(false);
 				CanvasPanel.canvasContainer.remove(i);
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
@@ -586,31 +582,6 @@ System.out.println("clearing circle as mouse exits");
 		return true;
 	}
 
-	private static void startDeleting() { // legacy
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		Point p2 = contentPanel.getLocationOnScreen();
-		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());
-		int gridSnapx = (int) (x % GLOBAL.GRIDWIDTH);
-		int gridSnapy = (int) (y % GLOBAL.GRIDHEIGHT);
-		x -= gridSnapx;
-		y -= gridSnapy;
-
-		for (int i = 0; i < canvasContainer.size(); i++) {
-
-			// canvasContainer.get(i).destroy(contentPanel);
-
-			if (x == ((JComponent) canvasContainer.get(i)).getX()
-					&& y == ((JComponent) canvasContainer.get(i)).getY()) {
-				((InkDrop) canvasContainer.get(i)).destroy(true);
-				System.out.println("removed " + i + " at " + x + "," + y);
-				System.out.println("canvast Container size: " + canvasContainer.size());
-				canvasContainer.remove(i); //
-				revalidateAndRepaint();
-			}
-
-		}
-
-	}
 
 	public static void revalidateAndRepaint() {
 		System.out.println("Revalidating and Repainting");

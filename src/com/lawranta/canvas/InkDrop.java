@@ -19,7 +19,7 @@ import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
 public class InkDrop extends JPanel implements Paint {
-	int id, x, y, xSize, ySize, offsetX, offsetY, mouseButton = 0, origX, origY;
+	int id, x, y, xSize, ySize, offsetX, offsetY, origX, origY;
 	int unscaledXSize, unscaledYSize, unscaledX, unscaledY;
 	boolean createdWhileZoomed;
 
@@ -121,7 +121,6 @@ public class InkDrop extends JPanel implements Paint {
 	public int getX() {
 		return x;
 	}
-	
 
 	public void setX(int x) {
 		this.x = x;
@@ -152,11 +151,11 @@ public class InkDrop extends JPanel implements Paint {
 	}
 
 	public InkDrop(int x, int y, int xSize, int ySize, int offsetX, int offsetY, Color color) {
-		this.color=color;
-		
+		this.color = color;
+
 		setRequestFocusEnabled(false);
 		setBackground(this.color);
-		//setBackground(new Color(255, 0, 0)); // debug color
+		// setBackground(new Color(255, 0, 0)); // debug color
 		// TODO Auto-generated constructor stub
 
 		this.unscaledXSize = xSize;
@@ -167,10 +166,10 @@ public class InkDrop extends JPanel implements Paint {
 		this.offsetY = offsetY;
 		this.origX = x;
 		this.origY = y;
-		
-		if(Zoom.factor>1) {
-			
-			this.createdWhileZoomed=true;
+
+		if (Zoom.factor > 1) {
+
+			this.createdWhileZoomed = true;
 		}
 
 		int gridSnapx = (int) (x % this.xSize);
@@ -183,18 +182,18 @@ public class InkDrop extends JPanel implements Paint {
 		this.x -= this.offsetX;
 		this.y -= this.offsetY;
 
-		if (this.x + xSize < origX/Zoom.factor) {
+		if (this.x + xSize < origX / Zoom.factor) {
 
-			this.x += xSize*Zoom.factor;
+			this.x += xSize * Zoom.factor;
 		}
 
-		if (this.y + xSize < origY/Zoom.factor) {
+		if (this.y + xSize < origY / Zoom.factor) {
 
-			this.y += ySize*Zoom.factor;
+			this.y += ySize * Zoom.factor;
 		}
 
-		this.unscaledX = (int) (this.x/Zoom.factor);
-		this.unscaledY = (int) (this.y/Zoom.factor);
+		this.unscaledX = (int) (this.x / Zoom.factor);
+		this.unscaledY = (int) (this.y / Zoom.factor);
 
 		draw();
 		setLayout(null);
@@ -219,18 +218,19 @@ public class InkDrop extends JPanel implements Paint {
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("dragged");
-				if (mouseButton == 3) {
+				if (CanvasPanel.mouse == 3 || e.getButton()==3) {
 					startDeleting();
 				}
 
 				if (e.getButton() == 1) {
+					//CanvasPanel.mouse =1;
 					if (SelectedTool.selectedTool == 3) {
 						CanvasPanel.startErasing();
 
-					}else if(SelectedTool.selectedTool == 1) {
-						
+					} else if (SelectedTool.selectedTool == 1) {
+
 						CanvasPanel.startPainting();
-						
+
 					}
 
 				}
@@ -240,7 +240,7 @@ public class InkDrop extends JPanel implements Paint {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				CanvasPanel.mouse  = 0;
 			}
 
 		};
@@ -255,7 +255,7 @@ public class InkDrop extends JPanel implements Paint {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				mouseButton = e.getButton();
+				CanvasPanel.mouse = e.getButton();
 				if (e.getButton() == 3) {
 					startDeleting();
 
@@ -265,20 +265,21 @@ public class InkDrop extends JPanel implements Paint {
 						CanvasPanel.mouse = 1;
 						CanvasPanel.startErasing();
 
-					}else if(SelectedTool.selectedTool == 1) {
-						
+					} else if (SelectedTool.selectedTool == 1) {
+
 						CanvasPanel.startPainting();
-						
+
 					}
 
-				} 
+				}
 
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				mouseButton = 0;
+				CanvasPanel.mouse  = 0;
+	
 			}
 
 			@Override
@@ -290,6 +291,8 @@ public class InkDrop extends JPanel implements Paint {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
+				System.out.println("Stop painting here?j");
+				
 
 			}
 		};
@@ -297,29 +300,11 @@ public class InkDrop extends JPanel implements Paint {
 		addMouseListener(clickListener);
 		addMouseMotionListener(listener);
 
-		
-		
-		
-		
-		this.origX = (int) (origX/Zoom.factor) ;
-		this.origY = (int) (origY/Zoom.factor);
-		
-		
-		
-		
-		
-		
-		
-		
+		this.origX = (int) (origX / Zoom.factor);
+		this.origY = (int) (origY / Zoom.factor);
+
 		checkCollision();
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 
 	public void destroy(boolean removeFromContainer) {
@@ -390,11 +375,6 @@ public class InkDrop extends JPanel implements Paint {
 
 		setBounds((int) (this.x), (int) (this.y), (int) (unscaledXSize * (Zoom.factor)),
 				(int) (unscaledYSize * (Zoom.factor)));
-
-		// setLocation( (int) (this.getLocation().getX()*Zoom.factor), (int)
-		// (this.getLocation().getY()*Zoom.factor));
-		// setBounds((int) (this.x*Zoom.factor),(int) (this.y*Zoom.factor),(int)
-		// (unscaledXSize*Zoom.factor),(int) (unscaledYSize*Zoom.factor));
 
 		revalidate();
 		repaint();
