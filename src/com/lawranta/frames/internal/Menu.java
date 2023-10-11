@@ -13,6 +13,7 @@ import com.lawranta.file.Export;
 import com.lawranta.file.ExportPreDialog;
 import com.lawranta.file.Open;
 import com.lawranta.file.Save;
+import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.help.About;
 import com.lawranta.panels.CanvasPanel;
@@ -21,6 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
@@ -100,7 +102,14 @@ public class Menu extends JMenuBar {
 					CanvasPanel.contentPanel.removeAll();
 					GLOBAL.setDefault();
 					CanvasPanel.setCanvasSize();
-
+					//actually let's just re-create the mainframe instead of just the panel...
+					
+					Point locationholder=GLOBAL.MAINFRAME.getLocation();
+					GLOBAL.MAINFRAME.dispose();
+					GLOBAL.MAINFRAME=new MainFrame();
+					GLOBAL.MAINFRAME.setLocation(locationholder);
+					GLOBAL.MAINFRAME.setVisible(true);
+					
 					break;
 				case "export":
 					JDialog j = new ExportPreDialog();

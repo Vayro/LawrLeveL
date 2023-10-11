@@ -50,7 +50,7 @@ public class About extends JDialog {
 			textArea.setText(
 					"© 2023 Lawrence Biteranta \n\n" +
 			
-							"Version " + GLOBAL.VERSION + "\n\n " + "https://www.Lawranta.com/"
+							"Version " + GLOBAL.VERSION + " " + GLOBAL.VERSION_NAME + "\n\n " + "https://www.Lawranta.com/"
 					
 					
 					

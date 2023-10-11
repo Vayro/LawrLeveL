@@ -432,7 +432,7 @@ System.out.println("clearing circle as mouse exits");
 
 		kkk.setVisible(true);
 		contentPanel.add(kkk, 1, 0);
-		System.out.println("Penis");
+	
 		revalidateAndRepaint();
 	}
 
