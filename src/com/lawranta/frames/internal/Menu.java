@@ -3,6 +3,7 @@ package com.lawranta.frames.internal;
 import java.awt.Color;
 import java.awt.EventQueue;
 
+import com.lawranta.edit.DoListStack;
 import com.lawranta.file.ExportPreDialog;
 import com.lawranta.file.Open;
 import com.lawranta.file.Save;
@@ -127,6 +128,13 @@ public class Menu extends JMenuBar {
 				// TODO Auto-generated method stub
 
 				switch (e.getActionCommand()) {
+				
+				case "undo":
+					DoListStack.UndoListStack.undo();
+					break;
+				case "redo":
+					DoListStack.RedoListStack.redo();
+					break;
 				case "debug":
 
 					GLOBAL.DEBUGFRAME.setVisible(true);
@@ -179,7 +187,13 @@ public class Menu extends JMenuBar {
 
 		editMenu = new JMenu("Edit");
 		add(editMenu);
-
+		
+		EditMenuItem undoMenuItem = new EditMenuItem("Undo", "undo");
+		editMenu.add(undoMenuItem);
+		
+		EditMenuItem redoMenuItem = new EditMenuItem("Redo", "redo");
+		editMenu.add(redoMenuItem);
+		
 		EditMenuItem debugMenuItem = new EditMenuItem("Debug", "debug");
 		editMenu.add(debugMenuItem);
 

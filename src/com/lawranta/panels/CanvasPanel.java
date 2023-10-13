@@ -8,6 +8,7 @@ import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.Paint;
 import com.lawranta.canvas.TextNode;
 import com.lawranta.canvas.Zoom;
+import com.lawranta.edit.DoListItem;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.globals.GLOBAL;
 
@@ -360,6 +361,9 @@ public class CanvasPanel extends JPanel {
 		contentPanel.add(node, 2, 0);
 		canvasContainer.add(node);
 		revalidateAndRepaint();
+		
+		//add to undo stack
+		DoListItem item = new DoListItem("nodeCreated", node);
 
 	}
 
@@ -416,7 +420,7 @@ public class CanvasPanel extends JPanel {
 
 		kkk.setVisible(true);
 		contentPanel.add(kkk, 1, 0);
-
+		DoListItem item = new DoListItem("inkCreated", kkk);
 		revalidateAndRepaint();
 	}
 
@@ -521,6 +525,12 @@ public class CanvasPanel extends JPanel {
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvast Container size: " + canvasContainer.size());
 				revalidateAndRepaint();
+				
+				if( canvasContainer.get(i).getClass()==InkDrop.class) {
+				DoListItem item = new DoListItem("inkDeleted", (InkDrop) canvasContainer.get(i));}
+				else 	if( canvasContainer.get(i).getClass()==TextNode.class){
+				DoListItem item = new DoListItem("nodeDeleted", (TextNode) canvasContainer.get(i));
+				}
 
 			}
 
@@ -553,12 +563,12 @@ public class CanvasPanel extends JPanel {
 		// TODO Auto-generated method stub
 
 		if (ix2 < x || ix > x2) {
-			System.out.println("no x overlap");
+		//	System.out.println("no x overlap");
 			return false;
 		}
 
 		if (iy > y2 || iy2 < y) {
-			System.out.println("no y overlap");
+		//	System.out.println("no y overlap");
 			return false;
 		}
 
@@ -566,7 +576,7 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void revalidateAndRepaint() {
-		System.out.println("Revalidating and Repainting");
+	//	System.out.println("Revalidating and Repainting");
 		gridPane.getParent().getParent().revalidate();
 		gridPane.getParent().getParent().repaint();
 		gridPane.revalidate();

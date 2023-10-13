@@ -10,6 +10,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
+import com.lawranta.edit.DoListItem;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
@@ -330,7 +331,7 @@ public class InkDrop extends JPanel implements Paint {
 
 //
 		destroy(true);
-
+		DoListItem item = new DoListItem("inkDeleted", this);
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
 			CanvasPanel.canvasContainer.get(i).setId(i);
