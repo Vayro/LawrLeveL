@@ -10,7 +10,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
+import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.*;
 
 public class TextNode extends JTextField implements Paint {
@@ -169,6 +169,10 @@ addKeyListener(new KeyListener() {
 			CanvasPanel.contentPanel.requestFocus();
 		
 		}
+		if (e.getKeyCode() == 17) {
+			GLOBAL.MENU.requestFocus();
+			GLOBAL.ctrlPressed = true;
+		}
 		
 		if(e.getKeyCode()==127) {
 			CanvasPanel.contentPanel.requestFocus();
@@ -185,7 +189,10 @@ addKeyListener(new KeyListener() {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if (e.getKeyCode() == 17) {
 		
+			GLOBAL.ctrlPressed = false;
+		}
 	}
 	
 	

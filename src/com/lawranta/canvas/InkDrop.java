@@ -3,7 +3,8 @@ package com.lawranta.canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -211,6 +212,34 @@ public class InkDrop extends JPanel implements Paint {
 			}
 
 		}
+		
+		addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getKeyCode() == 17) {
+					GLOBAL.MENU.requestFocus();
+					GLOBAL.ctrlPressed = true;
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getKeyCode() == 17) {
+					GLOBAL.ctrlPressed = false;
+				}
+			}
+
+		});
+
 
 		MouseMotionListener listener = new MouseMotionListener() {
 

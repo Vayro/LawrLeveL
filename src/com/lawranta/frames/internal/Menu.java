@@ -18,6 +18,8 @@ import javax.swing.JMenuItem;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.border.BevelBorder;
@@ -128,7 +130,7 @@ public class Menu extends JMenuBar {
 				// TODO Auto-generated method stub
 
 				switch (e.getActionCommand()) {
-				
+
 				case "undo":
 					DoListStack.UndoListStack.undo();
 					break;
@@ -187,13 +189,13 @@ public class Menu extends JMenuBar {
 
 		editMenu = new JMenu("Edit");
 		add(editMenu);
-		
+
 		EditMenuItem undoMenuItem = new EditMenuItem("Undo", "undo");
 		editMenu.add(undoMenuItem);
-		
+
 		EditMenuItem redoMenuItem = new EditMenuItem("Redo", "redo");
 		editMenu.add(redoMenuItem);
-		
+
 		EditMenuItem debugMenuItem = new EditMenuItem("Debug", "debug");
 		editMenu.add(debugMenuItem);
 
@@ -202,6 +204,66 @@ public class Menu extends JMenuBar {
 
 		HelpMenuItem AboutMenuItem = new HelpMenuItem("About", "about");
 		helpMenu.add(AboutMenuItem);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//shortcuts
+		{
+			addKeyListener(new KeyListener() {
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+					switch(e.getKeyCode()) {
+					case 90:
+						//undo
+						DoListStack.UndoListStack.undo();
+					break;
+					case 89:
+						//redo
+						DoListStack.RedoListStack.redo();
+					break;
+					
+					}
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+					if (e.getKeyCode() == 17) {
+						GLOBAL.ctrlPressed = false;
+					}
+				}
+
+			});
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		}
+		
 
 	}
 

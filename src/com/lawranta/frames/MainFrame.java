@@ -26,7 +26,6 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	Toolbar toolbar;
-	Menu menu;
 	public static JScrollPane scrollPane;
 
 	/**
@@ -70,15 +69,15 @@ public class MainFrame extends JFrame {
 		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
-		menu = new Menu();
-		menu.setVisible(true);
+		GLOBAL.MENU = new Menu();
+		GLOBAL.MENU.setVisible(true);
 		GridBagConstraints gbc_menu = new GridBagConstraints();
 		gbc_menu.fill = GridBagConstraints.HORIZONTAL;
 		gbc_menu.gridwidth = 10;
 		gbc_menu.insets = new Insets(0, 0, 0, 5);
 		gbc_menu.gridx = 0;
 		gbc_menu.gridy = 0;
-		contentPane.add(menu, gbc_menu);
+		contentPane.add(GLOBAL.MENU, gbc_menu);
 
 		toolbar = new Toolbar();
 		toolbar.setMaximumSize(new Dimension(64, 2147483647));
