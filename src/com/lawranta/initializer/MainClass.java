@@ -1,12 +1,13 @@
 package com.lawranta.initializer;
 
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import com.lawranta.edit.Debug;
 import com.lawranta.file.*;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
+
+
 
 public class MainClass {
 
@@ -14,8 +15,7 @@ public class MainClass {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, UnsupportedLookAndFeelException {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		UIManager.put("Menu.foreground", GLOBAL.lightColor);
@@ -33,9 +33,9 @@ public class MainClass {
 
 		GLOBAL.filePathDialog = new FilePathDialog();
 		GLOBAL.exportPathDialog = new ExportPathDialog();
-		GLOBAL.MAINFRAME.setVisible(true)
-
-		;
+		GLOBAL.MAINFRAME.setVisible(true);
+		
+	
 
 	}
 
