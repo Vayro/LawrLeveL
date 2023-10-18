@@ -570,9 +570,9 @@ public class CanvasPanel extends JPanel {
 
 			{
 				((Paint) canvasContainer.get(i)).destroy(false);
-				CanvasPanel.canvasContainer.remove(i);
+				//CanvasPanel.canvasContainer.remove(i);
 				System.out.println("removed " + i + " at " + x + "," + y);
-				System.out.println("canvast Container size: " + canvasContainer.size());
+				System.out.println("canvas Container size: " + canvasContainer.size());
 				revalidateAndRepaint();
 
 				if (canvasContainer.get(i).getClass() == InkDrop.class) {
