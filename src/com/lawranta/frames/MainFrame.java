@@ -14,11 +14,13 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements KeyListener {
 
 	/**
 	 * 
@@ -31,6 +33,24 @@ public class MainFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Key Typed");
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Key Pressed");
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Key Released");
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -51,7 +71,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		setIconImage(GLOBAL.FAVICO);
 		setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")");
-
+		setFocusable(true);
 		GLOBAL.CP = new CanvasPanel();
 		setMinimumSize(new Dimension(320, 240));
 		setSize(new Dimension(1024, 768));

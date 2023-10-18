@@ -25,6 +25,7 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -75,12 +76,16 @@ public class CanvasPanel extends JPanel {
 		}
 	}
 
+	
+	
 	public CanvasPanel() {
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBackground(new Color(0, 0, 0));
+		setFocusable(true);
+		requestFocus(true);
 		SelectedTool.setToolDefault();
 		getCP = this;
 
@@ -595,7 +600,7 @@ public class CanvasPanel extends JPanel {
 
 		Shape circle = new Rectangle2D.Double(p.getX(), p.getY(), DIAMETER, DIAMETER);
 
-		g2.setXORMode(XOR_COLOR);
+		//g2.setXORMode(XOR_COLOR);
 		g2.draw(circle);
 		g2.setPaintMode();
 
@@ -629,5 +634,6 @@ public class CanvasPanel extends JPanel {
 		contentPanel.repaint();
 		GLOBAL.DEBUGFRAME.refresh();
 	}
+
 
 }

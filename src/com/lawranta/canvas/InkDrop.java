@@ -15,7 +15,7 @@ import com.lawranta.edit.DoListItem;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
-public class InkDrop extends JPanel implements Paint {
+public class InkDrop extends JPanel implements Paint, KeyListener {
 	/**
 	 * 
 	 */
@@ -25,8 +25,16 @@ public class InkDrop extends JPanel implements Paint {
 	boolean createdWhileZoomed;
 
 	/**
+	 * @return 
 	 * @return the id
 	 */
+	
+	@Override
+	public boolean isFocusTraversable(){
+		
+		return true;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -156,6 +164,7 @@ public class InkDrop extends JPanel implements Paint {
 
 		setRequestFocusEnabled(false);
 		setBackground(this.color);
+		requestFocus();
 		// setBackground(new Color(255, 0, 0)); // debug color
 		// TODO Auto-generated constructor stub
 
@@ -218,24 +227,19 @@ public class InkDrop extends JPanel implements Paint {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
-
+				System.out.println("Key Typed");
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				if (e.getKeyCode() == 17) {
-					GLOBAL.MENU.requestFocus();
-					GLOBAL.ctrlPressed = true;
-				}
+				System.out.println("Key Pressed");
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
-				if (e.getKeyCode() == 17) {
-					GLOBAL.ctrlPressed = false;
-				}
+				System.out.println("Key Released");
 			}
 
 		});
@@ -407,6 +411,24 @@ public class InkDrop extends JPanel implements Paint {
 		revalidate();
 		repaint();
 
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Key Typed");
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Key Pressed");
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Key Released");
 	}
 
 }
