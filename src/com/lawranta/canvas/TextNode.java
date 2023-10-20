@@ -166,16 +166,19 @@ addKeyListener(new KeyListener() {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getKeyCode()==10) {
-			CanvasPanel.contentPanel.requestFocus();
+			System.out.println("enter pressed");
+			GLOBAL.MAINFRAME.requestFocus();
 		
 		}
 		if (e.getKeyCode() == 17) {
-			GLOBAL.MENU.requestFocus();
+			System.out.println("ctrl pressed");
+			GLOBAL.MAINFRAME.requestFocus();
 			GLOBAL.ctrlPressed = true;
 		}
 		
 		if(e.getKeyCode()==127) {
-			CanvasPanel.contentPanel.requestFocus();
+			System.out.println("Delete pressed");
+			GLOBAL.MAINFRAME.requestFocus();
 			CanvasPanel.contentPanel.remove(thisNode);
 		
 		}
@@ -194,7 +197,6 @@ addKeyListener(new KeyListener() {
 			GLOBAL.ctrlPressed = false;
 		}
 	}
-	
 	
 	
 });

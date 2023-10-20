@@ -2,11 +2,13 @@ package com.lawranta.edit;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.KeyboardFocusManager;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
 
@@ -14,6 +16,8 @@ import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.TextNode;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
+import javax.swing.JTextPane;
+import java.awt.Dimension;
 
 public class Debug extends JFrame {
 
@@ -24,9 +28,10 @@ public class Debug extends JFrame {
 	private JPanel contentPane;
 	JTableHeader header;
 	JTable table;
-	JScrollPane scroll;
+	JScrollPane scroll, scroll2;
 	Object[][] data;
-	String[] headers={"CC Index","ID","X","Y","Type"};;
+	String[] headers = { "CC Index", "ID", "X", "Y", "Type" };
+	private JTextArea textPane;;
 
 	/**
 	 * Launch the application.
@@ -56,7 +61,6 @@ public class Debug extends JFrame {
 
 		data = new Object[CanvasPanel.canvasContainer.size()][5];
 
-
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
 			if (CanvasPanel.canvasContainer.get(i).getClass() == InkDrop.class) {
@@ -83,7 +87,9 @@ public class Debug extends JFrame {
 		}
 
 		scroll = new JScrollPane();
-
+		scroll2 = new JScrollPane();
+		scroll2.setMinimumSize(new Dimension(450, 64));
+		scroll2.setPreferredSize(new Dimension(450, 64));
 		table = new JTable(data, headers) {
 			/**
 			 * 
@@ -105,6 +111,14 @@ public class Debug extends JFrame {
 
 		getContentPane().add(scroll);
 
+		textPane = new JTextArea();
+		textPane.setLineWrap(true);
+		textPane.setRows(2);
+		textPane.setMinimumSize(new Dimension(128, 128));
+		contentPane.add(scroll2, BorderLayout.SOUTH);
+
+		scroll2.setViewportView(textPane);
+
 		setVisible(true);
 
 	}
@@ -112,7 +126,6 @@ public class Debug extends JFrame {
 	public void refresh() {
 		// TODO Auto-generated method stub
 		data = new Object[CanvasPanel.canvasContainer.size()][5];
-
 
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
@@ -124,7 +137,6 @@ public class Debug extends JFrame {
 				data[i][3] = ((InkDrop) CanvasPanel.canvasContainer.get(i)).getY();
 				data[i][4] = "InkDrop";
 
-				
 			}
 
 			else if (CanvasPanel.canvasContainer.get(i).getClass() == TextNode.class) {
@@ -152,7 +164,11 @@ public class Debug extends JFrame {
 
 		};
 		scroll.setViewportView(table);
-	//	System.out.println("refreshed deubugger");
+		textPane.setText(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().toString()
+
+		);
+		textPane.setCaretPosition(0);
+		// System.out.println("refreshed deubugger");
 
 	}
 

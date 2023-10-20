@@ -5,6 +5,7 @@ import java.util.Stack;
 
 import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.TextNode;
+import com.lawranta.canvas.Zoom;
 import com.lawranta.panels.CanvasPanel;
 
 public class DoListStack {
@@ -123,6 +124,18 @@ public class DoListStack {
 
 					InkDrop drop = rebuildInkDrop(action.getInkDrop());
 					DoListItem item = new DoListItem("inkCreated", drop);
+					
+					
+					
+					
+					drop.setX((int) (drop.getUnscaledX() * Zoom.factor));
+					drop.setY((int) (drop.getUnscaledY() * Zoom.factor));
+					drop.setxSize((int) (drop.getxSize() * Zoom.factor));
+					drop.setySize((int) (drop.getySize() * Zoom.factor));
+					drop.draw();
+					
+					
+					
 					break;
 				}
 				case "inkDeleted": {
@@ -139,7 +152,7 @@ public class DoListStack {
 					System.out.println("undo text create");
 
 					TextNode node = rebuildTextNode(action.getTextNode());
-					DoListItem item = new DoListItem("nodeCreated", node);
+					DoListItem item = new DoListItem("nodeCreated", node);			
 					break;
 				}
 				case "nodeDeleted": {

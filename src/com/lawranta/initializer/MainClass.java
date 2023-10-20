@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 import com.lawranta.edit.Debug;
 import com.lawranta.file.*;
 import com.lawranta.frames.MainFrame;
+import com.lawranta.frames.ShortcutKeyListener;
 import com.lawranta.globals.GLOBAL;
 
 import java.awt.event.KeyEvent;
@@ -31,12 +32,12 @@ public class MainClass {
 
 		GLOBAL.MAINFRAME = new MainFrame();
 		GLOBAL.DEBUGFRAME = new Debug();
-		GLOBAL.DEBUGFRAME.setVisible(false);
+		//GLOBAL.DEBUGFRAME.setVisible(false);
 
 		GLOBAL.filePathDialog = new FilePathDialog();
 		GLOBAL.exportPathDialog = new ExportPathDialog();
 		GLOBAL.MAINFRAME.setVisible(true);
-		
+		GLOBAL.MAINFRAME.addKeyListener(new ShortcutKeyListener());
 
 		
 	}

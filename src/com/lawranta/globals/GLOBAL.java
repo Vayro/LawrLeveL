@@ -18,7 +18,7 @@ import com.lawranta.frames.internal.Menu;
 import com.lawranta.panels.CanvasPanel;
 
 public class GLOBAL {
-	public static final double VERSION=0.03;
+	public static final double VERSION=0.04;
 	public static final String VERSION_NAME="Public Alpha";
 	public static int GRIDWIDTH=(int) (32*Zoom.factor), GRIDHEIGHT=(int) (32*Zoom.factor),CANVAS_WIDTH=1024, CANVAS_HEIGHT=1024,  OFFSETX=0, OFFSETY=0, DEFAULTGRIDSIZE;
 	public static CanvasPanel CP;

@@ -20,7 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
 
-public class MainFrame extends JFrame implements KeyListener {
+public class MainFrame extends JFrame {
 
 	/**
 	 * 
@@ -33,23 +33,7 @@ public class MainFrame extends JFrame implements KeyListener {
 	/**
 	 * Launch the application.
 	 */
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("Key Typed");
-	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("Key Pressed");
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("Key Released");
-	}
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -91,6 +75,7 @@ public class MainFrame extends JFrame implements KeyListener {
 
 		GLOBAL.MENU = new Menu();
 		GLOBAL.MENU.setVisible(true);
+		GLOBAL.MENU.setFocusable(true);
 		GridBagConstraints gbc_menu = new GridBagConstraints();
 		gbc_menu.fill = GridBagConstraints.HORIZONTAL;
 		gbc_menu.gridwidth = 10;

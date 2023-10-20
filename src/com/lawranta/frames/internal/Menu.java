@@ -24,7 +24,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.border.BevelBorder;
 
-public class Menu extends JMenuBar {
+public class Menu extends JMenuBar implements KeyListener {
 
 	/**
 	 * 
@@ -74,7 +74,7 @@ public class Menu extends JMenuBar {
 		setBackground(new Color(69, 69, 69));
 		setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		this.setOpaque(false);
-
+		setFocusable(true);
 		fileMenu = new JMenu("File");
 		fileMenu.setBackground(new Color(69, 69, 69));
 		fileAction = new ActionListener() {
@@ -95,17 +95,7 @@ public class Menu extends JMenuBar {
 					break;
 				case "new":
 
-					CanvasPanel.canvasContainer.clear();
-					CanvasPanel.contentPanel.removeAll();
-					GLOBAL.setDefault();
-					CanvasPanel.setCanvasSize();
-					// actually let's just re-create the mainframe instead of just the panel...
-
-					Point locationholder = GLOBAL.MAINFRAME.getLocation();
-					GLOBAL.MAINFRAME.dispose();
-					GLOBAL.MAINFRAME = new MainFrame();
-					GLOBAL.MAINFRAME.setLocation(locationholder);
-					GLOBAL.MAINFRAME.setVisible(true);
+					newCanvas();
 
 					break;
 				case "export":
@@ -173,11 +163,11 @@ public class Menu extends JMenuBar {
 
 		add(fileMenu);
 
-		FileMenuItem newMenuItem = new FileMenuItem("New", "new");
+		FileMenuItem newMenuItem = new FileMenuItem("New (ctrl+n)", "new");
 
-		FileMenuItem openMenuItem = new FileMenuItem("Open", "open");
+		FileMenuItem openMenuItem = new FileMenuItem("Open (ctrl+O)", "open");
 
-		FileMenuItem SaveMenuItem = new FileMenuItem("Save", "save");
+		FileMenuItem SaveMenuItem = new FileMenuItem("Save (ctrl+S)", "save");
 
 		FileMenuItem SaveAsMenuItem = new FileMenuItem("Save As...", "saveAs");
 		FileMenuItem ExportMenuItem = new FileMenuItem("Export as PNG", "export");
@@ -190,10 +180,10 @@ public class Menu extends JMenuBar {
 		editMenu = new JMenu("Edit");
 		add(editMenu);
 
-		EditMenuItem undoMenuItem = new EditMenuItem("Undo", "undo");
+		EditMenuItem undoMenuItem = new EditMenuItem("Undo (ctrl+Z)", "undo");
 		editMenu.add(undoMenuItem);
 
-		EditMenuItem redoMenuItem = new EditMenuItem("Redo", "redo");
+		EditMenuItem redoMenuItem = new EditMenuItem("Redo (ctrl+Y)", "redo");
 		editMenu.add(redoMenuItem);
 
 		EditMenuItem debugMenuItem = new EditMenuItem("Debug", "debug");
@@ -267,6 +257,22 @@ public class Menu extends JMenuBar {
 
 	}
 
+	public static void newCanvas() {
+		// TODO Auto-generated method stub
+		CanvasPanel.canvasContainer.clear();
+		CanvasPanel.contentPanel.removeAll();
+		GLOBAL.setDefault();
+		CanvasPanel.setCanvasSize();
+		// actually let's just re-create the mainframe instead of just the panel...
+
+		Point locationholder = GLOBAL.MAINFRAME.getLocation();
+		GLOBAL.MAINFRAME.dispose();
+		GLOBAL.MAINFRAME = new MainFrame();
+		GLOBAL.MAINFRAME.setLocation(locationholder);
+		GLOBAL.MAINFRAME.setVisible(true);
+		
+	}
+
 	public class FileMenuItem extends JMenuItem {
 
 		/**
@@ -313,5 +319,23 @@ public class Menu extends JMenuBar {
 			helpMenu.add(this);
 
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e.getKeyChar());
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
