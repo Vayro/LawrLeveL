@@ -8,6 +8,7 @@ import com.lawranta.edit.DoListStack;
 import com.lawranta.file.Open;
 import com.lawranta.file.Save;
 import com.lawranta.frames.internal.Menu;
+import com.lawranta.frames.internal.Toolbar;
 import com.lawranta.globals.GLOBAL;
 
 public class ShortcutKeyListener implements KeyListener {
@@ -37,11 +38,11 @@ public class ShortcutKeyListener implements KeyListener {
 			switch (e.getKeyCode()) {
 			case 66: // B
 				System.out.println("Brush Tool");
-				SelectedTool.setInkDropTool();
+				Toolbar.setBrush();
 				break;
 			case 69: // E
 				System.out.println("EraserTool");
-				SelectedTool.setEraserTool();
+				Toolbar.setEraser();
 				break;
 			case 78: // N
 				System.out.println("New");
@@ -56,8 +57,8 @@ public class ShortcutKeyListener implements KeyListener {
 				Save.save();
 				break;
 			case 84: // T
-				System.out.println("InkDrop Tool");
-				SelectedTool.setTextTool();
+				System.out.println("Text Tool");
+				Toolbar.setText();
 				break;
 			
 			case 90: // z

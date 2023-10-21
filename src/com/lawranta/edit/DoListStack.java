@@ -1,6 +1,7 @@
 package com.lawranta.edit;
 
 import java.awt.Color;
+
 import java.util.Stack;
 
 import com.lawranta.canvas.InkDrop;
@@ -26,6 +27,7 @@ public class DoListStack {
 		public void AddToStack(DoListItem e) {
 			// TODO Auto-generated constructor stub
 			undoList.add(e);
+		
 		}
 
 		public static void PrintStack() {

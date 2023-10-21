@@ -26,13 +26,13 @@ public class GridPanel extends JPanel {
 		if (!CanvasPanel.hideGrid)
 			CanvasPanel.cg = new CreateGrid(g, (int) (GLOBAL.GRIDWIDTH * Zoom.factor),
 					(int) (GLOBAL.GRIDHEIGHT * Zoom.factor), (int) (GLOBAL.CANVAS_WIDTH * Zoom.factor),
-					(int) (GLOBAL.CANVAS_HEIGHT * Zoom.factor), Color.RED);
+					(int) (GLOBAL.CANVAS_HEIGHT * Zoom.factor), GLOBAL.gridColor);
 
 	}
 
 	public GridPanel() {
 		setLayout(null);
-		setBackground(new Color(0, 255, 255, 50));
+		//setBackground(new Color(0, 255, 23, 50));
 		setOpaque(false);
 		setSize(CanvasPanel.contentPanel.getSize());
 		setMinimumSize(CanvasPanel.contentPanel.getMinimumSize());

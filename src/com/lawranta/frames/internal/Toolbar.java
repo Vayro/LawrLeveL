@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.canvas.Zoom;
+import com.lawranta.frames.internal.Toolbar.toolButton;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 
@@ -113,23 +114,25 @@ public class Toolbar extends JPanel {
 
 				switch (e.getActionCommand()) {
 				case "Brush":
-					SelectedTool.setInkDropTool();
-					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-					CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+					setBrush();
 					break;
 
 				case "Aa":
-					SelectedTool.setTextTool();
-					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-					CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+					setText();
 					break;
 
 				case "Color":
 
 					j = GLOBAL.CC;
 
-					j.setLocation(colorButton.getLocationOnScreen());
+					// j.setLocation(colorButton.getLocationOnScreen());
+					j.setLocationRelativeTo(null);
 					j.setVisible(true);
+
+					if (GLOBAL.CC.cancelled == false) {
+						SelectedTool.selectedColor = GLOBAL.CC.j.getColor();
+						toolButton.colorBorder(Toolbar.colorButton);
+					}
 
 					break;
 
@@ -139,11 +142,7 @@ public class Toolbar extends JPanel {
 					break;
 
 				case "Eraser":
-					circle = makeImage(32, 32);
-					eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0, 0), "eraser");
-					SelectedTool.setEraserTool();
-					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-					CanvasPanel.contentPanel.setCursor(eraserCursor);
+					setEraser();
 
 					break;
 				case "Grid":
@@ -304,6 +303,44 @@ public class Toolbar extends JPanel {
 		setBounds(100, 100, 450, 300);
 
 	}
+	
+	
+	
+	
+	
+	
+	public static void setBrush() {
+		
+		SelectedTool.setInkDropTool();
+		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+		CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+		
+	}
+	
+	
+public static void setText() {
+		
+	SelectedTool.setTextTool();
+	System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+	CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+		
+	}
+	
+	
+public static void setEraser() {
+	circle = makeImage(32, 32);
+	eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0, 0), "eraser");
+	SelectedTool.setEraserTool();
+	System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+	CanvasPanel.contentPanel.setCursor(eraserCursor);
+	
+	
+}
+	
+
+	
+	
+	
 
 	static public BufferedImage makeImage(int width, int height) {
 		// BufferedImage is actually already transparent on my system, but that isn't
@@ -354,6 +391,9 @@ public class Toolbar extends JPanel {
 		}
 
 	}
+	
+	
+
 
 	/**
 	 * 

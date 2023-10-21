@@ -25,6 +25,8 @@ public class ColorChooser extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	ActionListener actionListener;
+	public boolean cancelled;
+	public JColorChooser j;
 
 	/**
 	 * Launch the application.
@@ -44,11 +46,10 @@ public class ColorChooser extends JDialog {
 	 * Create the dialog.
 	 */
 	public ColorChooser() {
+		setUndecorated(true);
 		getContentPane().setBackground(new Color(255, 255, 255));
 		((JComponent) getContentPane())
 				.setBorder(new TitledBorder(null, "Pick Color", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-
-		setUndecorated(true);
 		setAlwaysOnTop(true);
 
 		setMinimumSize(new Dimension(700, 420));
@@ -61,7 +62,7 @@ public class ColorChooser extends JDialog {
 		getContentPane().add(contentPanel);
 		setModal(true);
 
-		JColorChooser j = new JColorChooser();
+		 j = new JColorChooser();
 		j.setBackground(new Color(78, 78, 78));
 		contentPanel.add(j);
 
@@ -72,13 +73,14 @@ public class ColorChooser extends JDialog {
 				// TODO Auto-generated method stub
 				switch (e.getActionCommand()) {
 				case "OK":
-					SelectedTool.selectedColor = j.getColor();
-					toolButton.colorBorder(Toolbar.colorButton);
+
+					cancelled=false;
 					dispose();
 
 					break;
 
 				case "Cancel":
+					cancelled = true;
 					dispose();
 					break;
 				}
@@ -89,7 +91,8 @@ public class ColorChooser extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setBackground(new Color(0, 0, 0));
+			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
@@ -105,6 +108,24 @@ public class ColorChooser extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 
+		}
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(0, 0, 0));
+			getContentPane().add(buttonPane, BorderLayout.NORTH);
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			{
+				JButton okButton = new JButton("✓");
+				okButton.setActionCommand("OK");
+				okButton.addActionListener(actionListener);
+				buttonPane.add(okButton);
+			}
+			{
+				JButton btnX = new JButton("X");
+				btnX.setActionCommand("Cancel");
+				btnX.addActionListener(actionListener);
+				buttonPane.add(btnX);
+			}
 		}
 	}
 

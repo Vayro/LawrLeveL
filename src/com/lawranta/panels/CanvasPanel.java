@@ -58,6 +58,7 @@ public class CanvasPanel extends JPanel {
 	static CanvasPanel getCP;
 	private static double DIAMETER = SelectedTool.brushSize;
 	private static final Color XOR_COLOR = Color.yellow;
+	public static JComponent canvas;
 	Graphics2D g2 = (Graphics2D) getGraphics();
 	Point p;
 	MouseEvent e;
@@ -76,40 +77,41 @@ public class CanvasPanel extends JPanel {
 		}
 	}
 
-	
-	
 	public CanvasPanel() {
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
+		canvas = this;
 		setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setBackground(new Color(0, 0, 0));
+		setBackground(GLOBAL.bgColor);
 		setFocusable(true);
 		requestFocus(true);
 		SelectedTool.setToolDefault();
 		getCP = this;
 
 		contentPanel = new JLayeredPane() {
-			
+
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 7384584610102161622L;
 
-			public boolean isFocusTraversable ( ) {
-				return true ;
-				}
-			
+			public boolean isFocusTraversable() {
+				return true;
+			}
+
 		};
-		contentPanel.setFocusable(true);;
+		contentPanel.setFocusable(true);
+		;
 		contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		contentPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
-		contentPanel.setBackground(new Color(255, 255, 255));
+		contentPanel.setBackground(GLOBAL.gridBGColor);
 		contentPanel.setOpaque(true);
 		contentPanel.setSize(new Dimension(canvasWidthDefault, canvasHeightDefault));
 		contentPanel.setMinimumSize(new Dimension(canvasWidthDefault, canvasHeightDefault));
 		contentPanel.setPreferredSize(new Dimension(canvasWidthDefault, canvasHeightDefault));
+		contentPanel.setLocation(32, 32);
 		gridPane = new GridPanel();
 
 		add(contentPanel);
@@ -570,7 +572,7 @@ public class CanvasPanel extends JPanel {
 
 			{
 				((Paint) canvasContainer.get(i)).destroy(false);
-				//CanvasPanel.canvasContainer.remove(i);
+				// CanvasPanel.canvasContainer.remove(i);
 				System.out.println("removed " + i + " at " + x + "," + y);
 				System.out.println("canvas Container size: " + canvasContainer.size());
 				revalidateAndRepaint();
@@ -600,7 +602,7 @@ public class CanvasPanel extends JPanel {
 
 		Shape circle = new Rectangle2D.Double(p.getX(), p.getY(), DIAMETER, DIAMETER);
 
-		//g2.setXORMode(XOR_COLOR);
+		// g2.setXORMode(XOR_COLOR);
 		g2.draw(circle);
 		g2.setPaintMode();
 
@@ -626,6 +628,8 @@ public class CanvasPanel extends JPanel {
 
 	public static void revalidateAndRepaint() {
 		// System.out.println("Revalidating and Repainting");
+		contentPanel.setBackground(GLOBAL.gridBGColor);
+		canvas.setBackground(GLOBAL.bgColor);
 		gridPane.getParent().getParent().revalidate();
 		gridPane.getParent().getParent().repaint();
 		gridPane.revalidate();
@@ -634,6 +638,5 @@ public class CanvasPanel extends JPanel {
 		contentPanel.repaint();
 		GLOBAL.DEBUGFRAME.refresh();
 	}
-
 
 }

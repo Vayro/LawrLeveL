@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.TextNode;
+import com.lawranta.edit.DoListStack.RedoListStack;
 
 public class DoListItem {
 	
@@ -29,6 +30,7 @@ public class DoListItem {
 		this.id=inkDrop.getId();
 		this.action=action;
 		DoListStack.undoList.add(this);
+		DoListStack.redoList.clear();
 	}
 	
 	public DoListItem(String action, TextNode textNode) {
@@ -39,12 +41,14 @@ public class DoListItem {
 		this.id=textNode.getId();
 		this.action=action;
 		DoListStack.undoList.add(this);
+		DoListStack.redoList.clear();
 	}
 	
 	public DoListItem(String action) {
 		// TODO Auto-generated constructor stub
 		this.action=action;
 		DoListStack.undoList.add(this);
+		DoListStack.redoList.clear();
 	}
 
 	/**
@@ -198,7 +202,7 @@ public class DoListItem {
 	 * @param textNode the textNode to set
 	 */
 	public void setTextNode(TextNode textNode) {
-		textNode = textNode;
+		this.textNode = textNode;
 	}
 	
 

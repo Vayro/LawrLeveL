@@ -131,6 +131,9 @@ public class Menu extends JMenuBar implements KeyListener {
 
 					GLOBAL.DEBUGFRAME.setVisible(true);
 					break;
+				case "preferences":
+					GLOBAL.preferences.setVisible(true);
+					break;
 
 				default:
 
@@ -189,6 +192,9 @@ public class Menu extends JMenuBar implements KeyListener {
 		EditMenuItem debugMenuItem = new EditMenuItem("Debug", "debug");
 		editMenu.add(debugMenuItem);
 
+		EditMenuItem preferencesMenuItem = new EditMenuItem("Preferences", "preferences");
+		editMenu.add(preferencesMenuItem);
+		
 		helpMenu = new JMenu("Help");
 		add(helpMenu);
 

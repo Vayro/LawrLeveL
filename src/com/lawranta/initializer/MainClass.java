@@ -7,9 +7,9 @@ import com.lawranta.file.*;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.frames.ShortcutKeyListener;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.popups.Preferences;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 
 public class MainClass {
 	private static boolean run = true;
@@ -20,6 +20,8 @@ public class MainClass {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
+		
+		
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		UIManager.put("Menu.foreground", GLOBAL.lightColor);
 		UIManager.put("MenuItem.background", GLOBAL.darkColor);
@@ -28,18 +30,24 @@ public class MainClass {
 
 		System.out.println("initializing..");
 
-		GLOBAL.fileInfo = new FileInfo();
 
+		 
+		
+		GLOBAL.fileInfo = new FileInfo();
+		
+		//create e CGF file if it does not exist
+		PropertiesCFG.mainCFG();
+		PropertiesCFG.cfgLoad();
+		
 		GLOBAL.MAINFRAME = new MainFrame();
 		GLOBAL.DEBUGFRAME = new Debug();
 		//GLOBAL.DEBUGFRAME.setVisible(false);
-
+		GLOBAL.preferences= new Preferences();
 		GLOBAL.filePathDialog = new FilePathDialog();
 		GLOBAL.exportPathDialog = new ExportPathDialog();
 		GLOBAL.MAINFRAME.setVisible(true);
 		GLOBAL.MAINFRAME.addKeyListener(new ShortcutKeyListener());
 
-		
 	}
 	
 	
