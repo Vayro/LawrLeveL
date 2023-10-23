@@ -197,7 +197,7 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				GLOBAL.MAINFRAME.requestFocus();
 			}
 
 			@Override
@@ -339,14 +339,15 @@ public class CanvasPanel extends JPanel {
 
 	public void clearCircle() {
 		if (m_circle != null) {
+			if(g2!=null) {
 			g2.setXORMode(XOR_COLOR);
 			g2.draw(m_circle);
 			g2.setPaintMode();
 
 			m_circle = null;
-			revalidateAndRepaint();
-		}
-
+			
+		}}
+		revalidateAndRepaint();
 	}
 
 	public static void setCanvasSize() {

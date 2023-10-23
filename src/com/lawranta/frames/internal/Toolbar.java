@@ -70,6 +70,7 @@ public class Toolbar extends JPanel {
 		 * setIconifiable(true); setMaximizable(true);
 		 */
 		setBackground(new Color(69, 69, 69));
+		setFocusable(false);
 		addMouseListener(new MouseListener() {
 
 			@Override
@@ -101,7 +102,7 @@ public class Toolbar extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				GLOBAL.MAINFRAME.requestFocus();
 			}
 
 		});

@@ -19,7 +19,7 @@ import com.lawranta.panels.CanvasPanel;
 import com.lawranta.popups.Preferences;
 
 public class GLOBAL {
-	public static final double VERSION=0.05;
+	public static final double VERSION=1.0;
 	public static final String VERSION_NAME="Public Alpha";
 	public static int GRIDWIDTH=(int) (32*Zoom.factor), GRIDHEIGHT=(int) (32*Zoom.factor),CANVAS_WIDTH=1024, CANVAS_HEIGHT=1024,  OFFSETX=0, OFFSETY=0, DEFAULTGRIDSIZE;
 	public static CanvasPanel CP;

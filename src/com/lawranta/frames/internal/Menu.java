@@ -10,6 +10,7 @@ import com.lawranta.file.Save;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.help.About;
+import com.lawranta.initializer.MainClass;
 import com.lawranta.panels.CanvasPanel;
 import javax.swing.JDialog;
 import javax.swing.JMenuBar;
@@ -30,8 +31,8 @@ public class Menu extends JMenuBar implements KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JMenu fileMenu, editMenu, helpMenu;
-	ActionListener fileAction, editAction, helpAction;
+	JMenu fileMenu, editMenu, toolsMenu, helpMenu;
+	ActionListener fileAction, editAction, helpAction, toolsAction;
 	@SuppressWarnings("unused")
 	private JMenuItem AboutMenuItem;
 
@@ -143,6 +144,33 @@ public class Menu extends JMenuBar implements KeyListener {
 			}
 		};
 
+		toolsAction = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				switch (e.getActionCommand()) {
+				case "inkdrop":
+					Toolbar.setBrush();
+
+					break;
+				case "eraser":
+					Toolbar.setEraser();
+
+					break;
+				case "text":
+					Toolbar.setText();
+
+					break;
+				default:
+
+					break;
+
+				}
+			}
+		};
+
 		helpAction = new ActionListener() {
 
 			@Override
@@ -194,24 +222,23 @@ public class Menu extends JMenuBar implements KeyListener {
 
 		EditMenuItem preferencesMenuItem = new EditMenuItem("Preferences", "preferences");
 		editMenu.add(preferencesMenuItem);
-		
+
+		toolsMenu = new JMenu("Tools");
+		add(toolsMenu);
+		ToolsMenuItem BrushMenuItem = new ToolsMenuItem("Brush (ctrl+B)", "inkdrop");
+		toolsMenu.add(BrushMenuItem);
+		ToolsMenuItem EraserMenuItem = new ToolsMenuItem("Eraser (ctrl+E)", "eraser");
+		toolsMenu.add(EraserMenuItem);
+		ToolsMenuItem TextMenuItem = new ToolsMenuItem("Text Tool (ctrl+T)", "text");
+		toolsMenu.add(TextMenuItem);
+
 		helpMenu = new JMenu("Help");
 		add(helpMenu);
 
 		HelpMenuItem AboutMenuItem = new HelpMenuItem("About", "about");
 		helpMenu.add(AboutMenuItem);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//shortcuts
+
+		// shortcuts
 		{
 			addKeyListener(new KeyListener() {
 
@@ -224,16 +251,16 @@ public class Menu extends JMenuBar implements KeyListener {
 				@Override
 				public void keyPressed(KeyEvent e) {
 					// TODO Auto-generated method stub
-					switch(e.getKeyCode()) {
+					switch (e.getKeyCode()) {
 					case 90:
-						//undo
+						// undo
 						DoListStack.UndoListStack.undo();
-					break;
+						break;
 					case 89:
-						//redo
+						// redo
 						DoListStack.RedoListStack.redo();
-					break;
-					
+						break;
+
 					}
 				}
 
@@ -247,36 +274,32 @@ public class Menu extends JMenuBar implements KeyListener {
 
 			});
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		}
-		
 
 	}
 
 	public static void newCanvas() {
-		// TODO Auto-generated method stub
+		/* TODO Auto-generated method stub
 		CanvasPanel.canvasContainer.clear();
 		CanvasPanel.contentPanel.removeAll();
 		GLOBAL.setDefault();
-		CanvasPanel.setCanvasSize();
+		CanvasPanel.setCanvasSize();*/
 		// actually let's just re-create the mainframe instead of just the panel...
 
 		Point locationholder = GLOBAL.MAINFRAME.getLocation();
 		GLOBAL.MAINFRAME.dispose();
-		GLOBAL.MAINFRAME = new MainFrame();
+		GLOBAL.DEBUGFRAME.dispose();
+		try {
+			MainClass.main(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		GLOBAL.MAINFRAME.setLocation(locationholder);
-		GLOBAL.MAINFRAME.setVisible(true);
-		
+	/*	GLOBAL.MAINFRAME = new MainFrame();
+		GLOBAL.MAINFRAME.setLocation(locationholder);
+		GLOBAL.MAINFRAME.setVisible(true);*/
+
 	}
 
 	public class FileMenuItem extends JMenuItem {
@@ -327,10 +350,26 @@ public class Menu extends JMenuBar implements KeyListener {
 		}
 	}
 
+	public class ToolsMenuItem extends JMenuItem {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public ToolsMenuItem(String text, String command) {
+			setText(text);
+			setActionCommand(command);
+			addActionListener(toolsAction);
+			toolsMenu.add(this);
+
+		}
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -342,6 +381,6 @@ public class Menu extends JMenuBar implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
