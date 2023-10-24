@@ -53,6 +53,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		JFrame pointerToThisFrame=this;
 		setIconImage(GLOBAL.FAVICO);
 		setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")");
 		setFocusable(true);
@@ -130,13 +131,15 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Well here we are");
-				System.out.println("mouse left");
+				System.out.println("Attempting frame grabFocus");
+				pointerToThisFrame.requestFocus();
 				CanvasPanel.mouse = 0;
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
+				System.out.println("Attempting frame grabFocus");
+				pointerToThisFrame.requestFocus();
 				// TODO Auto-generated method stub
 
 			}

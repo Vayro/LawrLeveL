@@ -1,8 +1,12 @@
 package com.lawranta.edit;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.KeyboardFocusManager;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +22,7 @@ import com.lawranta.globals.GLOBAL;
 import com.lawranta.panels.CanvasPanel;
 import javax.swing.JTextPane;
 import java.awt.Dimension;
+import javax.swing.border.TitledBorder;
 
 public class Debug extends JFrame {
 
@@ -53,7 +58,7 @@ public class Debug extends JFrame {
 	 * Create the frame.
 	 */
 	public Debug() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setIconImage(GLOBAL.FAVICO);
@@ -87,7 +92,11 @@ public class Debug extends JFrame {
 		}
 
 		scroll = new JScrollPane();
+		scroll.setMinimumSize(new Dimension(450, 200));
+		scroll.setPreferredSize(new Dimension(450, 200));
 		scroll2 = new JScrollPane();
+		
+		scroll2.setBorder(new TitledBorder(null, "Focus:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		scroll2.setMinimumSize(new Dimension(450, 64));
 		scroll2.setPreferredSize(new Dimension(450, 64));
 		table = new JTable(data, headers) {
@@ -109,18 +118,28 @@ public class Debug extends JFrame {
 
 		scroll.setViewportView(table);
 
-		getContentPane().add(scroll);
+
+		contentPane.add(scroll, BorderLayout.NORTH);
 
 		textPane = new JTextArea();
 		textPane.setLineWrap(true);
 		textPane.setRows(2);
 		textPane.setMinimumSize(new Dimension(128, 128));
-		contentPane.add(scroll2, BorderLayout.SOUTH);
+		contentPane.add(scroll2, BorderLayout.CENTER);
 
 		scroll2.setViewportView(textPane);
 
 		setVisible(true);
 
+
+		 
+
+		
+		
+		
+		
+		
+		
 	}
 
 	public void refresh() {
@@ -171,5 +190,8 @@ public class Debug extends JFrame {
 		// System.out.println("refreshed deubugger");
 
 	}
+	
+	
+	
 
 }

@@ -129,13 +129,7 @@ public class DoListStack {
 					
 					
 					
-					
-					drop.setX((int) (drop.getUnscaledX() * Zoom.factor));
-					drop.setY((int) (drop.getUnscaledY() * Zoom.factor));
-					drop.setxSize((int) (drop.getxSize() * Zoom.factor));
-					drop.setySize((int) (drop.getySize() * Zoom.factor));
-					drop.draw();
-					
+			
 					
 					
 					break;
@@ -181,10 +175,10 @@ public class DoListStack {
 
 	public static InkDrop rebuildInkDrop(InkDrop inkDrop) {
 		// TODO Auto-generated method stub
-		int x = inkDrop.getX();
-		int y = inkDrop.getY();
-		int ySize = inkDrop.getySize();
-		int xSize = inkDrop.getxSize();
+		int x = inkDrop.getUnscaledX();
+		int y = inkDrop.getUnscaledY();
+		int ySize = inkDrop.getUnscaledYSize();
+		int xSize = inkDrop.getUnscaledXSize();
 		int offsetX = inkDrop.getOffsetX();
 		int offsetY = inkDrop.getOffsetY();
 		int id = inkDrop.getId();
@@ -193,6 +187,14 @@ public class DoListStack {
 
 				new InkDrop(x, y, ySize, xSize, offsetX, offsetY, color);
 
+		
+		System.out.println("remaking inkdrop");
+		kkk.setX((int) (x * Zoom.factor));
+		kkk.setY((int) (y * Zoom.factor));
+		kkk.setxSize((int) (kkk.getUnscaledXSize() * Zoom.factor));
+		kkk.setySize((int) (kkk.getUnscaledXSize() * Zoom.factor));
+		kkk.draw();
+		
 		CanvasPanel.canvasContainer.add(kkk);
 		CanvasPanel.contentPanel.add(kkk, 1, 0);
 		return kkk;
