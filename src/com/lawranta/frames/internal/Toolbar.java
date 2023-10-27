@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -35,7 +36,8 @@ public class Toolbar extends JPanel {
 
 	public static ActionListener actionListener;
 	public static JDialog j;
-	static toolButton colorButton;
+	static toolButton colorButton, textToolButton, canvasSizeButton, gridSizeButton, eraserButton, zoomInButton,
+			zoomOutButton, shiftButton;
 	static Image circle;
 	static Cursor eraserCursor;
 
@@ -111,6 +113,9 @@ public class Toolbar extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if (j != null)
+					j.dispose();
 				// TODO Auto-generated method stub
 
 				switch (e.getActionCommand()) {
@@ -160,6 +165,21 @@ public class Toolbar extends JPanel {
 				case "ZoomOut":
 					Zoom.zoomOut();
 					System.out.println("Zoom: " + Zoom.factor);
+
+					CanvasPanel.revalidateAndRepaint();
+
+					break;
+				case "shift":
+					
+					j = new ShiftPaints();
+					j.setUndecorated(true);
+					j.setVisible(true);
+					j.setLocation(
+							(int) (MouseInfo.getPointerInfo().getLocation().getX() - j.getLocationOnScreen().getX()
+									+ j.getWidth() / 2),
+							(int) (MouseInfo.getPointerInfo().getLocation().getY() - j.getLocationOnScreen().getY())
+									+ j.getHeight() / 2);
+					;
 
 					CanvasPanel.revalidateAndRepaint();
 
@@ -248,13 +268,13 @@ public class Toolbar extends JPanel {
 
 		});
 
-		toolButton textToolButton = new toolButton("Aa", panel);
+		textToolButton = new toolButton("Aa", panel);
 
-		toolButton canvasSizeButton = new toolButton("Canvas", panel);
+		canvasSizeButton = new toolButton("Canvas", panel);
 
-		toolButton gridSizeButton = new toolButton("Grid", panel);
+		gridSizeButton = new toolButton("Grid", panel);
 
-		toolButton eraserButton = new toolButton("Eraser", panel);
+		eraserButton = new toolButton("Eraser", panel);
 		eraserButton.addMouseListener(new MouseListener() {
 
 			@Override
@@ -296,52 +316,42 @@ public class Toolbar extends JPanel {
 
 		});
 
-		toolButton zoomInButton = new toolButton("ZoomIn", panel);
-		toolButton zoomOutButton = new toolButton("ZoomOut", panel);
+		zoomInButton = new toolButton("ZoomIn", panel);
+		zoomOutButton = new toolButton("ZoomOut", panel);
+
+		shiftButton = new toolButton("shift", panel);
+
 		colorButton = new toolButton("Color", panel);
 		toolButton.colorBorder(colorButton);
 
 		setBounds(100, 100, 450, 300);
 
 	}
-	
-	
-	
-	
-	
-	
+
 	public static void setBrush() {
-		
+
 		SelectedTool.setInkDropTool();
 		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 		CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-		
-	}
-	
-	
-public static void setText() {
-		
-	SelectedTool.setTextTool();
-	System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-	CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-		
-	}
-	
-	
-public static void setEraser() {
-	circle = makeImage(32, 32);
-	eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0, 0), "eraser");
-	SelectedTool.setEraserTool();
-	System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-	CanvasPanel.contentPanel.setCursor(eraserCursor);
-	
-	
-}
-	
 
-	
-	
-	
+	}
+
+	public static void setText() {
+
+		SelectedTool.setTextTool();
+		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+		CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+
+	}
+
+	public static void setEraser() {
+		circle = makeImage(32, 32);
+		eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0, 0), "eraser");
+		SelectedTool.setEraserTool();
+		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+		CanvasPanel.contentPanel.setCursor(eraserCursor);
+
+	}
 
 	static public BufferedImage makeImage(int width, int height) {
 		// BufferedImage is actually already transparent on my system, but that isn't
@@ -375,9 +385,9 @@ public static void setEraser() {
 			// TODO Auto-generated constructor stub
 			setFont(GLOBAL.toolFont);
 			setText(s);
-			setPreferredSize(new Dimension(64, 64));
-			setMinimumSize(new Dimension(64, 64));
-			setMaximumSize(new Dimension(64, 64));
+			setPreferredSize(new Dimension(64, 32));
+			setMinimumSize(new Dimension(64, 32));
+			setMaximumSize(new Dimension(64, 32));
 			setMargin(new Insets(0, 0, 0, 0));
 			setActionCommand(s);
 			addActionListener(Toolbar.actionListener);
@@ -392,9 +402,6 @@ public static void setEraser() {
 		}
 
 	}
-	
-	
-
 
 	/**
 	 * 

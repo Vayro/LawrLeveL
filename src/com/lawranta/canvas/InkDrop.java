@@ -20,6 +20,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 7177229581515071838L;
+	boolean selected;
 	int id, x, y, xSize, ySize, offsetX, offsetY, origX, origY;
 	int unscaledXSize, unscaledYSize, unscaledX, unscaledY;
 	boolean createdWhileZoomed;
@@ -167,7 +168,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		requestFocus();
 		// setBackground(new Color(255, 0, 0)); // debug color
 		// TODO Auto-generated constructor stub
-
+		this.selected=true;
 		this.unscaledXSize = xSize;
 		this.unscaledYSize = ySize;
 		this.xSize = (int) (xSize * Zoom.factor);
@@ -429,6 +430,19 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Key Released");
+	}
+
+	@Override
+	public boolean isSelected() {
+		// TODO Auto-generated method stub
+		return selected;
+	}
+
+	@Override
+	public void setSelected(boolean selected) {
+		// TODO Auto-generated method stub
+		this.selected=selected;
+		
 	}
 
 }

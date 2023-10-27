@@ -17,7 +17,6 @@ public class MainClass {
 	public MainClass() {
 		// TODO Auto-generated constructor stub
 	}
-
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		

@@ -19,6 +19,28 @@ public class TextNode extends JTextField implements Paint {
 	 */
 	TextNode thisNode;
 	private static final long serialVersionUID = -4669795077837742209L;
+	boolean selected;
+	/**
+	 * @return the selected
+	 */
+	public boolean isSelected() {
+		return selected;
+	}
+
+
+	/**
+	 * @param selected the selected to set
+	 */
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+
+
+
+
+
+
 	int id, x, y, xSize, ySize, unscaledX, unscaledY;; /**
 	
 	 * @return the id

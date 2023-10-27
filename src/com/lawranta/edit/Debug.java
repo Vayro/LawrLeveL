@@ -35,7 +35,7 @@ public class Debug extends JFrame {
 	JTable table;
 	JScrollPane scroll, scroll2;
 	Object[][] data;
-	String[] headers = { "CC Index", "ID", "X", "Y", "Type" };
+	String[] headers = { "CC Index", "ID", "X", "Y", "Type", "Selected" };
 	private JTextArea textPane;;
 
 	/**
@@ -64,7 +64,7 @@ public class Debug extends JFrame {
 		setIconImage(GLOBAL.FAVICO);
 		setContentPane(contentPane);
 
-		data = new Object[CanvasPanel.canvasContainer.size()][5];
+		data = new Object[CanvasPanel.canvasContainer.size()][6];
 
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
@@ -88,6 +88,8 @@ public class Debug extends JFrame {
 				data[i][4] = "TextNode";
 
 			}
+			
+			data[i][5] =  CanvasPanel.canvasContainer.get(i).isSelected();
 
 		}
 
@@ -144,7 +146,7 @@ public class Debug extends JFrame {
 
 	public void refresh() {
 		// TODO Auto-generated method stub
-		data = new Object[CanvasPanel.canvasContainer.size()][5];
+		data = new Object[CanvasPanel.canvasContainer.size()][6];
 
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
@@ -167,6 +169,7 @@ public class Debug extends JFrame {
 				data[i][4] = "TextNode";
 
 			}
+			data[i][5] =  CanvasPanel.canvasContainer.get(i).isSelected();
 
 		}
 		table = new JTable(data, headers) {

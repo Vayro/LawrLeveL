@@ -5,11 +5,13 @@ import java.awt.Color;
 public interface Paint {
 
 	static int x = 0, y = 0, xSize = 0, ySize = 0;
-	boolean removed = false;
+	boolean removed = false, selected=true;
 	public static Color color = SelectedTool.selectedColor;
 
 	int getId();
-
+	public boolean isSelected();
+	public void setSelected(boolean selected);
+	
 	void setId(int id);
 
 	public int getX();
