@@ -113,9 +113,11 @@ public class Toolbar extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				if (j != null)
+
+				if (j != null) {
+					ShiftPaints.deSelectAll();
 					j.dispose();
+				}
 				// TODO Auto-generated method stub
 
 				switch (e.getActionCommand()) {
@@ -170,18 +172,7 @@ public class Toolbar extends JPanel {
 
 					break;
 				case "shift":
-					
-					j = new ShiftPaints();
-					j.setUndecorated(true);
-					j.setVisible(true);
-					j.setLocation(
-							(int) (MouseInfo.getPointerInfo().getLocation().getX() - j.getLocationOnScreen().getX()
-									+ j.getWidth() / 2),
-							(int) (MouseInfo.getPointerInfo().getLocation().getY() - j.getLocationOnScreen().getY())
-									+ j.getHeight() / 2);
-					;
-
-					CanvasPanel.revalidateAndRepaint();
+					setSelection();
 
 					break;
 				default:
@@ -351,6 +342,21 @@ public class Toolbar extends JPanel {
 		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 		CanvasPanel.contentPanel.setCursor(eraserCursor);
 
+	}
+
+	public static void setSelection() {
+		j = new ShiftPaints();
+		j.setUndecorated(true);
+		j.setVisible(true);
+		j.setLocation(
+				(int) (MouseInfo.getPointerInfo().getLocation().getX() - j.getLocationOnScreen().getX()
+						+ j.getWidth() / 2),
+				(int) (MouseInfo.getPointerInfo().getLocation().getY() - j.getLocationOnScreen().getY())
+						+ j.getHeight() / 2);
+		;
+		CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		SelectedTool.setSelectionTool();
+		CanvasPanel.revalidateAndRepaint();
 	}
 
 	static public BufferedImage makeImage(int width, int height) {

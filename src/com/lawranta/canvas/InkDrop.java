@@ -120,6 +120,12 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		if (!removed) {
 			g.setColor(this.color);
 			g.fillRect(0, 0, (int) (xSize * Zoom.factor), (int) (ySize * Zoom.factor));
+			if(selected) {
+				g.setColor(new Color(255,255,0,155));
+				g.drawRoundRect(1, 1, (int) (xSize * Zoom.factor)-4, (int) (ySize * Zoom.factor)-4, 2, 2);
+			}
+			g.setColor(this.color);
+			
 
 		} else {
 
@@ -168,7 +174,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		requestFocus();
 		// setBackground(new Color(255, 0, 0)); // debug color
 		// TODO Auto-generated constructor stub
-		this.selected=true;
+		this.selected=false;
 		this.unscaledXSize = xSize;
 		this.unscaledYSize = ySize;
 		this.xSize = (int) (xSize * Zoom.factor);
@@ -303,7 +309,14 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 						CanvasPanel.startPainting();
 
+					}else if (SelectedTool.selectedTool == 4) {
+						
+						selected=!selected;
+						draw();
 					}
+					
+					
+					
 
 				}
 
@@ -443,6 +456,21 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		// TODO Auto-generated method stub
 		this.selected=selected;
 		
+	}
+
+	@Override
+	public Runnable refresh() {
+		// TODO Auto-generated method stub
+		return new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				draw();
+				CanvasPanel.revalidateAndRepaint();
+			}
+
+		};
 	}
 
 }

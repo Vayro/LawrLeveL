@@ -136,6 +136,8 @@ public TextNode(int x, int y) {
 	setLayout(null);
 	this.x=x; this.y=y;
 	 thisNode=this;
+		this.selected=false;
+
 	addFocusListener(new FocusListener() {
 
 		@Override
@@ -292,6 +294,20 @@ public void destroy(boolean removeFromContainer) {
 	}
 
 	
+}
+
+@Override
+public Runnable refresh() {
+	// TODO Auto-generated method stub
+	return new Runnable() {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			draw();
+		}
+
+	};
 }
 
 }

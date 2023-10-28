@@ -445,23 +445,7 @@ public class CanvasPanel extends JPanel {
 		Point p2 = contentPanel.getLocationOnScreen();
 		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());
 
-		/*
-		 * for (int i = 0; i < canvasContainer.size(); i++) {
-		 * 
-		 * System.out.println("Checking: " + i);
-		 * 
-		 * if (x == canvasContainer.get(i).getX() && y == canvasContainer.get(i).getY())
-		 * {
-		 * 
-		 * System.out.println("collision detected"); contentPanel.remove((Component)
-		 * canvasContainer.get(i)); // canvasContainer.remove(i); //
-		 * 
-		 * revalidateAndRepaint();
-		 * 
-		 * ; }
-		 * 
-		 * }
-		 */
+
 
 		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY,
 				SelectedTool.selectedColor);
@@ -477,8 +461,11 @@ public class CanvasPanel extends JPanel {
 	}
 
 	public static void ReloadFromCanvasContainer(ArrayList<Paint> loadedTanFile) {
-
+		contentPanel.removeAll();
+		revalidateAndRepaint();
+		
 		if (canvasContainer.size() > 1) {
+
 			canvasContainer.clear();
 		}
 
@@ -491,6 +478,16 @@ public class CanvasPanel extends JPanel {
 		rebuildGrid();
 		GLOBAL.DEBUGFRAME.refresh();
 
+		
+		
+		loadedTanFile.sort((o1, o2)
+                 -> Integer.compare(o1.getId(),o2.getId()));
+   
+		
+		
+		
+		
+		
 		for (int i = 0; i < loadedTanFile.size(); i++) {
 
 			if (loadedTanFile.get(i).getClass() == InkDrop.class) {// check if loaded element is an inkdrop
@@ -631,8 +628,13 @@ public class CanvasPanel extends JPanel {
 		// System.out.println("Revalidating and Repainting");
 		contentPanel.setBackground(GLOBAL.gridBGColor);
 		canvas.setBackground(GLOBAL.bgColor);
+		
+		if(gridPane.getParent()!=null) {
 		gridPane.getParent().getParent().revalidate();
 		gridPane.getParent().getParent().repaint();
+		}
+		
+		
 		gridPane.revalidate();
 		gridPane.repaint();
 		contentPanel.revalidate();

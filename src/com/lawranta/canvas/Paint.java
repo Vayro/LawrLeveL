@@ -41,5 +41,6 @@ public interface Paint {
 	}
 
 	void destroy(boolean removeFromContainer);
+	Runnable refresh();
 
 }

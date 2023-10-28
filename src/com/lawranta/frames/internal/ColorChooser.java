@@ -3,14 +3,22 @@ package com.lawranta.frames.internal;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.frames.internal.Toolbar.toolButton;
 
@@ -62,7 +70,7 @@ public class ColorChooser extends JDialog {
 		getContentPane().add(contentPanel);
 		setModal(true);
 
-		 j = new JColorChooser();
+		j = new JColorChooser();
 		j.setBackground(new Color(78, 78, 78));
 		contentPanel.add(j);
 
@@ -74,7 +82,7 @@ public class ColorChooser extends JDialog {
 				switch (e.getActionCommand()) {
 				case "OK":
 
-					cancelled=false;
+					cancelled = false;
 					dispose();
 
 					break;
@@ -117,15 +125,49 @@ public class ColorChooser extends JDialog {
 			{
 				JButton okButton = new JButton("✓");
 				okButton.setActionCommand("OK");
+				okButton.setFocusable(false);
 				okButton.addActionListener(actionListener);
+
 				buttonPane.add(okButton);
 			}
 			{
 				JButton btnX = new JButton("X");
 				btnX.setActionCommand("Cancel");
+				btnX.setFocusable(false);
 				btnX.addActionListener(actionListener);
 				buttonPane.add(btnX);
 			}
+
+			{
+				Icon icon = new ImageIcon("src/images/move.png");
+				JButton moveButton = new JButton(icon);
+				moveButton.setFocusable(false);
+				buttonPane.add(moveButton);
+
+				moveButton.addMouseMotionListener(new MouseMotionListener() {
+
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						// TODO Auto-generated method stub
+						System.out.println("moving");
+
+						int x = (int) (MouseInfo.getPointerInfo().getLocation().getX() - moveButton.getLocation().getX()
+								- (moveButton.getWidth() / 2));
+						int y = (int) (MouseInfo.getPointerInfo().getLocation().getY() - moveButton.getLocation().getY()
+								- (moveButton.getHeight() / 2));
+
+						setLocation(new Point(x, y));
+					}
+
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+			}
+
 		}
 	}
 
