@@ -38,7 +38,7 @@ public class GLOBAL {
 	public static ColorChooser CC = new ColorChooser();
 	public static Menu MENU;
 	public static boolean ctrlPressed=false;
-	public static String cfgPath= "src\\null.cfg";
+	public static String cfgPath= "./global.cfg";
 	
 	public static void setDefault(){
 		GRIDHEIGHT=32;
