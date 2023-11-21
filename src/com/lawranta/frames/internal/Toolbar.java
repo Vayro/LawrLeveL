@@ -16,7 +16,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Cursor;
-
+import javax.swing.JMenu;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -24,6 +24,7 @@ import com.lawranta.canvas.SelectedTool;
 import com.lawranta.canvas.Zoom;
 import com.lawranta.frames.internal.Toolbar.toolButton;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.layers.LayersMenu;
 import com.lawranta.panels.CanvasPanel;
 
 import javax.swing.JButton;
@@ -111,6 +112,7 @@ public class Toolbar extends JPanel {
 
 		actionListener = new ActionListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -175,6 +177,7 @@ public class Toolbar extends JPanel {
 					setSelection();
 
 					break;
+
 				default:
 					break;
 
@@ -311,7 +314,9 @@ public class Toolbar extends JPanel {
 		zoomOutButton = new toolButton("ZoomOut", panel);
 
 		shiftButton = new toolButton("shift", panel);
-
+		
+	
+		
 		colorButton = new toolButton("Color", panel);
 		toolButton.colorBorder(colorButton);
 

@@ -11,6 +11,7 @@ import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.help.About;
 import com.lawranta.initializer.MainClass;
+import com.lawranta.layers.LayersMenu;
 import com.lawranta.panels.CanvasPanel;
 import javax.swing.JDialog;
 import javax.swing.JMenuBar;
@@ -31,8 +32,8 @@ public class Menu extends JMenuBar implements KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JMenu fileMenu, editMenu, toolsMenu, helpMenu;
-	ActionListener fileAction, editAction, helpAction, toolsAction;
+	static JMenu fileMenu, editMenu, toolsMenu, layersMenu, helpMenu;
+	ActionListener fileAction, editAction,  helpAction, toolsAction;
 	@SuppressWarnings("unused")
 	private JMenuItem AboutMenuItem;
 
@@ -232,6 +233,11 @@ public class Menu extends JMenuBar implements KeyListener {
 		ToolsMenuItem TextMenuItem = new ToolsMenuItem("Text Tool (ctrl+T)", "text");
 		toolsMenu.add(TextMenuItem);
 
+		
+		layersMenu = new LayersMenu();
+		add(layersMenu);
+		
+		
 		helpMenu = new JMenu("Help");
 		add(helpMenu);
 
@@ -276,6 +282,13 @@ public class Menu extends JMenuBar implements KeyListener {
 
 		}
 
+	}
+	
+	public static void refreshLayerMenu() {
+		
+	
+		layersMenu = new LayersMenu();
+		
 	}
 
 	public static void newCanvas() {

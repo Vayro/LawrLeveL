@@ -7,6 +7,7 @@ import com.lawranta.file.*;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.frames.ShortcutKeyListener;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.layers.LayerContainer;
 import com.lawranta.popups.Preferences;
 
 
@@ -30,7 +31,8 @@ public class MainClass {
 		System.out.println("initializing..");
 
 
-		 
+		//create first layer
+		LayerContainer.initialize();
 		
 		GLOBAL.fileInfo = new FileInfo();
 		
@@ -46,6 +48,8 @@ public class MainClass {
 		GLOBAL.exportPathDialog = new ExportPathDialog();
 		GLOBAL.MAINFRAME.setVisible(true);
 		GLOBAL.MAINFRAME.addKeyListener(new ShortcutKeyListener());
+		
+
 
 	}
 	

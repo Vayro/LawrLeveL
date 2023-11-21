@@ -473,4 +473,16 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		};
 	}
 
+	@Override
+	public int getLayer() {
+		// TODO Auto-generated method stub
+		return layer;
+	}
+
+	@Override
+	public void setLayer(int l) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
