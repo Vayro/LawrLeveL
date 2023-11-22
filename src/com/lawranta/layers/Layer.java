@@ -72,7 +72,7 @@ public class Layer {
 
 	public void setActive(boolean b) {
 		// TODO Auto-generated method stub
-		this.active=true;
+		this.active=b;
 	}
 
 }

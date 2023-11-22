@@ -38,8 +38,11 @@ public class GLOBAL {
 	public static ColorChooser CC = new ColorChooser();
 	public static Menu MENU;
 	public static boolean ctrlPressed=false;
-	public static String cfgPath= "./global.cfg";
 	
+	//paths
+	public static String cfgPath= "./global.cfg";
+	public static String moveIconPath="/images/move.png";
+	public static String exitIconPath="/images/exit.png";
 	public static void setDefault(){
 		GRIDHEIGHT=32;
 		GRIDWIDTH=32;

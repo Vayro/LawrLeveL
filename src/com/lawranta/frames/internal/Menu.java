@@ -32,7 +32,7 @@ public class Menu extends JMenuBar implements KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	static JMenu fileMenu, editMenu, toolsMenu, layersMenu, helpMenu;
+	static JMenu fileMenu, editMenu, toolsMenu, helpMenu;
 	ActionListener fileAction, editAction,  helpAction, toolsAction;
 	@SuppressWarnings("unused")
 	private JMenuItem AboutMenuItem;
@@ -233,9 +233,7 @@ public class Menu extends JMenuBar implements KeyListener {
 		ToolsMenuItem TextMenuItem = new ToolsMenuItem("Text Tool (ctrl+T)", "text");
 		toolsMenu.add(TextMenuItem);
 
-		
-		layersMenu = new LayersMenu();
-		add(layersMenu);
+
 		
 		
 		helpMenu = new JMenu("Help");
@@ -284,12 +282,6 @@ public class Menu extends JMenuBar implements KeyListener {
 
 	}
 	
-	public static void refreshLayerMenu() {
-		
-	
-		layersMenu = new LayersMenu();
-		
-	}
 
 	public static void newCanvas() {
 		/* TODO Auto-generated method stub

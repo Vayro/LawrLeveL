@@ -24,6 +24,7 @@ import javax.swing.text.PlainDocument;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import com.lawranta.canvas.Paint;
+import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.globals.IntegerFilter;
 import com.lawranta.panels.CanvasPanel;
@@ -72,7 +73,7 @@ public class ShiftPaints extends JDialog {
 		JPanel topPanel = new JPanel();
 		getContentPane().add(topPanel, BorderLayout.NORTH);
 		{
-			Icon icon = new ImageIcon("src/images/move.png");
+			Icon icon = new ImageIcon(MainFrame.class.getResource(GLOBAL.moveIconPath));
 			topPanel.setLayout(new BorderLayout(0, 0));
 			JButton moveButton = new JButton(icon);
 			moveButton.setFocusable(false);

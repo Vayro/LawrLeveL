@@ -53,7 +53,7 @@ public class LayersMenu extends JMenu {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				LayerContainer.newLayer();
-				Menu.refreshLayerMenu();
+
 				
 			}
 			

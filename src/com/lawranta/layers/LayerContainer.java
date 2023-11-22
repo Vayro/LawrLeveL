@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class LayerContainer {
 
+	public static Layer activeLayer;
 	static ArrayList<Layer> LayerArray;
 
 	public static void initialize() {
@@ -22,16 +23,17 @@ public class LayerContainer {
 		System.out.println(l.toString());
 		LayerArray = new ArrayList<Layer>();
 		LayerArray.add(l);
+		activeLayer = l;
 		l.setActive(true);
 
 	}
 
-	static int getLayerArraySize() {
+	public static int getLayerArraySize() {
 		return LayerArray.size();
 
 	}
 
-	static ArrayList<Layer> getLayerContainer() {
+	public static ArrayList<Layer> getLayerContainer() {
 		return LayerArray;
 
 	}
@@ -44,7 +46,7 @@ public class LayerContainer {
 
 			if (LayerArray.get(i).getLayerID() == 0) {
 				id++;
-				i=0;
+				i = 0;
 
 			}
 		}
@@ -55,8 +57,26 @@ public class LayerContainer {
 		System.out.println("Layer created: ");
 		System.out.println(l.toString());
 		LayerArray.add(l);
-		l.setActive(false);
+		setAllInactive();
+		activeLayer = l;
+		l.setActive(true);
 
+	}
+
+	private static void setAllInactive() {
+
+		for (Layer i : LayerArray) {
+			i.setActive(false);
+
+		}
+
+	}
+
+	public static void setActive(Layer layer) {
+		// TODO Auto-generated method stub
+		setAllInactive();
+		activeLayer = layer;
+		layer.setActive(true);
 	}
 
 }

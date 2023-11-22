@@ -16,15 +16,15 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Cursor;
-import javax.swing.JMenu;
+
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.canvas.Zoom;
-import com.lawranta.frames.internal.Toolbar.toolButton;
+
 import com.lawranta.globals.GLOBAL;
-import com.lawranta.layers.LayersMenu;
+
 import com.lawranta.panels.CanvasPanel;
 
 import javax.swing.JButton;
@@ -37,7 +37,7 @@ public class Toolbar extends JPanel {
 
 	public static ActionListener actionListener;
 	public static JDialog j;
-	static toolButton colorButton, textToolButton, canvasSizeButton, gridSizeButton, eraserButton, zoomInButton,
+	static toolButton colorButton, textToolButton, canvasSizeButton, gridSizeButton, eraserButton, layerButton, zoomInButton,
 			zoomOutButton, shiftButton;
 	static Image circle;
 	static Cursor eraserCursor;
@@ -171,13 +171,16 @@ public class Toolbar extends JPanel {
 					System.out.println("Zoom: " + Zoom.factor);
 
 					CanvasPanel.revalidateAndRepaint();
-
+					
 					break;
 				case "shift":
 					setSelection();
 
 					break;
-
+				case "Layers":
+					j=new LayersDialog();
+					j.setLocation((int) (getLocationOnScreen().getX()+layerButton.getLocation().getX()+layerButton.getWidth()),(int) (getLocationOnScreen().getY()+layerButton.getLocation().getY()));
+					break;
 				default:
 					break;
 
@@ -315,7 +318,7 @@ public class Toolbar extends JPanel {
 
 		shiftButton = new toolButton("shift", panel);
 		
-	
+		layerButton = new toolButton("Layers", panel);
 		
 		colorButton = new toolButton("Color", panel);
 		toolButton.colorBorder(colorButton);
