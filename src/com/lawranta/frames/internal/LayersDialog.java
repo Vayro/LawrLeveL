@@ -1,6 +1,7 @@
 package com.lawranta.frames.internal;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +17,14 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.lawranta.canvas.Paint;
 import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.layers.Layer;
 import com.lawranta.layers.LayerContainer;
+import com.lawranta.panels.CanvasPanel;
+import com.lawranta.popups.ConfirmDialog;
+
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -29,10 +34,12 @@ import java.awt.GridLayout;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Component;
+import javax.swing.border.BevelBorder;
 
 public class LayersDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel(), superPanel = new JPanel();
+	Dimension topButtonSize = new Dimension(34, 34);
 
 	/**
 	 * Launch the application.
@@ -51,24 +58,27 @@ public class LayersDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public LayersDialog() {
-		setSize(new Dimension(175, 0));
+		setSize(new Dimension(128, 0));
 		setMinimumSize(new Dimension(128, 400));
 		setAlwaysOnTop(true);
 		setUndecorated(true);
 		contentPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
-		contentPanel.setSize(new Dimension(175, 400));
-		contentPanel.setPreferredSize(new Dimension(160, 355));
-		contentPanel.setMinimumSize(new Dimension(128, 10));
+		contentPanel.setSize(new Dimension(120, 400));
+		contentPanel.setPreferredSize(new Dimension(120, 355));
+		contentPanel.setMinimumSize(new Dimension(100, 10));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		Dimension buttonSize = new Dimension(128, 32);
-		Dimension topButtonSize = new Dimension(34, 34);
+		Dimension smallerButtonSize = new Dimension(100, 32);
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setMinimumSize(new Dimension(128, 23));
+		scrollPane.setMinimumSize(new Dimension(120, 23));
+		superPanel.setPreferredSize(new Dimension(128, 400));
 		getContentPane().add(superPanel);
 
 		JPanel topPanel = new JPanel();
+		topPanel.setMinimumSize(new Dimension(128, 10));
+		topPanel.setPreferredSize(new Dimension(128, 10));
 		topPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		topPanel.setAlignmentX(0.0f);
 
@@ -120,7 +130,7 @@ public class LayersDialog extends JDialog {
 				int y = (int) (MouseInfo.getPointerInfo().getLocation().getY() - moveButton.getLocation().getY()
 						- (moveButton.getHeight() / 2));
 
-				setLocation(new Point(x - 80, y));
+				setLocation(new Point(x - 40, y));
 			}
 
 			@Override
@@ -132,70 +142,216 @@ public class LayersDialog extends JDialog {
 		superPanel.setLayout(new BoxLayout(superPanel, BoxLayout.Y_AXIS));
 
 		superPanel.add(topPanel);
-		
-		JLabel lblNewLabel = new JLabel("Layers");
-		topPanel.add(lblNewLabel, BorderLayout.WEST);
 
 		superPanel.add(contentPanel);
-		contentPanel.setLayout(new BorderLayout(0, 0));
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
 		contentPanel.add(scrollPane);
 
 		JPanel layerPanel = new JPanel();
-		layerPanel.setMaximumSize(new Dimension(128, 32767));
+		layerPanel.setMaximumSize(new Dimension(120, 32767));
 
-		//populate with one button for each existing later
-		
+		// populate with one button for each existing later
+
+		// set icons for visbility, clear, delete
+		Icon visibleIcon = new ImageIcon(MainFrame.class.getResource(GLOBAL.openEyeIconPath));
+		Icon invisibleIcon = new ImageIcon(MainFrame.class.getResource(GLOBAL.closedEyeIconPath));
+		Icon clearIcon = new ImageIcon(MainFrame.class.getResource(GLOBAL.clearIconPath));
+		Icon trashIcon = new ImageIcon(MainFrame.class.getResource(GLOBAL.trashEyeIconPath));
+		Icon greyTrashIcon = new ImageIcon(MainFrame.class.getResource(GLOBAL.greyTrashIconPath));
+
 		for (int i = 0; i < LayerContainer.getLayerArraySize(); i++) {
 
 			Layer layer = LayerContainer.getLayerContainer().get(i);
 			JButton lButton = null;
 
 			if (layer.isActive()) {
-				lButton = new JButton(layer.getLayerName() + " (active)");
+				lButton = new JButton("✔ " + layer.getLayerName());
 
 			} else {
 				lButton = new JButton(layer.getLayerName());
 
 			}
-			lButton.setPreferredSize(buttonSize);
-			lButton.setMaximumSize(buttonSize);
-			
-			
-			//action listener for each button
+			lButton.setPreferredSize(smallerButtonSize);
+			lButton.setMaximumSize(smallerButtonSize);
+			lButton.setToolTipText("id: " + layer.getLayerID());
+
+			// action listener for each button
 			lButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					if(layer.isActive())
-					{
+					if (layer.isActive()) {
 						System.out.println("This is the active layer.");
-						
-					}
-					else
-					{
+
+					} else {
 						System.out.println("Set " + layer.getLayerName() + " to active layer");
 						LayerContainer.setActive(layer);
 						dispose();
 
-						
 					}
 				}
-				
-				
+
 			});
+
+			JPanel buttonPanel = new JPanel();
+
+			buttonPanel.setPreferredSize(new Dimension(100, 64));
+			buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			buttonPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+			buttonPanel.setMinimumSize(new Dimension(100, 64));
+
+			buttonPanel.add(lButton);
+
+			JPanel iconButtonPanel = new JPanel();
+			if (i % 2 == 0) {
+				buttonPanel.setBackground(new Color(255, 255, 255, 255));
+				iconButtonPanel.setBackground(new Color(100, 100, 100, 255));
+
+			} else {
+
+				buttonPanel.setBackground(new Color(200, 200, 200, 255));
+				iconButtonPanel.setBackground(new Color(150, 150, 150, 255));
+
+			}
+
+			iconButtonPanel.setPreferredSize(new Dimension(200, 32));
+			iconButtonPanel.setSize(new Dimension(200, 32));
+			iconButtonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			// iconButtonPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null,
+			// null, null));
+			iconButtonPanel.setLayout(new BoxLayout(iconButtonPanel, BoxLayout.X_AXIS));
+
+			JButton clearButton = new iconButton(clearIcon, "clear");
+			clearButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+
+					ConfirmDialog confirm = new ConfirmDialog("Clear entire layer of its contents?");
+					confirm.setVisible(true);
+					ActionEvent c = confirm.getA();
+
+					switch (c.getActionCommand()) {
+
+					case "OK":
+
+						LayerContainer.clearLayer(layer);
+					
+						break;
+					case "Cancel":
+						System.out.println("cancelled");
+
+						break;
+
+					}
+
+				}
+
+			});
+
+			JButton trashButton = new iconButton(trashIcon, "delete layer");
+			if (layer.getLayerID() == 0) {
+
+				trashButton.setIcon(greyTrashIcon);
+				trashButton.setToolTipText("Cannot delete base layer. (" + layer.getLayerName() + ")");
+			}else {
+				
+				
+				
+				trashButton.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+
+						// TODO Auto-generated method stub
+
+						ConfirmDialog confirm = new ConfirmDialog("Delete Layer? This cannot be undone.");
+						confirm.setVisible(true);
+						ActionEvent c = confirm.getA();
+
+						switch (c.getActionCommand()) {
+
+						case "OK":
+
+							LayerContainer.clearLayer(layer);
+						
+							LayerContainer.deleteLayer(layer);
+							dispose();
+							break;
+						case "Cancel":
+							System.out.println("cancelled");
+
+							break;
+
+						}
+					}
+					
+					
+					
+				});
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			}
 			
 			
 			
 			
-			layerPanel.add(lButton);
+			
+			
+			
+			
+			
+			
+
+			JButton visibleButton;
+
+			if (layer.isVisible()) {
+				visibleButton = new iconButton(visibleIcon, "visible");
+
+			} else {
+				visibleButton = new iconButton(invisibleIcon, "invisible");
+
+			}
+			visibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					LayerContainer.toggleVisibility(layer);
+					dispose();
+				}
+
+			});
+
+			iconButtonPanel.add(visibleButton);
+			iconButtonPanel.add(clearButton);
+			iconButtonPanel.add(trashButton);
+
+			buttonPanel.add(iconButtonPanel);
+			layerPanel.add(buttonPanel);
+			layerPanel.add(new JLabel(" "));
 
 		}
 
 		JButton newButton = new JButton("New Layer");
-		newButton.setPreferredSize(buttonSize);
-		newButton.setMaximumSize(buttonSize);
+		newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		newButton.setPreferredSize(smallerButtonSize);
+		newButton.setMaximumSize(smallerButtonSize);
 		newButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -208,23 +364,44 @@ public class LayersDialog extends JDialog {
 
 		});
 
-		JButton clearButton = new JButton("Clear Layer");
-		clearButton.setPreferredSize(buttonSize);
-		clearButton.setMaximumSize(buttonSize);
-		JButton deleteButton = new JButton("Delete Layer");
-		deleteButton.setPreferredSize(buttonSize);
-		deleteButton.setMaximumSize(buttonSize);
-		layerPanel.setLayout(new BoxLayout(layerPanel, BoxLayout.PAGE_AXIS));
-		layerPanel.add(new JLabel("-"));
-		layerPanel.add(newButton);
-		layerPanel.add(clearButton);
-		layerPanel.add(deleteButton);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		buttonPanel.setPreferredSize(smallerButtonSize);
+		// buttonPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null,
+		// null));
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+		layerPanel.setLayout(new BoxLayout(layerPanel, BoxLayout.Y_AXIS));
+		layerPanel.add(buttonPanel);
 
 		scrollPane.setViewportView(layerPanel);
-		scrollPane.setPreferredSize(new Dimension(128, 300));
+		scrollPane.setPreferredSize(new Dimension(120, 300));
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
+		contentPanel.add(newButton);
 		setVisible(true);
+	}
+
+	class iconButton extends JButton {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1905845524455077544L;
+
+		iconButton(Icon icon, String toolTip) {
+			setIcon(icon);
+			setToolTipText(toolTip);
+			setAlignmentX(Component.CENTER_ALIGNMENT);
+			setFocusable(false);
+			setHorizontalAlignment(SwingConstants.CENTER);
+			setPreferredSize(new Dimension(32, 32));
+			setMaximumSize(new Dimension(32, 32));
+			setBorderPainted(false);
+			setContentAreaFilled(false);
+			setFocusPainted(false);
+			setOpaque(false);
+
+		}
+
 	}
 
 }

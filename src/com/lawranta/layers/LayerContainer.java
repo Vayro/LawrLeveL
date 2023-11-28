@@ -3,13 +3,21 @@
  */
 package com.lawranta.layers;
 
+import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.swing.JDialog;
+
+import com.lawranta.canvas.Paint;
+import com.lawranta.panels.CanvasPanel;
+import com.lawranta.popups.ConfirmDialog;
 
 /**
  * This class contains all the layers of the program in an arraylist. It is
  * SINGLETON , there should only be ONE instance of LayerContainer
  */
-public class LayerContainer {
+public class LayerContainer implements Serializable  {
 
 	public static Layer activeLayer;
 	static ArrayList<Layer> LayerArray;
@@ -28,6 +36,20 @@ public class LayerContainer {
 
 	}
 
+	/**
+	 * @return the activeLayer
+	 */
+	public static Layer getActiveLayer() {
+		return activeLayer;
+	}
+
+	/**
+	 * @param activeLayer the activeLayer to set
+	 */
+	public static void setActiveLayer(Layer activeLayer) {
+		LayerContainer.activeLayer = activeLayer;
+	}
+
 	public static int getLayerArraySize() {
 		return LayerArray.size();
 
@@ -40,7 +62,7 @@ public class LayerContainer {
 
 	public static void newLayer() {
 
-		int id = LayerArray.size();
+		int id = LayerArray.size() - 1;
 
 		for (int i = 0; i < LayerArray.size(); i++) {
 
@@ -79,4 +101,82 @@ public class LayerContainer {
 		layer.setActive(true);
 	}
 
+	public static void toggleVisibility(Layer layer) {
+		// Toggle visibility of each Paint in the layer
+
+		// first, toggle visibility of layer
+		if (layer.isVisible()) {
+			layer.setVisible(false);
+		} else {
+			layer.setVisible(true);
+
+		}
+
+		// now for each Paint, set the visibility
+		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
+			Paint p = CanvasPanel.canvasContainer.get(i);
+
+			if (p.getLayer() == layer) {
+				// if layer is the same as active layer, toggle visibility
+				p.toggleVisibility(layer.isVisible());
+
+			}
+
+		}
+
+	}
+
+	public static void clearLayer(Layer layer) {
+		// TODO Auto-generated method stub
+
+		// clear code goes here
+		{
+
+			for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
+				// loop through container and delete all paint in each later
+				Paint p = CanvasPanel.canvasContainer.get(i);
+				if (p.getLayer() == layer) {
+
+					p.destroy(false);
+
+				}
+
+			}
+
+		}
+
+	}
+
+	public static void deleteLayer(Layer layer) {
+		/* TODO check if the layer to be deleted is active, 
+		**if so then set the root later as active in preparation for layer deletion*/
+		if(layer.isActive()) {
+			LayerArray.get(0).setActive(true);
+		}
+		
+		
+		
+		for(int i=0;i<LayerArray.size();i++) {
+			//loop through the list of layers and delete the one that has the same layer ID 
+			if(LayerArray.get(i).getLayerID()==layer.getLayerID()) {
+				
+				LayerArray.remove(i);
+				layer=null;
+			}
+			
+			
+		}
+		
+		
+	}
+
+	public static Object getLayerArray() {
+		// TODO Auto-generated method stub
+		return LayerArray;
+	}
+
+	public static void setArrayFromFile(Object object) {
+		// TODO Auto-generated method stubs
+		LayerArray = (ArrayList<Layer>) object;
+	}
 }

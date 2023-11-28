@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.layers.Layer;
 import com.lawranta.panels.*;
 
 public class TextNode extends JTextField implements Paint {
@@ -19,6 +20,7 @@ public class TextNode extends JTextField implements Paint {
 	 */
 	TextNode thisNode;
 	private static final long serialVersionUID = -4669795077837742209L;
+	Layer layer;
 	boolean selected;
 	/**
 	 * @return the selected
@@ -312,16 +314,34 @@ public Runnable refresh() {
 
 
 @Override
-public int getLayer() {
+public Layer getLayer() {
 	// TODO Auto-generated method stub
-	return layer;
+	return this.layer;
+}
+
+
+
+
+
+
+
+
+
+@Override
+public void toggleVisibility(boolean v) {
+	// TODO Auto-generated method stub
+	
 }
 
 
 @Override
-public void setLayer(int l) {
+public void setLayer(Layer layer) {
 	// TODO Auto-generated method stub
+	this.layer=layer;
 	
 }
+
+
+
 
 }

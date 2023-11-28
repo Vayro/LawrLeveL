@@ -52,7 +52,7 @@ public class ConfirmDialog extends JDialog {
 		setSize(new Dimension(300, 100));
 		setPreferredSize(new Dimension(300, 100));
 		setMinimumSize(new Dimension(300, 100));
-
+		setModal(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		getContentPane().setLayout(new BorderLayout());
 		setLocationRelativeTo(null);

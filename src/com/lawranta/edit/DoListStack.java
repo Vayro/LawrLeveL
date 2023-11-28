@@ -7,6 +7,7 @@ import java.util.Stack;
 import com.lawranta.canvas.InkDrop;
 import com.lawranta.canvas.TextNode;
 import com.lawranta.canvas.Zoom;
+import com.lawranta.layers.Layer;
 import com.lawranta.panels.CanvasPanel;
 
 public class DoListStack {
@@ -182,6 +183,7 @@ public class DoListStack {
 		int offsetX = inkDrop.getOffsetX();
 		int offsetY = inkDrop.getOffsetY();
 		int id = inkDrop.getId();
+		Layer layer = inkDrop.getLayer();
 		Color color = inkDrop.getColor();
 		InkDrop kkk =
 
@@ -189,6 +191,7 @@ public class DoListStack {
 
 		
 		System.out.println("remaking inkdrop");
+		kkk.setLayer(layer);
 		kkk.setX((int) (x * Zoom.factor));
 		kkk.setY((int) (y * Zoom.factor));
 		kkk.setxSize((int) (kkk.getUnscaledXSize() * Zoom.factor));
@@ -196,7 +199,7 @@ public class DoListStack {
 		kkk.draw();
 		
 		CanvasPanel.canvasContainer.add(kkk);
-		CanvasPanel.contentPanel.add(kkk, 1, 0);
+		CanvasPanel.contentPanel.add(kkk, layer.getLayerID(), 0);
 		return kkk;
 	}
 
@@ -204,11 +207,13 @@ public class DoListStack {
 		// TODO Auto-generated method stub
 		int x = textNode.getX();
 		int y = textNode.getY();
+		Layer layer = textNode.getLayer();
 		String s = textNode.getText();
 		TextNode node = new TextNode(x, y);
+		node.setLayer(layer);
 		node.setText(s);
 		node.setVisible(true);
-		CanvasPanel.contentPanel.add(node, 2, 0);
+		CanvasPanel.contentPanel.add(node, layer.getLayerID(), 0);
 		CanvasPanel.canvasContainer.add(node);
 		return node;
 	}

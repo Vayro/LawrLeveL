@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 
 import com.lawranta.edit.DoListItem;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.layers.Layer;
+import com.lawranta.layers.LayerContainer;
 import com.lawranta.panels.CanvasPanel;
 
 public class InkDrop extends JPanel implements Paint, KeyListener {
@@ -20,22 +22,23 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 7177229581515071838L;
-	boolean selected;
+	boolean selected, visible=true;
 	int id, x, y, xSize, ySize, offsetX, offsetY, origX, origY;
 	int unscaledXSize, unscaledYSize, unscaledX, unscaledY;
+	Layer layer;
 	boolean createdWhileZoomed;
 
 	/**
-	 * @return 
+	 * @return
 	 * @return the id
 	 */
-	
+
 	@Override
-	public boolean isFocusTraversable(){
-		
+	public boolean isFocusTraversable() {
+
 		return true;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -117,19 +120,20 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (!removed) {
+		if ((!removed) && (visible)){
 			g.setColor(this.color);
 			g.fillRect(0, 0, (int) (xSize * Zoom.factor), (int) (ySize * Zoom.factor));
-			if(selected) {
-				g.setColor(new Color(255,255,0,155));
-				g.drawRoundRect(1, 1, (int) (xSize * Zoom.factor)-4, (int) (ySize * Zoom.factor)-4, 2, 2);
+			if (selected) {
+				g.setColor(new Color(255, 255, 0, 155));
+				g.drawRoundRect(1, 1, (int) (xSize * Zoom.factor) - 4, (int) (ySize * Zoom.factor) - 4, 2, 2);
 			}
 			g.setColor(this.color);
-			
 
 		} else {
-
-			g.clearRect(0, 0, (int) (xSize * Zoom.factor), (int) (ySize * Zoom.factor));
+			
+		//	g.clearRect(0, 0, (int) (xSize * Zoom.factor), (int) (ySize * Zoom.factor));
+			g.setColor(new Color(0,0,0,1));
+			g.fillRect(0, 0, (int) (xSize * Zoom.factor), (int) (ySize * Zoom.factor));
 		}
 
 	}
@@ -168,13 +172,14 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 	public InkDrop(int x, int y, int xSize, int ySize, int offsetX, int offsetY, Color color) {
 		this.color = color;
-
+		setOpaque(false);
 		setRequestFocusEnabled(false);
 		setBackground(this.color);
 		requestFocus();
 		// setBackground(new Color(255, 0, 0)); // debug color
-		// TODO Auto-generated constructor stub
-		this.selected=false;
+		// This occurs when the inkdrop is created, smile :)
+
+		this.selected = false;
 		this.unscaledXSize = xSize;
 		this.unscaledYSize = ySize;
 		this.xSize = (int) (xSize * Zoom.factor);
@@ -183,7 +188,8 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		this.offsetY = offsetY;
 		this.origX = x;
 		this.origY = y;
-
+		this.layer = LayerContainer.getActiveLayer();
+		this.visible=LayerContainer.getActiveLayer().isVisible();
 		if (Zoom.factor > 1) {
 
 			this.createdWhileZoomed = true;
@@ -214,21 +220,24 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 		draw();
 		setLayout(null);
-		System.out.println("inkDrop created at " + this.x + "," + this.y + " Size(" + xSize + "," + ySize + ")");
+		System.out.println("inkDrop created at " + this.x + "," + this.y + " Size(" + xSize + "," + ySize
+				+ ") on layer: " + this.getLayer());
 
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
 			System.out.println(i + " out of " + CanvasPanel.canvasContainer.size());
-			if (x == ((Component) CanvasPanel.canvasContainer.get(i)).getX()
-					&& y == ((Component) CanvasPanel.canvasContainer.get(i)).getY()) {
-				GLOBAL.CP.remove((Component) CanvasPanel.canvasContainer.get(i));
-				CanvasPanel.canvasContainer.remove(i);
-				// i--;
-				GLOBAL.CP.repaint();
+			if (CanvasPanel.canvasContainer.get(i).getLayer() == this.getLayer()) {
+				if (x == ((Component) CanvasPanel.canvasContainer.get(i)).getX()
+						&& y == ((Component) CanvasPanel.canvasContainer.get(i)).getY()) {
+					GLOBAL.CP.remove((Component) CanvasPanel.canvasContainer.get(i));
+					CanvasPanel.canvasContainer.remove(i);
+					// i--;
+					GLOBAL.CP.repaint();
+				}
 			}
 
 		}
-		
+
 		addKeyListener(new KeyListener() {
 
 			@Override
@@ -250,7 +259,6 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 			}
 
 		});
-
 
 		MouseMotionListener listener = new MouseMotionListener() {
 
@@ -281,6 +289,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
 				CanvasPanel.mouse = 0;
+				CanvasPanel.revalidateAndRepaint();
 			}
 
 		};
@@ -295,10 +304,19 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				CanvasPanel.mouse = e.getButton();
-				if (e.getButton() == 3) {
-					startDeleting();
+				
+					/*
+					 * check if active layer is the same as this inkdrop's layer. if So.. start
+					 * deleting the inkdrops
+					 * 
+					 */
 
+					CanvasPanel.mouse = e.getButton();
+				if (LayerContainer.getActiveLayer() == layer) {
+					if (e.getButton() == 3) {
+						startDeleting();
+
+					}
 				}
 				if (e.getButton() == 1) {
 					if (SelectedTool.selectedTool == 3) {
@@ -309,14 +327,11 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 						CanvasPanel.startPainting();
 
-					}else if (SelectedTool.selectedTool == 4) {
-						
-						selected=!selected;
+					} else if (SelectedTool.selectedTool == 4) {
+
+						selected = !selected;
 						draw();
 					}
-					
-					
-					
 
 				}
 
@@ -338,7 +353,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Stop painting here?j");
+				System.out.println("Stop painting here?");
 
 			}
 		};
@@ -406,8 +421,11 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 				{
 
 					System.out.println("collision detected");
-					((InkDrop) CanvasPanel.canvasContainer.get(i)).destroy(true);
 
+					if (this.getLayer() == CanvasPanel.canvasContainer.get(i).getLayer()) {
+						System.out.println("Same layer collision, deleting");
+						((InkDrop) CanvasPanel.canvasContainer.get(i)).destroy(true);
+					}
 					CanvasPanel.revalidateAndRepaint();
 
 					;
@@ -426,7 +444,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		repaint();
 
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -454,8 +472,8 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	@Override
 	public void setSelected(boolean selected) {
 		// TODO Auto-generated method stub
-		this.selected=selected;
-		
+		this.selected = selected;
+
 	}
 
 	@Override
@@ -474,14 +492,25 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	}
 
 	@Override
-	public int getLayer() {
+	public Layer getLayer() {
 		// TODO Auto-generated method stub
-		return layer;
+		return this.layer;
 	}
 
 	@Override
-	public void setLayer(int l) {
+	public void setLayer(Layer layer) {
 		// TODO Auto-generated method stub
+		this.layer=layer;
+	}
+
+
+
+	@Override
+	public void toggleVisibility(boolean v) {
+		// TODO Auto-generated method stub
+		visible=v;
+		revalidate();
+		repaint();
 		
 	}
 

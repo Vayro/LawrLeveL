@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import com.lawranta.canvas.Paint;
 import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.layers.LayerContainer;
 import com.lawranta.panels.CanvasPanel;
 
 public class Open {
@@ -33,6 +34,7 @@ public class Open {
 					fileContainer = (ArrayList<Object>) (ois.readObject());
 					GLOBAL.fileInfo=(FileInfo) fileContainer.get(0);
 					CanvasPanel.ReloadFromCanvasContainer((ArrayList<Paint>) fileContainer.get(1));
+					LayerContainer.setArrayFromFile(fileContainer.get(2));
 					ois.close();
 				}
 

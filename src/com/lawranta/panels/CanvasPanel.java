@@ -13,6 +13,8 @@ import com.lawranta.frames.MainFrame;
 import com.lawranta.frames.internal.Menu;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.layers.Layer;
+import com.lawranta.layers.LayerContainer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -334,7 +336,7 @@ public class CanvasPanel extends JPanel {
 		;
 		mouse_y = (int) (p.getY() - p2.getY());
 		GLOBAL.MAINFRAME
-				.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + "," + mouse_y);
+				.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + "," + mouse_y + " | " + LayerContainer.getActiveLayer().getLayerName());
 	}
 
 	public void clearCircle() {
@@ -455,7 +457,7 @@ public class CanvasPanel extends JPanel {
 		// kkk.paintComponents(kkk.getGraphics());
 
 		kkk.setVisible(true);
-		contentPanel.add(kkk, 1, 0);
+		contentPanel.add(kkk, LayerContainer.getActiveLayer().getLayerID(), 0);
 		DoListItem item = new DoListItem("inkCreated", kkk);
 		revalidateAndRepaint();
 	}
@@ -498,13 +500,14 @@ public class CanvasPanel extends JPanel {
 				int xSize = ((InkDrop) loadedTanFile.get(i)).getxSize();
 				int offsetX = ((InkDrop) loadedTanFile.get(i)).getOffsetX();
 				int offsetY = ((InkDrop) loadedTanFile.get(i)).getOffsetY();
+				Layer layer =  ((InkDrop) loadedTanFile.get(i)).getLayer();
 				Color color = loadedTanFile.get(i).getColor();
 
 				for (int c = 0; c < canvasContainer.size(); c++) {
 
 					System.out.println("Checking: " + c);
 					if (x == ((JComponent) canvasContainer.get(c)).getX()
-							&& y == ((JComponent) canvasContainer.get(c)).getY()) {
+							&& y == ((JComponent) canvasContainer.get(c)).getY() && ( canvasContainer.get(c).getLayer()==layer ))  {
 
 						System.out.println("collision detected");
 						contentPanel.remove((Component) canvasContainer.get(c));
@@ -519,10 +522,10 @@ public class CanvasPanel extends JPanel {
 				InkDrop kkk =
 
 						new InkDrop(x, y, ySize, xSize, offsetX, offsetY, color);
-
+				kkk.setLayer(layer);
 				canvasContainer.add(kkk);
 				kkk.setVisible(true);
-				contentPanel.add(kkk, 1, 0);
+				contentPanel.add(kkk, layer.getLayerID(), 0);
 
 			} else if (loadedTanFile.get(i).getClass() == TextNode.class) {
 				// check if it is a TextNode
@@ -530,10 +533,12 @@ public class CanvasPanel extends JPanel {
 				int y = ((TextNode) loadedTanFile.get(i)).getY();
 				String text = ((TextNode) loadedTanFile.get(i)).getText();
 				TextNode node = new TextNode(x, y);
+				Layer layer = loadedTanFile.get(i).getLayer();
+				node.setLayer(layer);
 				node.setText(text);
 				node.setVisible(true);
 				node.requestFocusInWindow();
-				contentPanel.add(node, 2, 0);
+				contentPanel.add(node, layer.getLayerID(), 0);
 				canvasContainer.add(node);
 
 			}
@@ -562,11 +567,12 @@ public class CanvasPanel extends JPanel {
 			int iHeight = ((JComponent) canvasContainer.get(i)).getHeight(); // height of i
 			int ix2 = ix + iWidth; // width of i
 			int iy2 = iy + iHeight; // height of i
+			Layer layer =  canvasContainer.get(i).getLayer();
 
 			// need to check if item being erased has a coordinate that falls within the
-			// coordinate of the eraser brushSize
+			// coordinate of the eraser brushSize and if it is in the active layer
 
-			if (checkOverlap(iy, y2, iy2, y, ix2, x, ix, x2))
+			if (checkOverlap(iy, y2, iy2, y, ix2, x, ix, x2)&&(layer==LayerContainer.getActiveLayer()) ) 
 
 			{
 				((Paint) canvasContainer.get(i)).destroy(false);
@@ -590,7 +596,7 @@ public class CanvasPanel extends JPanel {
 	public void event() {
 		DIAMETER = SelectedTool.brushSize;
 		g2 = (Graphics2D) contentPanel.getGraphics();
-
+		Graphics2D g3 = (Graphics2D) contentPanel.getGraphics();
 		Point p1 = MouseInfo.getPointerInfo().getLocation();
 		Point p2 = contentPanel.getLocationOnScreen();
 
@@ -599,9 +605,11 @@ public class CanvasPanel extends JPanel {
 		// p = e.getPoint();
 
 		Shape circle = new Rectangle2D.Double(p.getX(), p.getY(), DIAMETER, DIAMETER);
-
+		g3.setColor(new Color(255,255,255,255));
+		Shape square = new Rectangle2D.Double(p.getX()+1, p.getY()+1, DIAMETER-2, DIAMETER-2);
 		// g2.setXORMode(XOR_COLOR);
 		g2.draw(circle);
+		g3.draw(square);
 		g2.setPaintMode();
 
 		m_circle = circle;

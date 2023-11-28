@@ -2,10 +2,13 @@ package com.lawranta.canvas;
 
 import java.awt.Color;
 
+import com.lawranta.layers.Layer;
+
 public interface Paint {
 
-	static int x = 0, y = 0, xSize = 0, ySize = 0, layer = 0;
-	boolean removed = false, selected = true;
+	static int x = 0, y = 0, xSize = 0, ySize = 0;
+	static Layer layer = null;
+	boolean removed = false, selected = true, visible =true;
 	public static Color color = SelectedTool.selectedColor;
 
 	int getId();
@@ -30,13 +33,13 @@ public interface Paint {
 
 	public int getySize();
 
-	public int getLayer();
+	public Layer getLayer();
 
 	public void setySize(int ySize);
 
 	public void setColor(Color color);
 
-	public void setLayer(int l);
+
 
 	public Color getColor();
 
@@ -49,5 +52,11 @@ public interface Paint {
 	void destroy(boolean removeFromContainer);
 
 	Runnable refresh();
+
+
+
+	void toggleVisibility(boolean v);
+
+	void setLayer(Layer layer);
 
 }

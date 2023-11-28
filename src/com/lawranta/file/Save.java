@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import com.lawranta.canvas.Zoom;
 import com.lawranta.globals.GLOBAL;
+import com.lawranta.layers.LayerContainer;
 import com.lawranta.panels.CanvasPanel;
 import com.lawranta.popups.ConfirmDialog;
 
@@ -27,8 +28,28 @@ public class Save {
 				FileOutputStream f = new FileOutputStream(new File(GLOBAL.fileInfo.getAbsPath()));
 				ObjectOutputStream o = new ObjectOutputStream(f);
 
+				ArrayList<Object> fileContainer = new ArrayList<Object>();
+
+				fileContainer.add(GLOBAL.fileInfo);
+				fileContainer.add(CanvasPanel.canvasContainer);
+				fileContainer.add(LayerContainer.getLayerArray());
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				// Write objects to file
-				o.writeObject(CanvasPanel.canvasContainer);
+				o.writeObject(fileContainer);
+				
+				
+				
+				
+				
+				
 				// o.writeObject(p2);
 
 				o.close();
@@ -101,11 +122,18 @@ public class Save {
 		GLOBAL.fileInfo.setOffsetX(GLOBAL.OFFSETX);
 		GLOBAL.fileInfo.setOffsetY(GLOBAL.OFFSETY);
 
-//stuff canvasContainer and FileInfo into a new object array
+		
+		
+		
+		
+		
+		
+//stuff canvasContainer and FileInfo and LayerArray into a new object array
 		ArrayList<Object> fileContainer = new ArrayList<Object>();
 
 		fileContainer.add(GLOBAL.fileInfo);
 		fileContainer.add(CanvasPanel.canvasContainer);
+		fileContainer.add(LayerContainer.getLayerArray());
 
 		try {
 			FileOutputStream file = new FileOutputStream(new File(absPath));

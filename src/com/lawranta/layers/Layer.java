@@ -1,11 +1,12 @@
 package com.lawranta.layers;
 
+import java.io.Serializable;
 import java.util.List;
 /**
  This is the layer OBJECT class
 	
  */
-public class Layer {
+public class Layer implements Serializable  {
 	
 	
 
@@ -14,7 +15,21 @@ public class Layer {
 	int layerID;
 	String layerName;
 	List contains;
-	boolean active = false;
+	boolean active = false, visible=true;
+
+	/**
+	 * @return the visible
+	 */
+	public boolean isVisible() {
+		return visible;
+	}
+
+	/**
+	 * @param visible the visible to set
+	 */
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 
 	/**
 	 * @return the layerID
