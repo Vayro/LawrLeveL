@@ -3,6 +3,7 @@ package com.lawranta.frames.internal;
 import java.awt.Color;
 import java.awt.EventQueue;
 
+import com.lawranta.canvas.Paint;
 import com.lawranta.edit.DoListStack;
 import com.lawranta.file.ExportPreDialog;
 import com.lawranta.file.Open;
@@ -10,6 +11,8 @@ import com.lawranta.file.Save;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.help.About;
 import com.lawranta.initializer.MainClass;
+import com.lawranta.panels.CanvasPanel;
+
 import javax.swing.JDialog;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -19,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.border.BevelBorder;
@@ -287,7 +291,7 @@ public class Menu extends JMenuBar implements KeyListener {
 		GLOBAL.setDefault();
 		CanvasPanel.setCanvasSize();*/
 		// actually let's just re-create the mainframe instead of just the panel...
-
+		CanvasPanel.canvasContainer = new ArrayList<Paint>();
 		Point locationholder = GLOBAL.MAINFRAME.getLocation();
 		GLOBAL.MAINFRAME.dispose();
 		GLOBAL.DEBUGFRAME.dispose();

@@ -12,6 +12,8 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 
 import com.lawranta.edit.DoListItem;
+import com.lawranta.frames.internal.Toolbar;
+import com.lawranta.frames.internal.Toolbar.toolButton;
 import com.lawranta.globals.GLOBAL;
 import com.lawranta.layers.Layer;
 import com.lawranta.layers.LayerContainer;
@@ -23,7 +25,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	 */
 	private static final long serialVersionUID = 7177229581515071838L;
 	boolean selected, visible=true;
-	int id, x, y, xSize, ySize, offsetX, offsetY, origX, origY;
+	int id, x, y, xSize, ySize, offsetX, offsetY, origX, origY, opacity=255;
 	int unscaledXSize, unscaledYSize, unscaledX, unscaledY;
 	Layer layer;
 	boolean createdWhileZoomed;
@@ -121,13 +123,17 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if ((!removed) && (visible)){
-			g.setColor(this.color);
+			
+			
+			Color c = new Color(this.color.getRed(),this.color.getGreen(),this.color.getBlue(),this.opacity);
+			
+			g.setColor(c);
 			g.fillRect(0, 0, (int) (xSize * Zoom.factor), (int) (ySize * Zoom.factor));
 			if (selected) {
 				g.setColor(new Color(255, 255, 0, 155));
 				g.drawRoundRect(1, 1, (int) (xSize * Zoom.factor) - 4, (int) (ySize * Zoom.factor) - 4, 2, 2);
 			}
-			g.setColor(this.color);
+			g.setColor(c);
 
 		} else {
 			
@@ -189,6 +195,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		this.origX = x;
 		this.origY = y;
 		this.layer = LayerContainer.getActiveLayer();
+		this.opacity=layer.getOpacity();
 		this.visible=LayerContainer.getActiveLayer().isVisible();
 		if (Zoom.factor > 1) {
 
@@ -332,6 +339,14 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 						selected = !selected;
 						draw();
 					}
+					 else if (SelectedTool.selectedTool == 5) {
+						 //set color with eyedropper tool
+						 SelectedTool.selectedColor=color;
+						 GLOBAL.CC.j.setColor(SelectedTool.selectedColor);
+							Toolbar.toolButton.colorBorder(Toolbar.colorButton);
+						 
+						 
+						}
 
 				}
 
@@ -512,6 +527,21 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 		revalidate();
 		repaint();
 		
+	}
+
+	@Override
+	public void setOpacity(int opacity) {
+		// TODO Auto-generated method stub
+		this.opacity=opacity;
+		revalidate();
+		repaint();
+		
+	}
+
+	@Override
+	public int getOpacity() {
+		// TODO Auto-generated method stub
+		return opacity;
 	}
 
 }

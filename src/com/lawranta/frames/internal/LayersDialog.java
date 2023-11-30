@@ -13,9 +13,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.lawranta.canvas.Paint;
 import com.lawranta.frames.MainFrame;
@@ -240,7 +243,7 @@ public class LayersDialog extends JDialog {
 					case "OK":
 
 						LayerContainer.clearLayer(layer);
-					
+
 						break;
 					case "Cancel":
 						System.out.println("cancelled");
@@ -258,10 +261,8 @@ public class LayersDialog extends JDialog {
 
 				trashButton.setIcon(greyTrashIcon);
 				trashButton.setToolTipText("Cannot delete base layer. (" + layer.getLayerName() + ")");
-			}else {
-				
-				
-				
+			} else {
+
 				trashButton.addActionListener(new ActionListener() {
 
 					@Override
@@ -279,7 +280,7 @@ public class LayersDialog extends JDialog {
 						case "OK":
 
 							LayerContainer.clearLayer(layer);
-						
+
 							LayerContainer.deleteLayer(layer);
 							dispose();
 							break;
@@ -290,33 +291,10 @@ public class LayersDialog extends JDialog {
 
 						}
 					}
-					
-					
-					
+
 				});
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 
 			JButton visibleButton;
 
@@ -342,7 +320,50 @@ public class LayersDialog extends JDialog {
 			iconButtonPanel.add(clearButton);
 			iconButtonPanel.add(trashButton);
 
+			
+			
+			//Opacity Panel goes here
+			
+			
+			JPanel opacityPanel = new JPanel();
+			opacityPanel.setPreferredSize(new Dimension(100, 64));
+			opacityPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			opacityPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			opacityPanel.setLayout(new BoxLayout(opacityPanel, BoxLayout.Y_AXIS));
+			opacityPanel.setMinimumSize(new Dimension(100, 64));
+			JSlider opacitySlider = new JSlider();
+			
+			opacitySlider.setPaintTicks(true);
+			opacitySlider.setPaintLabels(true);
+			opacitySlider.setMinorTickSpacing(25);
+			opacitySlider.setMinimum(0);
+			opacitySlider.setMaximum(100);
+			opacitySlider.setMajorTickSpacing(50);
+			opacitySlider.setPreferredSize(new Dimension(100, 64));
+			opacitySlider.setValue(layer.getOpacity());
+			opacitySlider.addChangeListener(new ChangeListener() {
+
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					// TODO Auto-generated method stub
+					
+					double opacity = ((double)opacitySlider.getValue()/(double)100)*255;
+					
+					System.out.println(layer.getLayerName() + " opacity is set at :");
+					System.out.println((int) opacity);
+					
+					layer.setOpacity((int) opacity);
+
+				}
+
+			});
+			
+			
+			
+			
+			opacityPanel.add(opacitySlider);
 			buttonPanel.add(iconButtonPanel);
+			buttonPanel.add(opacityPanel);
 			layerPanel.add(buttonPanel);
 			layerPanel.add(new JLabel(" "));
 

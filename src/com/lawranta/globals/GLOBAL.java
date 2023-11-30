@@ -48,6 +48,7 @@ public class GLOBAL {
 	public static String closedEyeIconPath="/images/closedEye.png";
 	public static String trashEyeIconPath="/images/trash.png";
 	public static String greyTrashIconPath="/images/greyTrash.png";
+	public static String eyeDropperPath="/images/eyeDropperCursor.png";
 	public static void setDefault(){
 		GRIDHEIGHT=32;
 		GRIDWIDTH=32;

@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.canvas.Zoom;
-
+import com.lawranta.frames.MainFrame;
 import com.lawranta.globals.GLOBAL;
 
 import com.lawranta.panels.CanvasPanel;
@@ -31,14 +31,25 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import java.awt.Dimension;
 
 public class Toolbar extends JPanel {
 
 	public static ActionListener actionListener;
 	public static JDialog j;
-	static toolButton colorButton, textToolButton, canvasSizeButton, gridSizeButton, eraserButton, layerButton, zoomInButton,
-			zoomOutButton, shiftButton;
+	public static toolButton colorButton;
+	static toolButton eyeDropperButton;
+	static toolButton textToolButton;
+	static toolButton canvasSizeButton;
+	static toolButton gridSizeButton;
+	static toolButton eraserButton;
+	static toolButton layerButton;
+	static toolButton zoomInButton;
+	static toolButton zoomOutButton;
+	static toolButton shiftButton;
 	static Image circle;
 	static Cursor eraserCursor;
 
@@ -181,6 +192,9 @@ public class Toolbar extends JPanel {
 					j=new LayersDialog();
 					j.setLocation((int) (getLocationOnScreen().getX()+layerButton.getLocation().getX()+layerButton.getWidth()),(int) (getLocationOnScreen().getY()+layerButton.getLocation().getY()));
 					break;
+				case "Eyedropper":
+					setEyeDropper();
+				break;
 				default:
 					break;
 
@@ -319,12 +333,24 @@ public class Toolbar extends JPanel {
 		shiftButton = new toolButton("shift", panel);
 		
 		layerButton = new toolButton("Layers", panel);
-		
+		eyeDropperButton = new toolButton("Eyedropper", panel);
 		colorButton = new toolButton("Color", panel);
 		toolButton.colorBorder(colorButton);
 
 		setBounds(100, 100, 450, 300);
 
+	}
+
+	protected void setEyeDropper() {
+		// TODO Auto-generated method stub
+		SelectedTool.setEyeDropperTool();
+		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image image =toolkit.getImage( MainFrame.class.getResource(GLOBAL.eyeDropperPath));
+		Cursor c = toolkit.createCustomCursor(image , new Point(0, 0), "eyeDropper");
+		CanvasPanel.contentPanel.setCursor(c);
+		
 	}
 
 	public static void setBrush() {
@@ -388,7 +414,7 @@ public class Toolbar extends JPanel {
 		return bufferedImage;
 	}
 
-	class toolButton extends JButton {
+	public class toolButton extends JButton {
 
 		/**
 		 * 

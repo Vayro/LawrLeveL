@@ -6,7 +6,7 @@ import com.lawranta.layers.Layer;
 
 public interface Paint {
 
-	static int x = 0, y = 0, xSize = 0, ySize = 0;
+	static int x = 0, y = 0, xSize = 0, ySize = 0, opacity=100;
 	static Layer layer = null;
 	boolean removed = false, selected = true, visible =true;
 	public static Color color = SelectedTool.selectedColor;
@@ -39,7 +39,9 @@ public interface Paint {
 
 	public void setColor(Color color);
 
-
+	public void setOpacity(int opacity);
+	
+	public int getOpacity();
 
 	public Color getColor();
 

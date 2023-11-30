@@ -12,7 +12,7 @@ public class SelectedTool {
 	 * 2: Text
 	 * 3: Eraser
 	 * 4: Selection
-	 * 
+	 * 5: Eyedropper
 	 * 
 	 * 
 	 * 
@@ -60,6 +60,11 @@ public class SelectedTool {
 	public static void setSelectionTool() {
 		selectedTool = 4;
 
+	}
+
+	public static void setEyeDropperTool() {
+		// TODO Auto-generated method stub
+		selectedTool = 5;
 	}
 
 }

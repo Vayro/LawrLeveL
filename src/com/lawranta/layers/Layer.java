@@ -2,6 +2,9 @@ package com.lawranta.layers;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.lawranta.canvas.Paint;
+import com.lawranta.panels.CanvasPanel;
 /**
  This is the layer OBJECT class
 	
@@ -12,7 +15,7 @@ public class Layer implements Serializable  {
 
 	
 	
-	int layerID;
+	int layerID, opacity=255;
 	String layerName;
 	List contains;
 	boolean active = false, visible=true;
@@ -88,6 +91,43 @@ public class Layer implements Serializable  {
 	public void setActive(boolean b) {
 		// TODO Auto-generated method stub
 		this.active=b;
+	}
+
+	public int getOpacity() {
+		// TODO Auto-generated method stub
+		return this.opacity;
+	}
+	public void setOpacity(int opacity) {
+		// first, set opacity in this layer object
+		
+		this.opacity=opacity;
+		
+		//next, loop through the CanvasContainer array and set all paint to have the same opacity as this layer
+		
+		for(int i=0;i<CanvasPanel.canvasContainer.size();i++) {
+			
+			Paint p = CanvasPanel.canvasContainer.get(i);
+			
+			//loop	
+			if(p.getLayer()==this) {
+				
+				
+				p.setOpacity(this.opacity);
+				
+				
+			}
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
 	}
 
 }

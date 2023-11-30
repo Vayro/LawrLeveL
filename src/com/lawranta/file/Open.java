@@ -33,6 +33,7 @@ public class Open {
 				{
 					fileContainer = (ArrayList<Object>) (ois.readObject());
 					GLOBAL.fileInfo=(FileInfo) fileContainer.get(0);
+					CanvasPanel.canvasContainer = new ArrayList<Paint>();
 					CanvasPanel.ReloadFromCanvasContainer((ArrayList<Paint>) fileContainer.get(1));
 					LayerContainer.setArrayFromFile(fileContainer.get(2));
 					ois.close();
