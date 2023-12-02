@@ -227,12 +227,12 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 		draw();
 		setLayout(null);
-		System.out.println("inkDrop created at " + this.x + "," + this.y + " Size(" + xSize + "," + ySize
-				+ ") on layer: " + this.getLayer());
+		//System.out.println("inkDrop created at " + this.x + "," + this.y + " Size(" + xSize + "," + ySize
+		//		+ ") on layer: " + this.getLayer());
 
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
-			System.out.println(i + " out of " + CanvasPanel.canvasContainer.size());
+			//System.out.println(i + " out of " + CanvasPanel.canvasContainer.size());
 			if (CanvasPanel.canvasContainer.get(i).getLayer() == this.getLayer()) {
 				if (x == ((Component) CanvasPanel.canvasContainer.get(i)).getX()
 						&& y == ((Component) CanvasPanel.canvasContainer.get(i)).getY()) {
@@ -368,7 +368,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Stop painting here?");
+			//	System.out.println("Stop painting here?");
 
 			}
 		};
@@ -385,7 +385,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 	public void destroy(boolean removeFromContainer) {
 		// TODO Auto-generated method stub
-		System.out.println(" deleting mySelf... :( ");
+		//System.out.println(" deleting mySelf... :( ");
 
 		// x=0;y=0;xSize=0; ySize=0;
 		setVisible(false);
@@ -423,7 +423,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 		for (int i = 0; i < CanvasPanel.canvasContainer.size(); i++) {
 
-			System.out.println("Checking: " + i);
+		
 
 			if (CanvasPanel.canvasContainer.get(i).getClass() == InkDrop.class) {
 				// first check if inkdrop
@@ -435,10 +435,10 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 
 				{
 
-					System.out.println("collision detected");
+				//	System.out.println("collision detected");
 
 					if (this.getLayer() == CanvasPanel.canvasContainer.get(i).getLayer()) {
-						System.out.println("Same layer collision, deleting");
+					//	System.out.println("Same layer collision, deleting");
 						((InkDrop) CanvasPanel.canvasContainer.get(i)).destroy(true);
 					}
 					CanvasPanel.revalidateAndRepaint();

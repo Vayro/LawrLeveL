@@ -50,8 +50,9 @@ public class Toolbar extends JPanel {
 	static toolButton zoomInButton;
 	static toolButton zoomOutButton;
 	static toolButton shiftButton;
+	static toolButton trueBrushButton;
 	static Image circle;
-	static Cursor eraserCursor;
+	static Cursor eraserCursor; 
 
 	/**
 	 * Launch the application.
@@ -134,8 +135,8 @@ public class Toolbar extends JPanel {
 				// TODO Auto-generated method stub
 
 				switch (e.getActionCommand()) {
-				case "Brush":
-					setBrush();
+				case "InkDrop":
+					setInkDrop();
 					break;
 
 				case "Aa":
@@ -195,12 +196,16 @@ public class Toolbar extends JPanel {
 				case "Eyedropper":
 					setEyeDropper();
 				break;
+				case "tBrush":
+					setBrush();
+				break;
 				default:
 					break;
 
 				}
 
 			}
+
 
 		};
 
@@ -238,7 +243,7 @@ public class Toolbar extends JPanel {
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		toolButton brushToolButton = new toolButton("Brush", panel);
+		toolButton inkDropToolButton = new toolButton("InkDrop", panel);
 		addMouseListener(new MouseListener() {
 
 			@Override
@@ -279,6 +284,8 @@ public class Toolbar extends JPanel {
 
 		});
 
+		trueBrushButton = new toolButton("tBrush", panel);
+		
 		textToolButton = new toolButton("Aa", panel);
 
 		canvasSizeButton = new toolButton("Canvas", panel);
@@ -340,6 +347,20 @@ public class Toolbar extends JPanel {
 		setBounds(100, 100, 450, 300);
 
 	}
+	
+
+	private void setBrush() {
+		// TODO Auto-generated method stub
+	//	circle = makeImage(32, 32);
+	//	eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0, 0), "eraser");
+		SelectedTool.setBrushTool();
+		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
+		CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+
+	//	CanvasPanel.contentPanel.setCursor(eraserCursor);
+
+		
+	}
 
 	protected void setEyeDropper() {
 		// TODO Auto-generated method stub
@@ -353,7 +374,7 @@ public class Toolbar extends JPanel {
 		
 	}
 
-	public static void setBrush() {
+	public static void setInkDrop() {
 
 		SelectedTool.setInkDropTool();
 		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
@@ -402,13 +423,15 @@ public class Toolbar extends JPanel {
 
 		// To be sure, we use clearRect, which will (unlike fillRect) totally replace
 		// the current pixels with the desired color, even if it's fully transparent.
-		graphics.setBackground(new Color(0, true));
+	/*	graphics.setBackground(new Color(0, true));
 		graphics.clearRect(0, 0, width, height);
-		graphics.setPaint(new Color(255, 255, 255));
+		graphics.setPaint(new Color(255, 255, 255, 0));
 		graphics.drawOval(1, 1, width - 2, height - 2);
-		graphics.setPaint(new Color(0, 0, 0));
-		graphics.drawOval(2, 2, width - 4, height - 4);
-
+		graphics.setPaint(new Color(0, 0, 0, 0));
+		graphics.drawOval(2, 2, width - 4, height - 4);*/
+		graphics.setPaint(new Color(0, 0, 0, 255));
+		graphics.fillOval(12, 12, 8, 8);
+		
 		graphics.dispose();
 
 		return bufferedImage;

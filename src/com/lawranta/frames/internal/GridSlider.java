@@ -108,7 +108,7 @@ public class GridSlider extends JDialog {
 
 				GLOBAL.GRIDWIDTH = Integer.parseInt(textField.getText());
 				GLOBAL.GRIDHEIGHT = Integer.parseInt(textField.getText());
-				SelectedTool.brushSize = Integer.parseInt(textField.getText());
+				//SelectedTool.brushSize = Integer.parseInt(textField.getText());
 				CanvasPanel.rebuildGrid();
 				CanvasPanel.contentPanel.revalidate();
 				CanvasPanel.contentPanel.repaint();
@@ -222,7 +222,7 @@ public class GridSlider extends JDialog {
 
 					GLOBAL.GRIDWIDTH = Integer.parseInt(textField.getText());
 					GLOBAL.GRIDHEIGHT = Integer.parseInt(textField.getText());
-					SelectedTool.brushSize = Integer.parseInt(textField.getText());
+					//SelectedTool.brushSize = Integer.parseInt(textField.getText());
 					CanvasPanel.rebuildGrid();
 					CanvasPanel.contentPanel.revalidate();
 					CanvasPanel.contentPanel.repaint();

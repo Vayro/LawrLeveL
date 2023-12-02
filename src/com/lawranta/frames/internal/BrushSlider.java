@@ -55,6 +55,7 @@ public class BrushSlider extends JDialog {
 		setMaximumSize(new Dimension(2147483647, 400));
 		setUndecorated(true);
 		setAlwaysOnTop(true);
+		setFocusable(false);
 		getContentPane().setSize(new Dimension(350, 100));
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setBounds(100, 100, 450, 150);
@@ -68,7 +69,7 @@ public class BrushSlider extends JDialog {
 		getContentPane().add(sliderPanel);
 		sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
 		JSlider slider = new JSlider();
-		slider.setValue(32);
+		slider.setValue(SelectedTool.getBrushSize());
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
 		slider.setMinorTickSpacing(16);
@@ -122,9 +123,6 @@ public class BrushSlider extends JDialog {
 
 					SelectedTool.brushSize = Integer.parseInt(textField.getText());
 
-					SelectedTool.setEraserTool();
-					System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-					CanvasPanel.contentPanel.setCursor(Toolbar.eraserCursor);
 
 					dispose();
 

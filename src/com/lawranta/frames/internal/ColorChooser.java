@@ -83,8 +83,7 @@ public class ColorChooser extends JDialog {
 				case "OK":
 
 					cancelled = false;
-					dispose();
-
+		
 					break;
 
 				case "Cancel":

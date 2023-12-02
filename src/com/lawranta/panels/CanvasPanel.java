@@ -10,6 +10,7 @@ import com.lawranta.canvas.TextNode;
 import com.lawranta.canvas.Zoom;
 import com.lawranta.edit.DoListItem;
 import com.lawranta.frames.MainFrame;
+import com.lawranta.frames.internal.Cell;
 import com.lawranta.frames.internal.Menu;
 import com.lawranta.canvas.SelectedTool;
 import com.lawranta.globals.GLOBAL;
@@ -34,6 +35,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -217,7 +219,7 @@ public class CanvasPanel extends JPanel {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if (SelectedTool.selectedTool == 3) {
+				if (SelectedTool.selectedTool == 3 || SelectedTool.selectedTool == 6) {
 					event();
 					clearCircle();
 				}
@@ -275,7 +277,7 @@ public class CanvasPanel extends JPanel {
 
 				mousePosUpdate();
 
-				if (SelectedTool.selectedTool == 3) {
+				if (SelectedTool.selectedTool == 3 || SelectedTool.selectedTool == 6) {
 					event();
 
 					clearCircle();
@@ -304,7 +306,7 @@ public class CanvasPanel extends JPanel {
 					break;
 				}
 				case 3: {
-					chooseStopActionByTool();
+
 					break;
 
 				}
@@ -321,7 +323,7 @@ public class CanvasPanel extends JPanel {
 				/*
 				 * contentPanel.revalidate(); contentPanel.repaint();
 				 */
-				if (SelectedTool.selectedTool == 3)
+				if (SelectedTool.selectedTool == 3 || SelectedTool.selectedTool == 6)
 					event();
 			}
 		}).start();
@@ -335,20 +337,21 @@ public class CanvasPanel extends JPanel {
 		mouse_x = (p.getX() - p2.getX());
 		;
 		mouse_y = (int) (p.getY() - p2.getY());
-		GLOBAL.MAINFRAME
-				.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + "," + mouse_y + " | " + LayerContainer.getActiveLayer().getLayerName());
+		GLOBAL.MAINFRAME.setTitle("LawrLeveler (" + GLOBAL.fileInfo.getFileName() + ")" + " | " + mouse_x + ","
+				+ mouse_y + " | " + LayerContainer.getActiveLayer().getLayerName());
 	}
 
 	public void clearCircle() {
 		if (m_circle != null) {
-			if(g2!=null) {
-			g2.setXORMode(XOR_COLOR);
-			g2.draw(m_circle);
-			g2.setPaintMode();
+			if (g2 != null) {
+				g2.setXORMode(XOR_COLOR);
+				g2.draw(m_circle);
+				g2.setPaintMode();
 
-			m_circle = null;
-			
-		}}
+				m_circle = null;
+
+			}
+		}
 		revalidateAndRepaint();
 	}
 
@@ -400,6 +403,20 @@ public class CanvasPanel extends JPanel {
 			break;
 
 		}
+		case 4: { // 0
+			break;
+
+		}
+		case 5: { // 0
+
+			break;
+
+		}
+		case 6: { // brush tool
+			startBrushPainting();
+			break;
+
+		}
 		}
 	}
 
@@ -421,33 +438,11 @@ public class CanvasPanel extends JPanel {
 
 	}
 
-	void chooseStopActionByTool() {
-
-		switch (SelectedTool.selectedTool) {
-		case 1: {
-			// startDeleting();
-			break;
-		}
-		case 2: {
-
-			break;
-		}
-		case 3: { // eraser tool
-
-			break;
-
-		}
-		}
-
-	}
-
 	public static void startPainting() {
 		// TODO Auto-generated method stub
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Point p2 = contentPanel.getLocationOnScreen();
 		int x = (int) (p.getX() - p2.getX()), y = (int) (p.getY() - p2.getY());
-
-
 
 		InkDrop kkk = new InkDrop(x, y, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX, GLOBAL.OFFSETY,
 				SelectedTool.selectedColor);
@@ -465,7 +460,7 @@ public class CanvasPanel extends JPanel {
 	public static void ReloadFromCanvasContainer(ArrayList<Paint> loadedTanFile) {
 		contentPanel.removeAll();
 		revalidateAndRepaint();
-		
+
 		if (canvasContainer.size() > 1) {
 
 			canvasContainer.clear();
@@ -480,16 +475,8 @@ public class CanvasPanel extends JPanel {
 		rebuildGrid();
 		GLOBAL.DEBUGFRAME.refresh();
 
-		
-		
-		loadedTanFile.sort((o1, o2)
-                 -> Integer.compare(o1.getId(),o2.getId()));
-   
-		
-		
-		
-		
-		
+		loadedTanFile.sort((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
+
 		for (int i = 0; i < loadedTanFile.size(); i++) {
 
 			if (loadedTanFile.get(i).getClass() == InkDrop.class) {// check if loaded element is an inkdrop
@@ -500,14 +487,15 @@ public class CanvasPanel extends JPanel {
 				int xSize = ((InkDrop) loadedTanFile.get(i)).getxSize();
 				int offsetX = ((InkDrop) loadedTanFile.get(i)).getOffsetX();
 				int offsetY = ((InkDrop) loadedTanFile.get(i)).getOffsetY();
-				Layer layer =  ((InkDrop) loadedTanFile.get(i)).getLayer();
+				Layer layer = ((InkDrop) loadedTanFile.get(i)).getLayer();
 				Color color = loadedTanFile.get(i).getColor();
 
 				for (int c = 0; c < canvasContainer.size(); c++) {
 
-					System.out.println("Checking: " + c);
+					//System.out.println("Checking: " + c);
 					if (x == ((JComponent) canvasContainer.get(c)).getX()
-							&& y == ((JComponent) canvasContainer.get(c)).getY() && ( canvasContainer.get(c).getLayer()==layer ))  {
+							&& y == ((JComponent) canvasContainer.get(c)).getY()
+							&& (canvasContainer.get(c).getLayer() == layer)) {
 
 						System.out.println("collision detected");
 						contentPanel.remove((Component) canvasContainer.get(c));
@@ -567,12 +555,12 @@ public class CanvasPanel extends JPanel {
 			int iHeight = ((JComponent) canvasContainer.get(i)).getHeight(); // height of i
 			int ix2 = ix + iWidth; // width of i
 			int iy2 = iy + iHeight; // height of i
-			Layer layer =  canvasContainer.get(i).getLayer();
+			Layer layer = canvasContainer.get(i).getLayer();
 
 			// need to check if item being erased has a coordinate that falls within the
 			// coordinate of the eraser brushSize and if it is in the active layer
 
-			if (checkOverlap(iy, y2, iy2, y, ix2, x, ix, x2)&&(layer==LayerContainer.getActiveLayer()) ) 
+			if (checkOverlap(iy, y2, iy2, y, ix2, x, ix, x2) && (layer == LayerContainer.getActiveLayer()))
 
 			{
 				((Paint) canvasContainer.get(i)).destroy(false);
@@ -593,7 +581,177 @@ public class CanvasPanel extends JPanel {
 
 	}
 
+	public static void startBrushPainting() {
+		// This method occurs when the mouse is being pressed down
+
+	//	System.out.println("brush painting");
+
+		Point p = MouseInfo.getPointerInfo().getLocation(); // get pointer location (absolute to screen)
+		Point p2 = contentPanel.getLocationOnScreen(); // get location of content window (where things are drawn)
+		int x = (int) ((p.getX() - p2.getX())- (DIAMETER / 2));// ((DIAMETER / 4)) );
+		int y = (int) ((p.getY() - p2.getY())- (DIAMETER / 2));// ((DIAMETER / 4)) );
+		/*
+		 * x and y coordinates of top-left boundary of circle as if it were surrounded my a square, this is the circle
+		 * location relative to the window... the location of the mouse will
+		 * be the center of the circle 
+		 */
+		
+		int x2 = x + SelectedTool.brushSize, y2 = y + SelectedTool.brushSize;
+		/*
+		 * location of bottom-right side of the brush boundary, actually this isn't
+		 * important for the circle it's just leftover code from when I used a square
+		 * brush instead of a circle brush, such as for the eraser tool
+		 */
+
+		double radius = DIAMETER / 2; /* ez radius reference */
+
+		double centerX = (int) ((p.getX() - p2.getX()));
+		double centerY = (int) ((p.getY() - p2.getY()));
+		/*
+		 * We now have everything we need to calculate the circle: the center point and
+		 * the radius.
+		 */
+
+		
+		/*im going to draw another circle using the points I calculated above here
+		 *  just to check that the circle i'm using
+		 */
+		
+		Graphics2D g4 = (Graphics2D) contentPanel.getGraphics();
+	g4.setColor(new Color(255,0,0));
+		Shape circle = new Ellipse2D.Double(x, y, radius*2, radius*2);
+		g4.setColor(new Color(255,255,0));
+	g4.drawOval((int) x,(int) y,(int) radius*2, (int) radius*2);
+		g4.draw(circle);
+		
+		ArrayList<Cell> cells = cg.getCellList(); // get list of grid cells in existence
+
+		for (int i = 0; i < cells.size(); i++)
+		/*
+		 * iterate through the cells to check if they are within the area of the
+		 * brushsize
+		 */
+		{
+			Cell cell = cells.get(i); // get the current cell being iterated through, along with all it's information
+
+			// top-left corner of cell:
+		//	int cellX = cell.getX()+((int) radius*2);
+		//	int cellY = cell.getY()+((int) radius*2);
+		//	Point cellTopLeft = new Point(cellX, cellY); // for easy reference, i'm storing the x and y in a "point"
+															// object
+
+			// bottom-right corner of cell:
+		//	int cellX2 = cell.getX()+GLOBAL.GRIDWIDTH-((int) radius);
+		//	int cellY2 = cell.getY()+GLOBAL.GRIDWIDTH-((int)radius);
+		//	Point cellBotRight = new Point(cellX2, cellY2);
+
+			// with these two point, I can easily calculate the top-right and bottom-left
+			// points
+		//	Point cellTopRight = new Point(cellX2, cellY); // top right
+		//	Point cellBotLeft = new Point(cellX, cellY2); // bottom left
+
+			/*
+			 * we should have everything we need to calculate if the circle and cell
+			 * collide. we just need to check the distance between each point and the center
+			 * of the circle. if all 4 of the points have a greater distance to the center
+			 * of the circle than the overall length of the radius, the square will never be
+			 * in the circle. However, if even only one corner has a smaller distance to the
+			 * center than the length of the radius, then the square will be inside the
+			 * circle. So, let's use the distance formula of all four points in relation to
+			 * the center of the circle. I have created another method
+			 * "distanceFormula(double x1, double y1,  double x2, double y2)" This will take
+			 * in 2 x and y values, and return the distance between them as a double... ...
+			 * hypothetically
+			 */
+
+		/*	double distanceTopLeft = distanceFormula(cellTopLeft.getX(), cellTopLeft.getY(), centerX, centerY);
+			double distanceBotRight = distanceFormula(cellBotRight.getX(), cellBotRight.getY(), centerX, centerY);
+			double distanceTopRight = distanceFormula(cellTopRight.getX(), cellTopRight.getY(), centerX, centerY);
+			double distanceBotLeft = distanceFormula(cellBotLeft.getX(), cellBotLeft.getY(), centerX, centerY);*/
+
+			/*
+			 * now the distances should all be stored as doubles in their own respective
+			 * variables.
+			 * 
+			 * 
+			 * hopefully I didn't do any dumb math mistakes.
+			 * 
+			 * Now, we just make one giant if statement that will first check if all
+			 * distances are greater than the radius
+			 */
+			
+			
+			
+			/*
+			 * an additional check,  treat the squares as circles and calculate the sum of the diameters, 
+			 * and if the distance between the center of the cell and the center of the circle is less than 
+			 * or equal to the combined diameters, then fill the square
+			 * 
+			 * */
+			
+			int sumOfRadi=(int) (radius/2+cell.getxSize()/2); //combined radii
+			Point centerOfCell=new Point(cell.getX(),cell.getY());
+			double distanceBetweenCenters=distanceFormula(centerX,centerY,centerOfCell.getX(),centerOfCell.getY());
+			
+			/*(distanceTopLeft > radius && distanceBotRight > radius && distanceTopRight > radius
+			&& distanceBotLeft > radius)*/
+
+			if ((distanceBetweenCenters>sumOfRadi)){
+				/*
+				 * if all 4 statements are true, then the overall statement is true, and the
+				 * circle and square do not collide
+				 */
+			} else {
+				/*
+				 * However, if even just one statement fails, the overall if statement is false,
+				 * and the circle and square do collied.
+				 * 
+				 * ...probably
+				 * 
+				 * 
+				 * 
+				 * so let's add a new inkdrop here But first, we need to go through the canvas
+				 * container array and check if there already exists an inkdrop in the square we
+				 * are trying to add that also happens to be in the active layer. if there is,
+				 * the fucking destroy that inkdrop as we add a new one in. (this is the normal
+				 * check we do before adding inkdrops in any other way... I should probably use
+				 * polymorphic code here but fuck it maybe i'll fix it later)
+				 */
+
+				InkDrop kkk = new InkDrop(cell.getX(), cell.getY(), GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX,
+						GLOBAL.OFFSETY, SelectedTool.selectedColor); // created inkdrop class at cellX and cellY
+
+				/*
+				 * as I was writing this code, I realied I already do all those "normal checks"
+				 * i mentioned within the inkDrop class, which means I already had made ir
+				 * polymorphic previously which means i'm awesome and save myself a bit of work
+				 * 
+				 * 
+				 * so at this point it is the same as previous code I used in the original brush
+				 * tool
+				 */
+
+				canvasContainer.add(kkk);
+				kkk.setId(canvasContainer.size() - 1);
+				// kkk.paintComponents(kkk.getGraphics());
+
+				kkk.setVisible(true);
+				contentPanel.add(kkk, LayerContainer.getActiveLayer().getLayerID(), 0);
+				DoListItem item = new DoListItem("inkCreated", kkk);
+				revalidateAndRepaint();
+
+				// meh, this will probably work. testing now.
+				// first test, my math is wrong because the brush is shifted upwards by like 16
+				// pixels for some reason
+
+			}
+
+		}
+
+	}
+
 	public void event() {
+
 		DIAMETER = SelectedTool.brushSize;
 		g2 = (Graphics2D) contentPanel.getGraphics();
 		Graphics2D g3 = (Graphics2D) contentPanel.getGraphics();
@@ -603,16 +761,30 @@ public class CanvasPanel extends JPanel {
 		p = new Point((int) ((p1.x - p2.x) - (DIAMETER / 2)) + 16, (int) ((p1.y - p2.y) - (DIAMETER / 2)) + 16);
 
 		// p = e.getPoint();
+		if (SelectedTool.selectedTool == 3) {
+			// draw a square around cursor if selected tool is a true brush
+			Shape square = new Rectangle2D.Double(p.getX(), p.getY(), DIAMETER, DIAMETER);
+			g3.setColor(new Color(255, 255, 255, 255));
+			Shape square2 = new Rectangle2D.Double(p.getX() + 1, p.getY() + 1, DIAMETER - 2, DIAMETER - 2);
+			// g2.setXORMode(XOR_COLOR);
+			g2.draw(square);
+			g3.draw(square2);
+			g2.setPaintMode();
 
-		Shape circle = new Rectangle2D.Double(p.getX(), p.getY(), DIAMETER, DIAMETER);
-		g3.setColor(new Color(255,255,255,255));
-		Shape square = new Rectangle2D.Double(p.getX()+1, p.getY()+1, DIAMETER-2, DIAMETER-2);
-		// g2.setXORMode(XOR_COLOR);
-		g2.draw(circle);
-		g3.draw(square);
-		g2.setPaintMode();
+			m_circle = square;
+		} else if (SelectedTool.selectedTool == 6) {
+			p = new Point((int) ((p1.x - p2.x)-( DIAMETER / 2)), (int) ((p1.y - p2.y)- (DIAMETER / 2)));
+			// draw a circle around cursor if selected tool is a true brush
+			Shape circle = new Ellipse2D.Double(p.getX(), p.getY(), DIAMETER, DIAMETER);
+			g3.setColor(new Color(255, 255, 255, 255));
+		Shape circle2 = new Ellipse2D.Double(p.getX() + 1, p.getY() + 1, DIAMETER - 2, DIAMETER - 2);
+			// g2.setXORMode(XOR_COLOR);
+			g2.draw(circle);
+			g3.draw(circle2);
+			g2.setPaintMode();
 
-		m_circle = circle;
+			m_circle = circle;
+		}
 
 	}
 
@@ -632,17 +804,29 @@ public class CanvasPanel extends JPanel {
 		return true;
 	}
 
+	private static double distanceFormula(double x1, double y1, double x2, double y2) {
+
+	//	return Math.hypot(x1 - x2, y1 - y2);
+		
+		
+		double distance = Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
+		
+		
+		
+		return distance;
+
+	}
+
 	public static void revalidateAndRepaint() {
 		// System.out.println("Revalidating and Repainting");
 		contentPanel.setBackground(GLOBAL.gridBGColor);
 		canvas.setBackground(GLOBAL.bgColor);
-		
-		if(gridPane.getParent()!=null) {
-		gridPane.getParent().getParent().revalidate();
-		gridPane.getParent().getParent().repaint();
+
+		if (gridPane.getParent() != null) {
+			gridPane.getParent().getParent().revalidate();
+			gridPane.getParent().getParent().repaint();
 		}
-		
-		
+
 		gridPane.revalidate();
 		gridPane.repaint();
 		contentPanel.revalidate();

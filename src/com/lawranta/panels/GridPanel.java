@@ -22,7 +22,7 @@ public class GridPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+ 
 		if (!CanvasPanel.hideGrid)
 			CanvasPanel.cg = new CreateGrid(g, (int) (GLOBAL.GRIDWIDTH * Zoom.factor),
 					(int) (GLOBAL.GRIDHEIGHT * Zoom.factor), (int) (GLOBAL.CANVAS_WIDTH * Zoom.factor),
@@ -37,7 +37,7 @@ public class GridPanel extends JPanel {
 		setSize(CanvasPanel.contentPanel.getSize());
 		setMinimumSize(CanvasPanel.contentPanel.getMinimumSize());
 		setPreferredSize(CanvasPanel.contentPanel.getPreferredSize());
-
+		System.out.println("\u001B[31m creating grid \u001B[0m");
 	}
 
 }

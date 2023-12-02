@@ -154,7 +154,7 @@ public class Menu extends JMenuBar implements KeyListener {
 
 				switch (e.getActionCommand()) {
 				case "inkdrop":
-					Toolbar.setBrush();
+					Toolbar.setInkDrop();
 
 					break;
 				case "eraser":

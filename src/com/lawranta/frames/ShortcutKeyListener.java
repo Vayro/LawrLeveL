@@ -38,7 +38,7 @@ public class ShortcutKeyListener implements KeyListener {
 			switch (e.getKeyCode()) {
 			case 66: // B
 				System.out.println("Brush Tool");
-				Toolbar.setBrush();
+				Toolbar.setInkDrop();
 				break;
 			case 69: // E
 				System.out.println("EraserTool");

@@ -13,7 +13,7 @@ public class SelectedTool {
 	 * 3: Eraser
 	 * 4: Selection
 	 * 5: Eyedropper
-	 * 
+	 * 6: true Brush
 	 * 
 	 * 
 	 * 
@@ -65,6 +65,16 @@ public class SelectedTool {
 	public static void setEyeDropperTool() {
 		// TODO Auto-generated method stub
 		selectedTool = 5;
+	}
+	
+	public static void setBrushTool() {
+		// TODO Auto-generated method stub
+		selectedTool = 6;
+	}
+
+	public static int getBrushSize() {
+		// TODO Auto-generated method stub
+		return brushSize;
 	}
 
 }

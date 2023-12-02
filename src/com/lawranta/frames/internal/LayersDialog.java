@@ -65,6 +65,7 @@ public class LayersDialog extends JDialog {
 		setMinimumSize(new Dimension(128, 400));
 		setAlwaysOnTop(true);
 		setUndecorated(true);
+		setFocusable(false);
 		contentPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
 		contentPanel.setSize(new Dimension(120, 400));
