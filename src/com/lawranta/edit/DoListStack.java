@@ -18,7 +18,7 @@ public class DoListStack {
 		// TODO Auto-generated constructor stub
 	}
 
-	public class UndoListStack {
+	public static class UndoListStack {
 		// TODO Auto-generated constructor stub
 
 		public void undoListStack() {
@@ -97,7 +97,7 @@ public class DoListStack {
 
 	}
 
-	public class RedoListStack {
+	public static class RedoListStack {
 
 		public void undoListStack() {
 			// TODO Auto-generated constructor stub

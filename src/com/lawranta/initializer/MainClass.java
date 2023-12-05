@@ -42,7 +42,7 @@ public class MainClass {
 		
 		GLOBAL.MAINFRAME = new MainFrame();
 		GLOBAL.DEBUGFRAME = new Debug();
-		//GLOBAL.DEBUGFRAME.setVisible(false);
+		GLOBAL.DEBUGFRAME.setVisible(false);
 		GLOBAL.preferences= new Preferences();
 		GLOBAL.filePathDialog = new FilePathDialog();
 		GLOBAL.exportPathDialog = new ExportPathDialog();

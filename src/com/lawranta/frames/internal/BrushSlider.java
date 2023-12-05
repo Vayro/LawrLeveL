@@ -3,6 +3,8 @@ package com.lawranta.frames.internal;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 import javax.swing.JDialog;
 import javax.swing.JSlider;
@@ -29,125 +31,92 @@ public class BrushSlider extends JDialog {
 	 */
 	private static final long serialVersionUID = -5757691635233262953L;
 	private JTextField textField;
-	@SuppressWarnings("unused")
 	private JPanel contentPane = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BrushSlider frame = new BrushSlider();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JSlider js = new JSlider();
 
 	/**
 	 * Create the frame.
 	 */
 	public BrushSlider() {
-		setMaximumSize(new Dimension(2147483647, 400));
 		setUndecorated(true);
-		setAlwaysOnTop(true);
-		setFocusable(false);
-		getContentPane().setSize(new Dimension(350, 100));
-		getContentPane().setBackground(new Color(255, 255, 255));
-		setBounds(100, 100, 450, 150);
-		setType(Type.UTILITY);
-		setVisible(true);
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		setLocationRelativeTo(null);
+		setBounds(0, 0, 350, 64);
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 
-		JPanel sliderPanel = new JPanel();
-		sliderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		getContentPane().add(sliderPanel);
-		sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
-		JSlider slider = new JSlider();
-		slider.setValue(SelectedTool.getBrushSize());
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		slider.setMinorTickSpacing(16);
-		slider.setMinimum(4);
-		slider.setMaximum(1024);
-		slider.setMajorTickSpacing(128);
-		sliderPanel.add(slider);
-		slider.addChangeListener(new ChangeListener() {
+		contentPane.setPreferredSize(new Dimension(350, 64));
+
+		js.setMaximum(512);
+		js.setMajorTickSpacing(64);
+		js.setMinorTickSpacing(8);
+		js.setMinimum(0);
+		js.setPaintTicks(true);
+		js.setPaintLabels(true);
+		js.setValue(SelectedTool.brushSize);
+
+		js.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
+				if (js.getValue() < 1) {
+					js.setValue(1);
 
-				textField.setText(Integer.toString(slider.getValue()));
+				}
+
+				SelectedTool.brushSize = js.getValue();
+				HeaderBar.brushSizetextField.setText(Integer.toString(js.getValue()));
 
 			}
 
 		});
 
-		JPanel panel = new JPanel();
-		panel.setMaximumSize(new Dimension(32767, 200));
-		sliderPanel.add(panel);
+		contentPane.add(js);
 
-		textField = new JTextField();
-		textField.setSize(new Dimension(64, 20));
-		textField.setPreferredSize(new Dimension(64, 20));
-		textField.setMinimumSize(new Dimension(64, 20));
-		textField.setText(Integer.toString(slider.getValue()));
-		textField.setHorizontalAlignment(JTextField.CENTER);
-
-		PlainDocument doc = (PlainDocument) textField.getDocument();
-		doc.setDocumentFilter(new IntegerFilter());
-
-		panel.add(textField);
-
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		getContentPane().add(buttonPanel);
-		{
-			JButton okButton = new JButton("OK");
-			okButton.setActionCommand("OK");
-			buttonPanel.add(okButton);
-			okButton.addActionListener(new ActionListener() {
-
-				/**
-				 * @param e
-				 */
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-
-					SelectedTool.brushSize = Integer.parseInt(textField.getText());
+		getContentPane().add(contentPane);
+		
+		
+		
+		
+		
+		
+		addWindowFocusListener( new WindowFocusListener() {
+	        int c=0;
+	        @Override
+	        public void windowLostFocus(WindowEvent e) {
+	         dispose();
 
 
-					dispose();
+	        }
 
-				}
+	        @Override
+	        public void windowGainedFocus(WindowEvent e) {
+	            //System.out.println(c);
+	            // TODO Auto-generated method stub
 
-			});
-			getRootPane().setDefaultButton(okButton);
-		}
-		{
-			JButton cancelButton = new JButton("Cancel");
-			cancelButton.setActionCommand("Cancel");
-			cancelButton.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					dispose();
-				}
-
-			});
-			buttonPanel.add(cancelButton);
-		}
-
-		revalidate();
-		repaint();
+	        }
+	    });
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 

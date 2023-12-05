@@ -1,6 +1,8 @@
 package com.lawranta.frames;
 
 import java.awt.EventQueue;
+
+import com.lawranta.frames.internal.HeaderBar;
 import com.lawranta.frames.internal.Menu;
 import com.lawranta.frames.internal.Toolbar;
 import com.lawranta.globals.GLOBAL;
@@ -28,6 +30,7 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	Toolbar toolbar;
+	HeaderBar headerbar;
 	public static JScrollPane scrollPane;
 
 	/**
@@ -85,6 +88,15 @@ public class MainFrame extends JFrame {
 		gbc_menu.gridy = 0;
 		contentPane.add(GLOBAL.MENU, gbc_menu);
 
+		
+		
+		headerbar = new HeaderBar();
+		headerbar.setMaximumSize(new Dimension(500, 64));
+		GridBagConstraints gbc_headerbar = new GridBagConstraints();
+		gbc_headerbar.gridx = 1;
+		gbc_headerbar.gridy = 1;
+		contentPane.add(headerbar, gbc_headerbar);
+		
 		toolbar = new Toolbar();
 		toolbar.setMaximumSize(new Dimension(64, 2147483647));
 		toolbar.setMinimumSize(new Dimension(64, 34));
@@ -97,7 +109,7 @@ public class MainFrame extends JFrame {
 		gbc_toolbar.gridheight = 9;
 		gbc_toolbar.insets = new Insets(0, 0, 0, 5);
 		gbc_toolbar.gridx = 0;
-		gbc_toolbar.gridy = 1;
+		gbc_toolbar.gridy = 2;
 		contentPane.add(toolbar, gbc_toolbar);
 		scrollPane = new JScrollPane() {
 
@@ -156,7 +168,7 @@ public class MainFrame extends JFrame {
 		gbc_scrollPane.gridwidth = 9;
 		gbc_scrollPane.gridheight = 9;
 		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 1;
+		gbc_scrollPane.gridy = 2;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		scrollPane.setViewportView(GLOBAL.CP);
 

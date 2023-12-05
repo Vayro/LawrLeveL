@@ -690,11 +690,11 @@ public class CanvasPanel extends JPanel {
 			 * */
 			
 			int sumOfRadi=(int) (radius/2+cell.getxSize()/2); //combined radii
-			Point centerOfCell=new Point(cell.getX(),cell.getY());
+			Point centerOfCell=new Point((cell.getX()+GLOBAL.GRIDWIDTH/2),(cell.getY()+GLOBAL.GRIDHEIGHT/2));
 			double distanceBetweenCenters=distanceFormula(centerX,centerY,centerOfCell.getX(),centerOfCell.getY());
 			
 			/*(distanceTopLeft > radius && distanceBotRight > radius && distanceTopRight > radius
-			&& distanceBotLeft > radius)*/
+			&& distanceBotLeft > radius)*/		
 
 			if ((distanceBetweenCenters>sumOfRadi)){
 				/*
@@ -718,11 +718,11 @@ public class CanvasPanel extends JPanel {
 				 * polymorphic code here but fuck it maybe i'll fix it later)
 				 */
 
-				InkDrop kkk = new InkDrop(cell.getX(), cell.getY(), GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX,
+				InkDrop kkk = new InkDrop(cell.getX()+GLOBAL.GRIDWIDTH, cell.getY()+GLOBAL.GRIDHEIGHT, GLOBAL.GRIDHEIGHT, GLOBAL.GRIDWIDTH, GLOBAL.OFFSETX,
 						GLOBAL.OFFSETY, SelectedTool.selectedColor); // created inkdrop class at cellX and cellY
 
 				/*
-				 * as I was writing this code, I realied I already do all those "normal checks"
+				 * as I was writing this code, I realized I already do all those "normal checks"
 				 * i mentioned within the inkDrop class, which means I already had made ir
 				 * polymorphic previously which means i'm awesome and save myself a bit of work
 				 * 

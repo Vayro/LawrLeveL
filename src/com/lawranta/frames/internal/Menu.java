@@ -64,11 +64,7 @@ public class Menu extends JMenuBar implements KeyListener {
 
 	}
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @return
-	 */
+
 
 	@SuppressWarnings("unused")
 	public Menu() {

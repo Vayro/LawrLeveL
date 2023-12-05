@@ -19,8 +19,8 @@ import com.lawranta.panels.CanvasPanel;
 import com.lawranta.popups.Preferences;
 
 public class GLOBAL {
-	public static final double VERSION=1.12;
-	public static final String VERSION_NAME="Public Alpha";
+	public static final double VERSION=1.2;
+	public static final String VERSION_NAME="Public Alpha 2";
 	public static int GRIDWIDTH=(int) (32*Zoom.factor), GRIDHEIGHT=(int) (32*Zoom.factor),CANVAS_WIDTH=1024, CANVAS_HEIGHT=1024,  OFFSETX=0, OFFSETY=0, DEFAULTGRIDSIZE;
 	public static CanvasPanel CP;
 	public static Font toolFont=new Font("Monospaced", Font.PLAIN, 12);
@@ -49,6 +49,17 @@ public class GLOBAL {
 	public static String trashEyeIconPath="/images/trash.png";
 	public static String greyTrashIconPath="/images/greyTrash.png";
 	public static String eyeDropperPath="/images/eyeDropperCursor.png";
+	
+	
+	//toolbar icons 22x32
+	public static String iconEraser32="/images/icon_eraser.png";
+	public static String iconEyeDropper32="/images/icon_eyedropper.png";
+	public static String iconInkDrop32="/images/icon_inkdrop.png";
+	public static String iconTBrush32="/images/icon_tbrush.png";
+	
+	
+	
+	
 	public static void setDefault(){
 		GRIDHEIGHT=32;
 		GRIDWIDTH=32;

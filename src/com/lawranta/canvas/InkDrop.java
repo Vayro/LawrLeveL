@@ -343,7 +343,7 @@ public class InkDrop extends JPanel implements Paint, KeyListener {
 						 //set color with eyedropper tool
 						 SelectedTool.selectedColor=color;
 						 GLOBAL.CC.j.setColor(SelectedTool.selectedColor);
-							Toolbar.toolButton.colorBorder(Toolbar.colorButton);
+						 Toolbar.colorButton.colorBorder(Toolbar.colorButton);
 						 
 						 
 						}

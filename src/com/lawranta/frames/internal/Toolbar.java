@@ -52,7 +52,7 @@ public class Toolbar extends JPanel {
 	static toolButton shiftButton;
 	static toolButton trueBrushButton;
 	static Image circle;
-	static Cursor eraserCursor; 
+	static Cursor eraserCursor;
 
 	/**
 	 * Launch the application.
@@ -153,7 +153,7 @@ public class Toolbar extends JPanel {
 
 					if (GLOBAL.CC.cancelled == false) {
 						SelectedTool.selectedColor = GLOBAL.CC.j.getColor();
-						toolButton.colorBorder(Toolbar.colorButton);
+						colorButton.colorBorder(Toolbar.colorButton);
 					}
 
 					break;
@@ -183,29 +183,31 @@ public class Toolbar extends JPanel {
 					System.out.println("Zoom: " + Zoom.factor);
 
 					CanvasPanel.revalidateAndRepaint();
-					
+
 					break;
 				case "shift":
 					setSelection();
 
 					break;
 				case "Layers":
-					j=new LayersDialog();
-					j.setLocation((int) (getLocationOnScreen().getX()+layerButton.getLocation().getX()+layerButton.getWidth()),(int) (getLocationOnScreen().getY()+layerButton.getLocation().getY()));
+					j = new LayersDialog();
+					j.setLocation(
+							(int) (getLocationOnScreen().getX() + layerButton.getLocation().getX()
+									+ layerButton.getWidth()),
+							(int) (getLocationOnScreen().getY() + layerButton.getLocation().getY()));
 					break;
 				case "Eyedropper":
 					setEyeDropper();
-				break;
+					break;
 				case "tBrush":
 					setBrush();
-				break;
+					break;
 				default:
 					break;
 
 				}
 
 			}
-
 
 		};
 
@@ -243,7 +245,7 @@ public class Toolbar extends JPanel {
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		toolButton inkDropToolButton = new toolButton("InkDrop", panel);
+		toolButton inkDropToolButton = new toolButton("InkDrop", panel, GLOBAL.iconInkDrop32);
 		addMouseListener(new MouseListener() {
 
 			@Override
@@ -284,15 +286,11 @@ public class Toolbar extends JPanel {
 
 		});
 
-		trueBrushButton = new toolButton("tBrush", panel);
-		
-		textToolButton = new toolButton("Aa", panel);
+		trueBrushButton = new toolButton("tBrush", panel, GLOBAL.iconTBrush32);
 
-		canvasSizeButton = new toolButton("Canvas", panel);
+		textToolButton = new toolButton("Aa", panel, null);
 
-		gridSizeButton = new toolButton("Grid", panel);
-
-		eraserButton = new toolButton("Eraser", panel);
+		eraserButton = new toolButton("Eraser", panel, GLOBAL.iconEraser32);
 		eraserButton.addMouseListener(new MouseListener() {
 
 			@Override
@@ -334,44 +332,37 @@ public class Toolbar extends JPanel {
 
 		});
 
-		zoomInButton = new toolButton("ZoomIn", panel);
-		zoomOutButton = new toolButton("ZoomOut", panel);
-
-		shiftButton = new toolButton("shift", panel);
-		
-		layerButton = new toolButton("Layers", panel);
-		eyeDropperButton = new toolButton("Eyedropper", panel);
-		colorButton = new toolButton("Color", panel);
-		toolButton.colorBorder(colorButton);
+		eyeDropperButton = new toolButton("Eyedropper", panel, GLOBAL.iconEyeDropper32);
+		colorButton = new toolButton("Color", panel, null);
+		colorButton.colorBorder(colorButton);
 
 		setBounds(100, 100, 450, 300);
 
 	}
-	
 
 	private void setBrush() {
 		// TODO Auto-generated method stub
-	//	circle = makeImage(32, 32);
-	//	eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new Point(0, 0), "eraser");
+		// circle = makeImage(32, 32);
+		// eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(circle, new
+		// Point(0, 0), "eraser");
 		SelectedTool.setBrushTool();
 		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
 		CanvasPanel.contentPanel.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 
-	//	CanvasPanel.contentPanel.setCursor(eraserCursor);
+		// CanvasPanel.contentPanel.setCursor(eraserCursor);
 
-		
 	}
 
 	protected void setEyeDropper() {
 		// TODO Auto-generated method stub
 		SelectedTool.setEyeDropperTool();
 		System.out.println("Selected Tool: " + SelectedTool.selectedTool);
-		
+
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image image =toolkit.getImage( MainFrame.class.getResource(GLOBAL.eyeDropperPath));
-		Cursor c = toolkit.createCustomCursor(image , new Point(0, 0), "eyeDropper");
+		Image image = toolkit.getImage(MainFrame.class.getResource(GLOBAL.eyeDropperPath));
+		Cursor c = toolkit.createCustomCursor(image, new Point(0, 0), "eyeDropper");
 		CanvasPanel.contentPanel.setCursor(c);
-		
+
 	}
 
 	public static void setInkDrop() {
@@ -423,15 +414,15 @@ public class Toolbar extends JPanel {
 
 		// To be sure, we use clearRect, which will (unlike fillRect) totally replace
 		// the current pixels with the desired color, even if it's fully transparent.
-	/*	graphics.setBackground(new Color(0, true));
-		graphics.clearRect(0, 0, width, height);
-		graphics.setPaint(new Color(255, 255, 255, 0));
-		graphics.drawOval(1, 1, width - 2, height - 2);
-		graphics.setPaint(new Color(0, 0, 0, 0));
-		graphics.drawOval(2, 2, width - 4, height - 4);*/
+		/*
+		 * graphics.setBackground(new Color(0, true)); graphics.clearRect(0, 0, width,
+		 * height); graphics.setPaint(new Color(255, 255, 255, 0)); graphics.drawOval(1,
+		 * 1, width - 2, height - 2); graphics.setPaint(new Color(0, 0, 0, 0));
+		 * graphics.drawOval(2, 2, width - 4, height - 4);
+		 */
 		graphics.setPaint(new Color(0, 0, 0, 255));
 		graphics.fillOval(12, 12, 8, 8);
-		
+
 		graphics.dispose();
 
 		return bufferedImage;
@@ -444,13 +435,21 @@ public class Toolbar extends JPanel {
 		 */
 		private static final long serialVersionUID = -2900847629316298000L;
 
-		public toolButton(String s, JPanel p) {
+		public toolButton(String s, JPanel p, String iconPath) {
 			// TODO Auto-generated constructor stub
 			setFont(GLOBAL.toolFont);
-			setText(s);
-			setPreferredSize(new Dimension(64, 32));
-			setMinimumSize(new Dimension(64, 32));
-			setMaximumSize(new Dimension(64, 32));
+
+			if (iconPath != null) {
+
+				setIcon(new ImageIcon(MainFrame.class.getResource(iconPath)));
+
+			} else {
+				setText(s);
+			}
+
+			setPreferredSize(new Dimension(48, 48));
+			setMinimumSize(new Dimension(48, 48));
+			setMaximumSize(new Dimension(48,48));
 			setMargin(new Insets(0, 0, 0, 0));
 			setActionCommand(s);
 			addActionListener(Toolbar.actionListener);
@@ -459,7 +458,7 @@ public class Toolbar extends JPanel {
 
 		}
 
-		public static void colorBorder(toolButton c) {
+		public void colorBorder(toolButton c) {
 
 			c.setBorder(BorderFactory.createLineBorder(SelectedTool.selectedColor, 2, true));
 		}

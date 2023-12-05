@@ -1,7 +1,7 @@
 TODO:
 
 •zoom ✅
-•layers? 
+•layers? ✅
 ALLOW PAINTING OVER SQUARES ✅
 •allow color change for backgrounds ✅
 •export as PNG ✅
@@ -10,3 +10,12 @@ ALLOW PAINTING OVER SQUARES ✅
 •add color to saved ✅
 •global shortcuts ✅
 •FIX SUPER ZOOM DRAW ERROR ✅
+move the following to headerbar: 
+brush slider✅
+grid✅
+canvas✅
+zoom in and out ✅
+shift✅
+layers✅
+
+

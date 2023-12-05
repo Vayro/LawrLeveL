@@ -130,7 +130,7 @@ public class TextNode extends JTextField implements Paint {
 				setEditable(false);
 				setBackground(new Color(255, 255, 255, 50));
 
-				if (getText().isBlank()) {
+				if (getText().length()==0) {
 					// setVisible(false);
 					CanvasPanel.contentPanel.remove(thisNode);
 					System.out.println("removed text node");

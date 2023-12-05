@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"LawrLeveL"}];updateSearchResults();
+moduleSearchIndex = [];updateSearchResults();

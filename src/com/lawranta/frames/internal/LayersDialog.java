@@ -38,6 +38,8 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Component;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 
 public class LayersDialog extends JDialog {
 
@@ -61,11 +63,14 @@ public class LayersDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public LayersDialog() {
+		setBackground(new Color(240, 240, 240));
+		getContentPane().setBackground(new Color(0, 0, 0));
 		setSize(new Dimension(128, 0));
 		setMinimumSize(new Dimension(128, 400));
 		setAlwaysOnTop(true);
 		setUndecorated(true);
 		setFocusable(false);
+		contentPanel.setBackground(new Color(128, 128, 128));
 		contentPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
 		contentPanel.setSize(new Dimension(120, 400));
@@ -76,11 +81,15 @@ public class LayersDialog extends JDialog {
 		Dimension smallerButtonSize = new Dimension(100, 32);
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBackground(new Color(0, 0, 0));
 		scrollPane.setMinimumSize(new Dimension(120, 23));
-		superPanel.setPreferredSize(new Dimension(128, 400));
+		superPanel.setBackground(new Color(128, 128, 128));
+		superPanel.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new LineBorder(new Color(0, 0, 0))));
+		superPanel.setPreferredSize(new Dimension(138, 400));
 		getContentPane().add(superPanel);
 
 		JPanel topPanel = new JPanel();
+		topPanel.setBackground(new Color(128, 128, 128));
 		topPanel.setMinimumSize(new Dimension(128, 10));
 		topPanel.setPreferredSize(new Dimension(128, 10));
 		topPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -153,6 +162,7 @@ public class LayersDialog extends JDialog {
 		contentPanel.add(scrollPane);
 
 		JPanel layerPanel = new JPanel();
+		layerPanel.setBackground(new Color(128, 128, 128));
 		layerPanel.setMaximumSize(new Dimension(120, 32767));
 
 		// populate with one button for each existing later
